@@ -434,6 +434,60 @@ def get_date_range(range_type, offset=0):
         # Default to today
         return today, today
 
+# ======= Database Initialization =======
+@with_db_connection
+def init_database_tables(conn):
+    """
+    Initialize all required database tables if they don't exist
+    
+    Parameters:
+    conn (sqlite3.Connection): Database connection
+    
+    Returns:
+    bool: True if successful, False otherwise
+    """
+    if conn is None:
+        return False
+    
+    # List of table creation queries
+    table_queries = [
+        # Create LoadBench table if it doesn't exist
+        ('''
+        CREATE TABLE IF NOT EXISTS LoadBench (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            load_id INTEGER NOT NULL,
+            testing_area TEXT NOT NULL,
+            assigned_date DATE DEFAULT CURRENT_DATE,
+            status TEXT DEFAULT 'Backlog',
+            priority INTEGER DEFAULT 100,
+            FOREIGN KEY (load_id) REFERENCES ReactorLoads(id)
+        )
+        ''', None),
+        
+        # Create indexes for LoadBench
+        ("CREATE INDEX IF NOT EXISTS idx_loadbench_load_id ON LoadBench(load_id)", None),
+        ("CREATE INDEX IF NOT EXISTS idx_loadbench_testing_area ON LoadBench(testing_area)", None),
+        ("CREATE INDEX IF NOT EXISTS idx_loadbench_status ON LoadBench(status)", None),
+        
+        # Create LoadSchedules table if it doesn't exist
+        ('''
+        CREATE TABLE IF NOT EXISTS LoadSchedules (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            load_id INTEGER NOT NULL,
+            load_start TIMESTAMP,
+            load_end TIMESTAMP,
+            reactor_id INTEGER,
+            FOREIGN KEY (load_id) REFERENCES ReactorLoads(id)
+        )
+        ''', None),
+        
+        # Create index for LoadSchedules
+        ("CREATE INDEX IF NOT EXISTS idx_loadschedules_load_id ON LoadSchedules(load_id)", None)
+    ]
+    
+    # Execute all table creation queries in a transaction
+    return execute_transaction(conn, table_queries)
+
 # ======= Data Access Layer (SQL Queries Abstracted into Functions) =======
 @st.cache_data(ttl=300)  # Cache for 5 minutes
 @with_db_connection
@@ -722,6 +776,160 @@ def get_unscheduled_loads(conn, date_range=None):
 
 @st.cache_data(ttl=300)  # Cache for 5 minutes
 @with_db_connection
+def get_load_summary_data(conn, testing_area=None, date_range=None):
+    """
+    Get summary data for dashboard
+    
+    Parameters:
+    conn (sqlite3.Connection): Database connection
+    testing_area (str, optional): Testing area to filter by
+    date_range (tuple, optional): (start_date, end_date) for filtering
+    
+    Returns:
+    dict: Dictionary containing summary data
+    """
+    if conn is None:
+        return {}
+    
+    # Base query for status counts
+    status_query = """
+    SELECT 
+        LB.status, 
+        COUNT(*) as count
+    FROM LoadBench LB
+    INNER JOIN ReactorLoads RL ON LB.load_id = RL.id
+    INNER JOIN LabRequests LR ON RL.lab_request_id = LR.id
+    WHERE 1=1
+    """
+    
+    # Base query for average completion time
+    completion_query = """
+    SELECT 
+        AVG(julianday(LS.load_end) - julianday(LS.load_start)) as avg_days
+    FROM LoadSchedules LS
+    INNER JOIN LoadBench LB ON LS.load_id = LB.load_id
+    INNER JOIN ReactorLoads RL ON LB.load_id = RL.id
+    INNER JOIN LabRequests LR ON RL.lab_request_id = LR.id
+    WHERE LS.load_start IS NOT NULL 
+    AND LS.load_end IS NOT NULL
+    """
+    
+    # Add testing area filter if specified
+    params = []
+    if testing_area:
+        status_query += " AND LB.testing_area = ?"
+        completion_query += " AND LB.testing_area = ?"
+        params.append(testing_area)
+    
+    # Add date range filter if specified
+    if date_range:
+        start_date, end_date = date_range
+        status_query += " AND LR.time_submitted >= ? AND LR.time_submitted <= ?"
+        completion_query += " AND LR.time_submitted >= ? AND LR.time_submitted <= ?"
+        params.append(start_date.strftime('%Y-%m-%d'))
+        params.append(end_date.strftime('%Y-%m-%d 23:59:59'))  # Include end date fully
+    
+    # Finish status query
+    status_query += " GROUP BY LB.status"
+    
+    # Execute queries
+    status_results = execute_query_to_df(conn, status_query, params if params else None)
+    completion_result = execute_query_to_df(conn, completion_query, params if params else None)
+    
+    # Process results
+    summary_data = {
+        'total_loads': status_results['count'].sum() if not status_results.empty else 0,
+        'status_counts': dict(zip(status_results['status'], status_results['count'])) if not status_results.empty else {},
+        'avg_completion_days': float(completion_result['avg_days'].iloc[0]) if not completion_result.empty and not completion_result['avg_days'].isna().iloc[0] else 0
+    }
+    
+    # Count of loads currently in reactor (start time but no end time)
+    in_reactor_query = """
+    SELECT COUNT(*) as count
+    FROM LoadSchedules LS
+    INNER JOIN LoadBench LB ON LS.load_id = LB.load_id
+    INNER JOIN ReactorLoads RL ON LB.load_id = RL.id
+    INNER JOIN LabRequests LR ON RL.lab_request_id = LR.id
+    WHERE LS.load_start IS NOT NULL 
+    AND (LS.load_end IS NULL OR LS.load_end = '')
+    """
+    
+    # Add testing area filter if specified
+    if testing_area:
+        in_reactor_query += " AND LB.testing_area = ?"
+    
+    # Add date range filter if specified
+    if date_range:
+        in_reactor_query += " AND LR.time_submitted >= ? AND LR.time_submitted <= ?"
+    
+    # Execute in-reactor query
+    in_reactor_result = execute_query_to_df(conn, in_reactor_query, params if params else None)
+    
+    # Add in-reactor count to summary data
+    summary_data['in_reactor_count'] = int(in_reactor_result['count'].iloc[0]) if not in_reactor_result.empty else 0
+    
+    return summary_data
+
+@with_db_connection
+def get_next_backlog_priority(conn, testing_area):
+    """
+    Get the next available priority number for backlog items
+    
+    Parameters:
+    conn (sqlite3.Connection): Database connection
+    testing_area (str): Testing area to calculate priority for
+    
+    Returns:
+    int: Next available priority number
+    """
+    if conn is None:
+        return 100
+    
+    # Query to get max priority
+    query = "SELECT MAX(priority) FROM LoadBench WHERE testing_area = ? AND UPPER(status) = 'BACKLOG'"
+    params = (testing_area,)
+    
+    # Execute query
+    result = execute_query(conn, query, params, fetchall=False)
+    
+    # Return next priority
+    max_priority = result[0] if result and result[0] is not None else 99
+    return max_priority + 1
+
+@with_db_connection
+def get_load_info(conn, load_id):
+    """
+    Get assigned testing area, status, and priority for a load
+    
+    Parameters:
+    conn (sqlite3.Connection): Database connection
+    load_id (int): Load ID to get info for
+    
+    Returns:
+    dict: Dictionary containing testing_area, status, and priority
+    """
+    if conn is None:
+        return {"testing_area": None, "status": None, "priority": 100}
+    
+    # Query to get load info
+    query = "SELECT testing_area, status, priority FROM LoadBench WHERE load_id = ?"
+    params = (load_id,)
+    
+    # Execute query
+    result = execute_query(conn, query, params, fetchall=False)
+    
+    # Return load info
+    if result:
+        return {
+            "testing_area": result[0], 
+            "status": result[1] if len(result) > 1 and result[1] else "Backlog",
+            "priority": result[2] if len(result) > 2 and result[2] is not None else 100
+        }
+    else:
+        return {"testing_area": None, "status": None, "priority": 100}
+
+@st.cache_data(ttl=300)  # Cache for 5 minutes
+@with_db_connection
 def get_current_in_reactor_load(conn):
     """
     Get the current load that is in the reactor (has start time but no end time)
@@ -786,64 +994,6 @@ def get_current_in_reactor_load(conn):
     return load_info
 
 # ======= Data Modification Functions =======
-@with_db_connection
-def get_next_backlog_priority(conn, testing_area):
-    """
-    Get the next available priority number for backlog items
-    
-    Parameters:
-    conn (sqlite3.Connection): Database connection
-    testing_area (str): Testing area to calculate priority for
-    
-    Returns:
-    int: Next available priority number
-    """
-    if conn is None:
-        return 100
-    
-    # Query to get max priority
-    query = "SELECT MAX(priority) FROM LoadBench WHERE testing_area = ? AND UPPER(status) = 'BACKLOG'"
-    params = (testing_area,)
-    
-    # Execute query
-    result = execute_query(conn, query, params, fetchall=False)
-    
-    # Return next priority
-    max_priority = result[0] if result and result[0] is not None else 99
-    return max_priority + 1
-
-@with_db_connection
-def get_load_info(conn, load_id):
-    """
-    Get assigned testing area, status, and priority for a load
-    
-    Parameters:
-    conn (sqlite3.Connection): Database connection
-    load_id (int): Load ID to get info for
-    
-    Returns:
-    dict: Dictionary containing testing_area, status, and priority
-    """
-    if conn is None:
-        return {"testing_area": None, "status": None, "priority": 100}
-    
-    # Query to get load info
-    query = "SELECT testing_area, status, priority FROM LoadBench WHERE load_id = ?"
-    params = (load_id,)
-    
-    # Execute query
-    result = execute_query(conn, query, params, fetchall=False)
-    
-    # Return load info
-    if result:
-        return {
-            "testing_area": result[0], 
-            "status": result[1] if len(result) > 1 and result[1] else "Backlog",
-            "priority": result[2] if len(result) > 2 and result[2] is not None else 100
-        }
-    else:
-        return {"testing_area": None, "status": None, "priority": 100}
-
 @with_db_connection
 def assign_testing_area(conn, load_id, testing_area, status=None, priority=None, reactor_id=None):
     """
@@ -1422,6 +1572,132 @@ def run_excel_import_script():
         return False, str(e)
 
 # ======= UI Components =======
+def display_dashboard(testing_area=None, date_range=None):
+    """
+    Display a dashboard with charts and key metrics
+    
+    Parameters:
+    testing_area (str, optional): Testing area to filter by
+    date_range (tuple, optional): (start_date, end_date) for filtering
+    """
+    # Get summary data
+    summary_data = get_load_summary_data(testing_area, date_range)
+    
+    if not summary_data:
+        st.warning("No data available for the dashboard.")
+        return
+    
+    # Date range info
+    if date_range:
+        start_date, end_date = date_range
+        date_info = f"{start_date.strftime('%Y-%m-%d')} to {end_date.strftime('%Y-%m-%d')}"
+    else:
+        date_info = "All Time"
+    
+    # Title and date range
+    st.subheader(f"Dashboard Overview - {testing_area if testing_area else 'All Testing Areas'}")
+    st.write(f"Showing data for: {date_info}")
+    
+    # Key metrics in cards
+    col1, col2, col3, col4 = st.columns(4)
+    
+    with col1:
+        st.markdown("""
+        <div class="dashboard-card">
+            <div class="dashboard-card-header">Total Loads</div>
+            <div class="dashboard-stat">{}</div>
+        </div>
+        """.format(summary_data['total_loads']), unsafe_allow_html=True)
+    
+    with col2:
+        backlog_count = summary_data['status_counts'].get('Backlog', 0)
+        st.markdown("""
+        <div class="dashboard-card">
+            <div class="dashboard-card-header">Backlog</div>
+            <div class="dashboard-stat">{}</div>
+        </div>
+        """.format(backlog_count), unsafe_allow_html=True)
+    
+    with col3:
+        in_reactor_count = summary_data['in_reactor_count']
+        st.markdown("""
+        <div class="dashboard-card">
+            <div class="dashboard-card-header">In Reactor</div>
+            <div class="dashboard-stat">{}</div>
+        </div>
+        """.format(in_reactor_count), unsafe_allow_html=True)
+    
+    with col4:
+        avg_days = round(summary_data['avg_completion_days'], 1)
+        st.markdown("""
+        <div class="dashboard-card">
+            <div class="dashboard-card-header">Avg. Test Days</div>
+            <div class="dashboard-stat">{}</div>
+        </div>
+        """.format(avg_days), unsafe_allow_html=True)
+    
+    # Create charts
+    st.subheader("Load Status Distribution")
+    
+    # Prepare data for status distribution chart
+    status_labels = []
+    status_values = []
+    for status, count in summary_data['status_counts'].items():
+        status_labels.append(status)
+        status_values.append(count)
+    
+    # Create status distribution pie chart
+    if status_labels and status_values:
+        fig = px.pie(
+            values=status_values,
+            names=status_labels,
+            title="Load Status Distribution",
+            color_discrete_sequence=px.colors.qualitative.Set3
+        )
+        fig.update_traces(textposition='inside', textinfo='percent+label')
+        st.plotly_chart(fig, use_container_width=True)
+    else:
+        st.info("No status data available for chart.")
+    
+    # Display current in-reactor load if any
+    current_load = get_current_in_reactor_load()
+    if current_load:
+        st.subheader("Current Load In Reactor")
+        
+        # Create a card for the current load
+        st.markdown("""
+        <div class="dashboard-card">
+            <div class="dashboard-card-header">Currently Testing</div>
+            <table style="width:100%">
+                <tr>
+                    <td><strong>Load ID:</strong></td>
+                    <td>{}</td>
+                    <td><strong>Lab Request:</strong></td>
+                    <td>{}</td>
+                </tr>
+                <tr>
+                    <td><strong>Testing Area:</strong></td>
+                    <td>{}</td>
+                    <td><strong>Start Time:</strong></td>
+                    <td>{}</td>
+                </tr>
+                <tr>
+                    <td><strong>Samples:</strong></td>
+                    <td>{}</td>
+                    <td><strong>Reactor:</strong></td>
+                    <td>{}</td>
+                </tr>
+            </table>
+        </div>
+        """.format(
+            current_load['ReactorLoadID'],
+            current_load['LabRequestNumber'],
+            current_load['testing_area'],
+            current_load['start_time'],
+            current_load['sample_count'],
+            current_load['reactor'] if current_load['reactor'] else 'Not specified'
+        ), unsafe_allow_html=True)
+
 def display_date_range_filter(key_prefix=""):
     """
     Display an enhanced date range filter with predefined options
@@ -1976,4 +2252,367 @@ def display_bench_loads(bench_type, status_filter=None, date_range=None):
                 with col1:
                     st.markdown("#### Basic Information")
                     st.write(f"**Load ID:** {load_id}")
-                    st.write(f"**Lab Request:** {load_row.get('LabRequestNumber',
+                    st.write(f"**Lab Request:** {load_row.get('LabRequestNumber', 'N/A')}")
+                    st.write(f"**Job Number:** {load_row.get('job_number', 'N/A')}")
+                    st.write(f"**PCN:** {load_row.get('pcn', 'N/A')}")
+                    st.write(f"**Submitted:** {load_row.get('time_submitted', 'N/A')}")
+                    st.write(f"**Created By:** {load_row.get('created_by', 'N/A')}")
+                
+                with col2:
+                    st.markdown("#### Technical Details")
+                    st.write(f"**Request Type:** {load_row.get('request_type', 'N/A')}")
+                    st.write(f"**Sample Count:** {load_row.get('sample_count', 'N/A')}")
+                    st.write(f"**Sample Types:** {load_row.get('sample_types', 'N/A')}")
+                    st.write(f"**Test Count:** {load_row.get('test_count', 'N/A')}")
+                    st.write(f"**SO2:** {load_row.get('SO2', 'N/A')}")
+                    st.write(f"**CO:** {load_row.get('CO', 'N/A')}")
+                    st.write(f"**NO:** {load_row.get('NO', 'N/A')}")
+                    st.write(f"**NO2:** {load_row.get('NO2', 'N/A')}")
+                    
+                # Display schedule information in a new section
+                st.markdown("#### Schedule Information")
+                st.write(f"**Start Time:** {load_row.get('start_time', 'Not Started')}")
+                st.write(f"**End Time:** {load_row.get('end_time', 'Not Completed')}")
+                st.write(f"**Reactor:** {load_row.get('reactor', 'N/A')}")
+                test_status = 'Not Tested' if not load_row.get('start_time') else ('In Reactor' if not load_row.get('end_time') else 'Completed')
+                st.write(f"**Test Status:** {test_status}")
+                
+                # Status update for individual load
+                st.markdown("#### Update Status")
+                new_status = st.selectbox(
+                    "Set Status:",
+                    options=STATUS_OPTIONS,
+                    index=STATUS_OPTIONS.index(load_row.get('status', 'Backlog')) if load_row.get('status', 'Backlog') in STATUS_OPTIONS else 0,
+                    key=f"status_select_{load_id}_{bench_type}"
+                )
+                
+                # Add reactor ID selection for In Reactor status
+                reactor_id = None
+                if new_status == "In Reactor":
+                    reactor_id = st.text_input(
+                        "Reactor ID (optional):",
+                        value=str(load_row.get('reactor', '')),
+                        key=f"reactor_id_{load_id}_{bench_type}"
+                    )
+                    # Convert to int or None
+                    reactor_id = int(reactor_id) if reactor_id and reactor_id.strip().isdigit() else None
+                
+                if new_status != load_row.get('status', 'Backlog') and st.button("Update Status", key=f"update_status_{load_id}_{bench_type}"):
+                    if update_load_status(load_id, new_status, reactor_id):
+                        st.cache_data.clear()
+                        st.rerun()
+                
+                # Individual re-assignment controls
+                st.markdown("#### Reassign Load")
+                reassign_cols = st.columns(3)
+                
+                with reassign_cols[0]:
+                    if bench_type != "Quarter Bench" and st.button("Move to Quarter Bench", key=f"ind_qb_{load_id}", use_container_width=True):
+                        try:
+                            assign_testing_area(load_id, "Quarter Bench", load_row.get('status', 'Backlog'), None, reactor_id)
+                            st.cache_data.clear()
+                            st.rerun()
+                        except Exception as e:
+                            st.error(f"Error moving load to Quarter Bench: {e}")
+                
+                with reassign_cols[1]:
+                    if bench_type != "Full Bench" and st.button("Move to Full Bench", key=f"ind_fb_{load_id}", use_container_width=True):
+                        try:
+                            assign_testing_area(load_id, "Full Bench", load_row.get('status', 'Backlog'), None, reactor_id)
+                            st.cache_data.clear()
+                            st.rerun()
+                        except Exception as e:
+                            st.error(f"Error moving load to Full Bench: {e}")
+                
+                with reassign_cols[2]:
+                    if st.button("Unschedule Load", key=f"ind_unschedule_{load_id}", use_container_width=True):
+                        try:
+                            unschedule_load(load_id)
+                            st.cache_data.clear()
+                            st.rerun()
+                        except Exception as e:
+                            st.error(f"Error unscheduling load: {e}")
+
+def display_priority_reordering(testing_area):
+    """
+    Display load dataframe with manual priority number editing and automatic adjustment
+    
+    Parameters:
+    testing_area (str): The testing area to display loads for
+    """
+    # Load the data for the selected testing area with 'Backlog' status only
+    query = """
+    SELECT lb.load_id, lb.priority, 
+           lr.number as LabRequestNumber, lr.job_number, lr.pcn,
+           au.username as created_by
+    FROM LoadBench lb
+    JOIN ReactorLoads rl ON lb.load_id = rl.id
+    JOIN LabRequests lr ON rl.lab_request_id = lr.id
+    LEFT JOIN auth_user au ON lr.created_by_id = au.id
+    WHERE lb.testing_area = ? AND UPPER(lb.status) = 'BACKLOG'
+    ORDER BY lb.priority
+    """
+    
+    df = execute_query_to_df(get_db_connection_pool(), query, params=(testing_area,))
+    
+    if df.empty:
+        st.info(f"No backlog loads scheduled for {testing_area}.")
+        return
+    
+    # Information header with clear instructions
+    st.markdown("""
+    ## Backlog Priority Editor
+    
+    1. **Edit any priority number** to change the order
+    2. **All other priorities will automatically adjust** when you save
+    3. Lowest number = highest priority (will be tested first)
+    4. Click **SAVE PRIORITIES** when done
+    """)
+    
+    # Create a copy of the original priorities to detect changes
+    original_priorities = dict(zip(df['load_id'], df['priority']))
+    
+    # Set column configuration
+    column_config = {
+        'load_id': st.column_config.NumberColumn("Load ID", disabled=True, width="small"),
+        'LabRequestNumber': st.column_config.TextColumn("Lab Request #", disabled=True, width="medium"),
+        'job_number': st.column_config.TextColumn("Job #", disabled=True, width="small"),
+        'pcn': st.column_config.TextColumn("PCN", disabled=True, width="small"),
+        'created_by': st.column_config.TextColumn("Created By", disabled=True, width="medium"),
+        'priority': st.column_config.NumberColumn(
+            "Priority", 
+            help="Enter a number to set priority (lower number = higher priority)",
+            min_value=1,
+            max_value=1000,
+            step=1,
+            format="%d",
+            width="small",
+            disabled=False  # This column is editable
+        )
+    }
+    
+    # Create a list of disabled columns (all except priority)
+    display_columns = ['load_id', 'LabRequestNumber', 'job_number', 'pcn', 'created_by', 'priority'] 
+    disabled_columns = [col for col in display_columns if col != 'priority']
+    
+    # Display the editor
+    edited_df = st.data_editor(
+        df,
+        column_config=column_config,
+        use_container_width=True,
+        hide_index=True,
+        num_rows="fixed",
+        key=f"priority_editor_{testing_area}",
+        disabled=disabled_columns  # Only priority column is editable
+    )
+    
+    # Check if priorities have been changed
+    changes_made = False
+    changed_items = []
+    for _, row in edited_df.iterrows():
+        load_id = row['load_id']
+        new_priority = row['priority']
+        if load_id in original_priorities and original_priorities[load_id] != new_priority:
+            changes_made = True
+            changed_items.append({
+                "load_id": load_id,
+                "old_priority": original_priorities[load_id],
+                "new_priority": new_priority
+            })
+    
+    # Add an explanation of the auto-adjustment
+    if changes_made:
+        st.info("☝️ You've changed some priorities. When you save, other priorities will automatically adjust to maintain the sequence.")
+    
+    # Show save button (with appropriate styling)
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        if st.button("💾 SAVE PRIORITIES", key=f"save_priorities_{testing_area}", use_container_width=True):
+            try:
+                with st.spinner("Adjusting priorities..."):
+                    # Apply priority adjustments before saving
+                    adjusted_df = auto_adjust_priorities(edited_df, changed_items)
+                    
+                    # Save the priorities to the database
+                    save_result = save_new_priorities(adjusted_df, testing_area)
+                    
+                    if save_result:
+                        # Clear cache and force app refresh to show the new priorities
+                        st.cache_data.clear()
+                        st.rerun()
+            except Exception as e:
+                st.error(f"Error saving priorities: {e}")
+
+def display_sidebar():
+    """
+    Display sidebar with navigation and tools
+    """
+    st.sidebar.title("Lab Load Scheduler")
+    
+    # Display Excel import button in the sidebar
+    st.sidebar.markdown("### Data Import")
+    
+    if st.sidebar.button("🔄 Sync Excel Schedules", use_container_width=True):
+        success, message = run_excel_import_script()
+        
+        if success:
+            st.sidebar.success("Load schedules synced successfully!")
+            # Clear cache to refresh data
+            st.cache_data.clear()
+        else:
+            st.sidebar.error(f"Failed to sync schedules: {message}")
+    
+    # Display current in-reactor load if any
+    st.sidebar.markdown("### Current Status")
+    current_load = get_current_in_reactor_load()
+    
+    if current_load:
+        st.sidebar.markdown(f"""
+        <div style="background-color: #E3F2FD; padding: 10px; border-radius: 8px; margin-bottom: 15px;">
+            <div style="font-weight: 600; margin-bottom: 8px;">Currently In Reactor:</div>
+            <div><strong>Load ID:</strong> {current_load['ReactorLoadID']}</div>
+            <div><strong>Lab Request:</strong> {current_load['LabRequestNumber']}</div>
+            <div><strong>Testing Area:</strong> {current_load['testing_area']}</div>
+            <div><strong>Start Time:</strong> {current_load['start_time']}</div>
+        </div>
+        """, unsafe_allow_html=True)
+    else:
+        st.sidebar.info("No loads currently in reactor")
+    
+    # Add useful links or quick actions
+    st.sidebar.markdown("### Quick Actions")
+    
+    # Unscheduled loads count
+    unscheduled_count = len(get_unscheduled_loads())
+    st.sidebar.markdown(f"**Unscheduled Loads:** {unscheduled_count}")
+    
+    # Backlog counts
+    query = """
+    SELECT testing_area, COUNT(*) as count
+    FROM LoadBench
+    WHERE UPPER(status) = 'BACKLOG'
+    GROUP BY testing_area
+    """
+    backlog_df = execute_query_to_df(get_db_connection_pool(), query)
+    
+    if not backlog_df.empty:
+        backlog_counts = dict(zip(backlog_df['testing_area'], backlog_df['count']))
+        for area, count in backlog_counts.items():
+            st.sidebar.markdown(f"**{area} Backlog:** {count}")
+    
+    # Link to documentation or help
+    st.sidebar.markdown("### Help")
+    st.sidebar.markdown("[View Documentation](https://example.com)")
+    st.sidebar.markdown("[Report an Issue](mailto:support@example.com)")
+
+# ======= Main Application =======
+def main():
+    """Main application function"""
+    # Apply custom CSS
+    apply_custom_css()
+    
+    # Initialize database tables
+    init_database_tables()
+    
+    # Display sidebar
+    display_sidebar()
+    
+    # Main app layout
+    st.title("Lab Load Scheduler")
+    
+    # Create tabs for different views
+    tabs = st.tabs(["Dashboard", "Quarter Bench", "Full Bench", "Unscheduled Loads", "Cancelled", "Priority Scheduler"])
+    
+    try:
+        # Tab 0: Dashboard
+        with tabs[0]:
+            st.header("Lab Scheduler Dashboard")
+            
+            # Date range filter for dashboard
+            date_range = display_date_range_filter(key_prefix="dashboard")
+            
+            # Display dashboard with date range filter
+            display_dashboard(date_range=date_range)
+        
+        # Tab 1: Quarter Bench
+        with tabs[1]:
+            st.header("Quarter Bench Loads")
+            
+            # Date range filter for Quarter Bench
+            date_range = display_date_range_filter(key_prefix="quarter_bench")
+            
+            # Display status filter checkboxes
+            selected_statuses = display_status_checkboxes(key_prefix="quarter_bench")
+            
+            # Handle the case when no statuses are selected
+            if not selected_statuses:
+                st.warning("No statuses selected. No data to display.")
+            else:
+                # Display bench loads with simplified columns
+                display_bench_loads("Quarter Bench", status_filter=selected_statuses, date_range=date_range)
+        
+        # Tab 2: Full Bench
+        with tabs[2]:
+            st.header("Full Bench Loads")
+            
+            # Date range filter for Full Bench
+            date_range = display_date_range_filter(key_prefix="full_bench")
+            
+            # Display status filter checkboxes
+            selected_statuses = display_status_checkboxes(key_prefix="full_bench")
+            
+            # Handle the case when no statuses are selected
+            if not selected_statuses:
+                st.warning("No statuses selected. No data to display.")
+            else:
+                # Display bench loads with simplified columns
+                display_bench_loads("Full Bench", status_filter=selected_statuses, date_range=date_range)
+                
+        # Tab 3: Unscheduled Loads
+        with tabs[3]:
+            st.header("Unscheduled Reactor Loads")
+            
+            # Date range filter for unscheduled loads
+            date_range = display_date_range_filter(key_prefix="unscheduled")
+            
+            # Display unscheduled loads
+            display_unscheduled_loads(date_range)
+        
+        # Tab 4: Cancelled
+        with tabs[4]:
+            st.header("Cancelled Loads")
+            
+            # Date range filter for Cancelled loads
+            date_range = display_date_range_filter(key_prefix="cancelled")
+            
+            # Display status filter checkboxes
+            selected_statuses = display_status_checkboxes(key_prefix="cancelled")
+            
+            # Handle the case when no statuses are selected
+            if not selected_statuses:
+                st.warning("No statuses selected. No data to display.")
+            else:
+                # Display bench loads with simplified columns
+                display_bench_loads("Cancelled", status_filter=selected_statuses, date_range=date_range)
+        
+        # Tab 5: Priority Scheduler
+        with tabs[5]:
+            st.header("🔄 Backlog Priority Scheduler")
+            st.info("This view shows only loads with 'Backlog' status and allows you to set testing priorities by reordering them.")
+            
+            # Select testing area for priority scheduling
+            testing_area = st.selectbox(
+                "Select Testing Area", 
+                ["Quarter Bench", "Full Bench"],
+                key="priority_area_select"
+            )
+            
+            # Display the reordering interface with improved implementation
+            display_priority_reordering(testing_area)
+    
+    except Exception as e:
+        st.error(f"An error occurred: {e}")
+        st.error("Please make sure the database path is correct and contains the required tables.")
+
+if __name__ == "__main__":
+    main()
