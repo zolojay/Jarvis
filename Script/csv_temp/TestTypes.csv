@@ -1,0 +1,9 @@
+id,test_type,obsolete,chemistry_test,location_test,physical_test,reactor_test
+1,XRF - Surface Qual All,False,True,True,False,False
+2,Bench,False,False,False,False,True
+3,Micro,False,False,False,False,True
+4,XRF - Bulk Quant,False,True,True,False,False
+5,XRF - Bulk Qual All,False,True,True,False,False
+6,Hg Porosimetry,False,False,True,False,False
+7,BET Surface Area,False,False,True,False,False
+8,Nitrogen Porosimetry,False,False,True,False,False

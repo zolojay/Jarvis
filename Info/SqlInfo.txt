@@ -1,0 +1,90 @@
+SELECT
+    RL.id AS ReactorLoadID,
+    LR.number AS LabRequestNumber,
+    LR.job_number,
+    LR.pcn,
+    LR.time_submitted,
+    AU.username AS created_by,
+    RT.request_type,
+
+    -- Sample info
+    COUNT(DISTINCT S.id) AS sample_count,
+    (SELECT GROUP_CONCAT(number, ', ')
+     FROM (SELECT DISTINCT S_inner.number
+           FROM ReactorLoadSamples RLS_inner
+           LEFT JOIN LabRequestSample LRS_inner ON RLS_inner.lab_request_sample_id = LRS_inner.id
+           LEFT JOIN Samples S_inner ON LRS_inner.sample_id = S_inner.id
+           WHERE RLS_inner.load_id = RL.id)
+    ) AS sample_numbers,
+
+    (SELECT GROUP_CONCAT(sample_type, ', ')
+     FROM (SELECT DISTINCT ST_inner.sample_type
+           FROM ReactorLoadSamples RLS_inner
+           LEFT JOIN LabRequestSample LRS_inner ON RLS_inner.lab_request_sample_id = LRS_inner.id
+           LEFT JOIN Samples S_inner ON LRS_inner.sample_id = S_inner.id
+           LEFT JOIN SampleTypes ST_inner ON S_inner.sample_type_id = ST_inner.id
+           WHERE RLS_inner.load_id = RL.id)
+    ) AS sample_types,
+
+    -- Test conditions info (excluding Pressure Drop)
+    (SELECT COUNT(DISTINCT TCT_inner.id)
+     FROM ReactorTests RTST_inner
+     LEFT JOIN ReactorTestConditions RTC_inner ON RTST_inner.test_condition_id = RTC_inner.id
+     LEFT JOIN TestConditionTypes TCT_inner ON RTC_inner.test_type_id = TCT_inner.id
+     WHERE RTST_inner.load_id = RL.id 
+     AND (TCT_inner.test_condition_type IS NULL OR TRIM(UPPER(TCT_inner.test_condition_type)) <> 'PRESSURE DROP')
+    ) AS test_condition_count,
+
+    (SELECT GROUP_CONCAT(test_condition_type, ', ')
+     FROM (SELECT DISTINCT TCT_inner.test_condition_type
+           FROM ReactorTests RTST_inner
+           LEFT JOIN ReactorTestConditions RTC_inner ON RTST_inner.test_condition_id = RTC_inner.id
+           LEFT JOIN TestConditionTypes TCT_inner ON RTC_inner.test_type_id = TCT_inner.id
+           WHERE RTST_inner.load_id = RL.id 
+           AND (TCT_inner.test_condition_type IS NULL OR TRIM(UPPER(TCT_inner.test_condition_type)) <> 'PRESSURE DROP'))
+    ) AS test_conditions,
+
+    -- Test condition descriptions (excluding Pressure Drop)
+    (SELECT GROUP_CONCAT(description, '; ')
+     FROM (SELECT DISTINCT RTC_inner.description
+           FROM ReactorTests RTST_inner
+           LEFT JOIN ReactorTestConditions RTC_inner ON RTST_inner.test_condition_id = RTC_inner.id
+           LEFT JOIN TestConditionTypes TCT_inner ON RTC_inner.test_type_id = TCT_inner.id
+           WHERE RTST_inner.load_id = RL.id 
+           AND (TCT_inner.test_condition_type IS NULL OR TRIM(UPPER(TCT_inner.test_condition_type)) <> 'PRESSURE DROP'))
+    ) AS testconditiondescription,
+
+    -- Parameters (pivoted)
+    MAX(CASE WHEN RP.reactor_parameter = 'SO2' THEN RTCP.value END) AS SO2,
+    MAX(CASE WHEN RP.reactor_parameter = 'CO' THEN RTCP.value END) AS CO,
+    MAX(CASE WHEN RP.reactor_parameter = 'NO' THEN RTCP.value END) AS NO,
+    MAX(CASE WHEN RP.reactor_parameter = 'NO2' THEN RTCP.value END) AS NO2
+
+FROM ReactorLoads RL
+INNER JOIN LabRequests LR ON RL.lab_request_id = LR.id
+LEFT JOIN auth_user AU ON LR.created_by_id = AU.id
+LEFT JOIN RequestTypes RT ON LR.request_type_id = RT.id
+
+-- Join Samples through ReactorLoadSamples → LabRequestSample → Samples
+LEFT JOIN ReactorLoadSamples RLS ON RL.id = RLS.load_id
+LEFT JOIN LabRequestSample LRS ON RLS.lab_request_sample_id = LRS.id
+LEFT JOIN Samples S ON LRS.sample_id = S.id
+LEFT JOIN SampleTypes ST ON S.sample_type_id = ST.id
+
+-- Join conditions through ReactorTests → ReactorTestConditions → TestConditionTypes
+LEFT JOIN ReactorTests RTST ON RTST.load_id = RL.id
+LEFT JOIN ReactorTestConditions RTC ON RTST.test_condition_id = RTC.id
+LEFT JOIN TestConditionTypes TCT ON RTC.test_type_id = TCT.id
+
+-- Exclude Pressure Drop condition from main query as well
+LEFT JOIN ReactorTestConditionParameters RTCP ON RTC.id = RTCP.condition_id
+LEFT JOIN ReactorParameters RP ON RTCP.reactor_parameter_id = RP.id
+
+WHERE 
+    TCT.test_condition_type IS NULL OR TRIM(UPPER(TCT.test_condition_type)) <> 'PRESSURE DROP'
+
+GROUP BY 
+    RL.id
+
+ORDER BY 
+    LR.time_submitted DESC;

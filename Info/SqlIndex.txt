@@ -1,0 +1,52 @@
+🔹 ReactorLoads Table
+
+sql
+Copy
+Edit
+CREATE INDEX IF NOT EXISTS idx_reactorloads_lab_request_id ON ReactorLoads(lab_request_id);
+CREATE INDEX IF NOT EXISTS idx_reactorloads_test_type_id ON ReactorLoads(test_type_id);
+🔹 LabRequests Table
+
+sql
+Copy
+Edit
+CREATE INDEX IF NOT EXISTS idx_labrequests_job_number ON LabRequests(job_number);
+CREATE INDEX IF NOT EXISTS idx_labrequests_pcn ON LabRequests(pcn);
+CREATE INDEX IF NOT EXISTS idx_labrequests_time_submitted ON LabRequests(time_submitted);
+CREATE INDEX IF NOT EXISTS idx_labrequests_created_by_id ON LabRequests(created_by_id);
+CREATE INDEX IF NOT EXISTS idx_labrequests_request_type_id ON LabRequests(request_type_id);
+🔹 LabRequestSample
+
+sql
+Copy
+Edit
+CREATE INDEX IF NOT EXISTS idx_labrequestsample_request_sample ON LabRequestSample(lab_request_id, sample_id);
+🔹 Samples
+
+sql
+Copy
+Edit
+CREATE INDEX IF NOT EXISTS idx_samples_number ON Samples(number);
+CREATE INDEX IF NOT EXISTS idx_samples_sample_type_id ON Samples(sample_type_id);
+🔹 ReactorLoadSamples
+
+sql
+Copy
+Edit
+CREATE INDEX IF NOT EXISTS idx_reactorloadsamples_load_id ON ReactorLoadSamples(load_id);
+CREATE INDEX IF NOT EXISTS idx_reactorloadsamples_sample ON ReactorLoadSamples(lab_request_sample_id);
+🔹 ReactorTests & ReactorTestConditions
+
+sql
+Copy
+Edit
+CREATE INDEX IF NOT EXISTS idx_reactortests_load_id ON ReactorTests(load_id);
+CREATE INDEX IF NOT EXISTS idx_reactortests_condition_id ON ReactorTests(test_condition_id);
+CREATE INDEX IF NOT EXISTS idx_reactortestconditions_testtype ON ReactorTestConditions(test_type_id);
+🔹 ReactorParameters & ReactorTestConditionParameters
+
+sql
+Copy
+Edit
+CREATE INDEX IF NOT EXISTS idx_rt_conditionparams_condition_id ON ReactorTestConditionParameters(condition_id);
+CREATE INDEX IF NOT EXISTS idx_rtcondparams_reactor_param ON ReactorTestConditionParameters(reactor_parameter_id);

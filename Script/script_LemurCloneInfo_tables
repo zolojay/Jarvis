@@ -1,0 +1,39 @@
+import sqlite3
+import os
+
+DB_PATH = r"C:\Jarvis\Database\lemur_full_clone.db"
+OUTPUT_DIR = r"C:\Jarvis\Info"
+os.makedirs(OUTPUT_DIR, exist_ok=True)
+OUTPUT_FILE = os.path.join(OUTPUT_DIR, "database_structure.txt")
+
+# Connect to the SQLite database
+conn = sqlite3.connect(DB_PATH)
+cursor = conn.cursor()
+
+# Get table names from the database
+cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+tables = [table[0] for table in cursor.fetchall()]
+
+with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+    f.write("Database Connection Details:\n")
+    f.write(f"Database Path: {DB_PATH}\n")
+    f.write(f"SQLite Version: {sqlite3.sqlite_version}\n")
+    f.write("=" * 60 + "\n\n")
+
+    for table in tables:
+        f.write(f"Table: {table}\n")
+        f.write("-" * 60 + "\n")
+
+        # Get column names and types
+        cursor.execute(f"PRAGMA table_info({table})")
+        columns_info = cursor.fetchall()
+        for col_info in columns_info:
+            cid, col_name, col_type, notnull, default_value, pk = col_info
+            f.write(f"{col_name} ({col_type})\n")
+
+        f.write("\n")
+
+# Close connection
+conn.close()
+
+print(f"Database structure successfully exported to {OUTPUT_FILE}")

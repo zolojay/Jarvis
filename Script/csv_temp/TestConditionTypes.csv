@@ -1,0 +1,8 @@
+id,test_condition_type,obsolete
+1,SO2 Oxidation,False
+2,Hg Oxidation,False
+3,NOx Removal,False
+4,CO Oxidation,False
+5,VOC Oxidation,False
+6,CH2O Oxidation,False
+7,Pressure Drop,False

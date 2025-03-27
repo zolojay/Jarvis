@@ -1,0 +1,425 @@
+id,name,content_type_id,codename
+1,Can add permission,1,add_permission
+2,Can change permission,1,change_permission
+3,Can delete permission,1,delete_permission
+4,Can view permission,1,view_permission
+5,Can add group,2,add_group
+6,Can change group,2,change_group
+7,Can delete group,2,delete_group
+8,Can view group,2,view_group
+9,Can add user,3,add_user
+10,Can change user,3,change_user
+11,Can delete user,3,delete_user
+12,Can view user,3,view_user
+13,Can add content type,4,add_contenttype
+14,Can change content type,4,change_contenttype
+15,Can delete content type,4,delete_contenttype
+16,Can view content type,4,view_contenttype
+17,Can add log entry,5,add_logentry
+18,Can change log entry,5,change_logentry
+19,Can delete log entry,5,delete_logentry
+20,Can view log entry,5,view_logentry
+21,Can add laboratory,6,add_laboratory
+22,Can change laboratory,6,change_laboratory
+23,Can delete laboratory,6,delete_laboratory
+24,Can view laboratory,6,view_laboratory
+25,Can add lab request,7,add_labrequest
+26,Can change lab request,7,change_labrequest
+27,Can delete lab request,7,delete_labrequest
+28,Can view lab request,7,view_labrequest
+29,Can add lab request sample,8,add_labrequestsample
+30,Can change lab request sample,8,change_labrequestsample
+31,Can delete lab request sample,8,delete_labrequestsample
+32,Can view lab request sample,8,view_labrequestsample
+33,Can add reactor,9,add_reactor
+34,Can change reactor,9,change_reactor
+35,Can delete reactor,9,delete_reactor
+36,Can view reactor,9,view_reactor
+37,Can add reactor load,10,add_reactorload
+38,Can change reactor load,10,change_reactorload
+39,Can delete reactor load,10,delete_reactorload
+40,Can view reactor load,10,view_reactorload
+41,Can add reactor load samples,11,add_reactorloadsamples
+42,Can change reactor load samples,11,change_reactorloadsamples
+43,Can delete reactor load samples,11,delete_reactorloadsamples
+44,Can view reactor load samples,11,view_reactorloadsamples
+45,Can add reactor parameter,12,add_reactorparameter
+46,Can change reactor parameter,12,change_reactorparameter
+47,Can delete reactor parameter,12,delete_reactorparameter
+48,Can view reactor parameter,12,view_reactorparameter
+49,Can add reactor test,13,add_reactortest
+50,Can change reactor test,13,change_reactortest
+51,Can delete reactor test,13,delete_reactortest
+52,Can view reactor test,13,view_reactortest
+53,Can add reactor test condition,14,add_reactortestcondition
+54,Can change reactor test condition,14,change_reactortestcondition
+55,Can delete reactor test condition,14,delete_reactortestcondition
+56,Can view reactor test condition,14,view_reactortestcondition
+57,Can add reactor test condition parameter,15,add_reactortestconditionparameter
+58,Can change reactor test condition parameter,15,change_reactortestconditionparameter
+59,Can delete reactor test condition parameter,15,delete_reactortestconditionparameter
+60,Can view reactor test condition parameter,15,view_reactortestconditionparameter
+61,Can add reactor test parameter,16,add_reactortestparameter
+62,Can change reactor test parameter,16,change_reactortestparameter
+63,Can delete reactor test parameter,16,delete_reactortestparameter
+64,Can view reactor test parameter,16,view_reactortestparameter
+65,Can add test sample type,17,add_testsampletype
+66,Can change test sample type,17,change_testsampletype
+67,Can delete test sample type,17,delete_testsampletype
+68,Can view test sample type,17,view_testsampletype
+69,Can add test type,18,add_testtype
+70,Can change test type,18,change_testtype
+71,Can delete test type,18,delete_testtype
+72,Can view test type,18,view_testtype
+73,Can add sampling location,19,add_samplinglocation
+74,Can change sampling location,19,change_samplinglocation
+75,Can delete sampling location,19,delete_samplinglocation
+76,Can view sampling location,19,view_samplinglocation
+77,Can add lab request note,20,add_labrequestnote
+78,Can change lab request note,20,change_labrequestnote
+79,Can delete lab request note,20,delete_labrequestnote
+80,Can view lab request note,20,view_labrequestnote
+81,Can add lab request sample test type,21,add_labrequestsampletesttype
+82,Can change lab request sample test type,21,change_labrequestsampletesttype
+83,Can delete lab request sample test type,21,delete_labrequestsampletesttype
+84,Can view lab request sample test type,21,view_labrequestsampletesttype
+85,Can add reactor test measurment parameter,22,add_reactortestmeasurmentparameter
+86,Can change reactor test measurment parameter,22,change_reactortestmeasurmentparameter
+87,Can delete reactor test measurment parameter,22,delete_reactortestmeasurmentparameter
+88,Can view reactor test measurment parameter,22,view_reactortestmeasurmentparameter
+89,Can add test condition measurment parameter,23,add_testconditionmeasurmentparameter
+90,Can change test condition measurment parameter,23,change_testconditionmeasurmentparameter
+91,Can delete test condition measurment parameter,23,delete_testconditionmeasurmentparameter
+92,Can view test condition measurment parameter,23,view_testconditionmeasurmentparameter
+93,Can add chemistry results,24,add_chemistryresults
+94,Can change chemistry results,24,change_chemistryresults
+95,Can delete chemistry results,24,delete_chemistryresults
+96,Can view chemistry results,24,view_chemistryresults
+97,Can add location test,25,add_locationtest
+98,Can change location test,25,change_locationtest
+99,Can delete location test,25,delete_locationtest
+100,Can view location test,25,view_locationtest
+101,Can add test condition type,26,add_testconditiontype
+102,Can change test condition type,26,change_testconditiontype
+103,Can delete test condition type,26,delete_testconditiontype
+104,Can view test condition type,26,view_testconditiontype
+105,Can add field sample tracking,27,add_fieldsampletracking
+106,Can change field sample tracking,27,change_fieldsampletracking
+107,Can delete field sample tracking,27,delete_fieldsampletracking
+108,Can view field sample tracking,27,view_fieldsampletracking
+109,Can add sample,28,add_sample
+110,Can change sample,28,change_sample
+111,Can delete sample,28,delete_sample
+112,Can view sample,28,view_sample
+113,Can add sample location,29,add_samplelocation
+114,Can change sample location,29,change_samplelocation
+115,Can delete sample location,29,delete_samplelocation
+116,Can view sample location,29,view_samplelocation
+117,Can add sample number,30,add_samplenumber
+118,Can change sample number,30,change_samplenumber
+119,Can delete sample number,30,delete_samplenumber
+120,Can view sample number,30,view_samplenumber
+121,Can add sample type,31,add_sampletype
+122,Can change sample type,31,change_sampletype
+123,Can delete sample type,31,delete_sampletype
+124,Can view sample type,31,view_sampletype
+125,Can add sample type location,32,add_sampletypelocation
+126,Can change sample type location,32,change_sampletypelocation
+127,Can delete sample type location,32,delete_sampletypelocation
+128,Can view sample type location,32,view_sampletypelocation
+129,Can add sample crate,33,add_samplecrate
+130,Can change sample crate,33,change_samplecrate
+131,Can delete sample crate,33,delete_samplecrate
+132,Can view sample crate,33,view_samplecrate
+133,Can add sample inspection photo,34,add_sampleinspectionphoto
+134,Can change sample inspection photo,34,change_sampleinspectionphoto
+135,Can delete sample inspection photo,34,delete_sampleinspectionphoto
+136,Can view sample inspection photo,34,view_sampleinspectionphoto
+137,Can add sample inspection,35,add_sampleinspection
+138,Can change sample inspection,35,change_sampleinspection
+139,Can delete sample inspection,35,delete_sampleinspection
+140,Can view sample inspection,35,view_sampleinspection
+141,Can add sample geometry,36,add_samplegeometry
+142,Can change sample geometry,36,change_samplegeometry
+143,Can delete sample geometry,36,delete_samplegeometry
+144,Can view sample geometry,36,view_samplegeometry
+145,Can add sample crate photo,37,add_samplecratephoto
+146,Can change sample crate photo,37,change_samplecratephoto
+147,Can delete sample crate photo,37,delete_samplecratephoto
+148,Can view sample crate photo,37,view_samplecratephoto
+149,Can add addresses,38,add_addresses
+150,Can change addresses,38,change_addresses
+151,Can delete addresses,38,delete_addresses
+152,Can view addresses,38,view_addresses
+153,Can add address types,39,add_addresstypes
+154,Can change address types,39,change_addresstypes
+155,Can delete address types,39,delete_addresstypes
+156,Can view address types,39,view_addresstypes
+157,Can add cleaning device types,40,add_cleaningdevicetypes
+158,Can change cleaning device types,40,change_cleaningdevicetypes
+159,Can delete cleaning device types,40,delete_cleaningdevicetypes
+160,Can view cleaning device types,40,view_cleaningdevicetypes
+161,Can add countries,41,add_countries
+162,Can change countries,41,change_countries
+163,Can delete countries,41,delete_countries
+164,Can view countries,41,view_countries
+165,Can add equipment types,42,add_equipmenttypes
+166,Can change equipment types,42,change_equipmenttypes
+167,Can delete equipment types,42,delete_equipmenttypes
+168,Can view equipment types,42,view_equipmenttypes
+169,Can add facilities,43,add_facilities
+170,Can change facilities,43,change_facilities
+171,Can delete facilities,43,delete_facilities
+172,Can view facilities,43,view_facilities
+173,Can add facility notes,44,add_facilitynotes
+174,Can change facility notes,44,change_facilitynotes
+175,Can delete facility notes,44,delete_facilitynotes
+176,Can view facility notes,44,view_facilitynotes
+177,Can add facility types,45,add_facilitytypes
+178,Can change facility types,45,change_facilitytypes
+179,Can delete facility types,45,delete_facilitytypes
+180,Can view facility types,45,view_facilitytypes
+181,Can add fuel types,46,add_fueltypes
+182,Can change fuel types,46,change_fueltypes
+183,Can delete fuel types,46,delete_fueltypes
+184,Can view fuel types,46,view_fueltypes
+185,Can add global regions,47,add_globalregions
+186,Can change global regions,47,change_globalregions
+187,Can delete global regions,47,delete_globalregions
+188,Can view global regions,47,view_globalregions
+189,Can add obsolete facility names,48,add_obsoletefacilitynames
+190,Can change obsolete facility names,48,change_obsoletefacilitynames
+191,Can delete obsolete facility names,48,delete_obsoletefacilitynames
+192,Can view obsolete facility names,48,view_obsoletefacilitynames
+193,Can add obsolete unit names,49,add_obsoleteunitnames
+194,Can change obsolete unit names,49,change_obsoleteunitnames
+195,Can delete obsolete unit names,49,delete_obsoleteunitnames
+196,Can view obsolete unit names,49,view_obsoleteunitnames
+197,Can add people,50,add_people
+198,Can change people,50,change_people
+199,Can delete people,50,delete_people
+200,Can view people,50,view_people
+201,Can add people facilities,51,add_peoplefacilities
+202,Can change people facilities,51,change_peoplefacilities
+203,Can delete people facilities,51,delete_peoplefacilities
+204,Can view people facilities,51,view_peoplefacilities
+205,Can add person roles,52,add_personroles
+206,Can change person roles,52,change_personroles
+207,Can delete person roles,52,delete_personroles
+208,Can view person roles,52,view_personroles
+209,Can add scr layers,53,add_scrlayers
+210,Can change scr layers,53,change_scrlayers
+211,Can delete scr layers,53,delete_scrlayers
+212,Can view scr layers,53,view_scrlayers
+213,Can add sc rs,54,add_scrs
+214,Can change sc rs,54,change_scrs
+215,Can delete sc rs,54,delete_scrs
+216,Can view sc rs,54,view_scrs
+217,Can add states,55,add_states
+218,Can change states,55,change_states
+219,Can delete states,55,delete_states
+220,Can view states,55,view_states
+221,Can add unit class,56,add_unitclass
+222,Can change unit class,56,change_unitclass
+223,Can delete unit class,56,delete_unitclass
+224,Can view unit class,56,view_unitclass
+225,Can add unit equipment,57,add_unitequipment
+226,Can change unit equipment,57,change_unitequipment
+227,Can delete unit equipment,57,delete_unitequipment
+228,Can view unit equipment,57,view_unitequipment
+229,Can add unit fuel types,58,add_unitfueltypes
+230,Can change unit fuel types,58,change_unitfueltypes
+231,Can delete unit fuel types,58,delete_unitfueltypes
+232,Can view unit fuel types,58,view_unitfueltypes
+233,Can add unit notes,59,add_unitnotes
+234,Can change unit notes,59,change_unitnotes
+235,Can delete unit notes,59,delete_unitnotes
+236,Can view unit notes,59,view_unitnotes
+237,Can add unit operators,60,add_unitoperators
+238,Can change unit operators,60,change_unitoperators
+239,Can delete unit operators,60,delete_unitoperators
+240,Can view unit operators,60,view_unitoperators
+241,Can add units,61,add_units
+242,Can change units,61,change_units
+243,Can delete units,61,delete_units
+244,Can view units,61,view_units
+245,Can add unit status,62,add_unitstatus
+246,Can change unit status,62,change_unitstatus
+247,Can delete unit status,62,delete_unitstatus
+248,Can view unit status,62,view_unitstatus
+249,Can add unit types,63,add_unittypes
+250,Can change unit types,63,change_unittypes
+251,Can delete unit types,63,delete_unittypes
+252,Can view unit types,63,view_unittypes
+253,Can add billing mile stone group members,64,add_billingmilestonegroupmembers
+254,Can change billing mile stone group members,64,change_billingmilestonegroupmembers
+255,Can delete billing mile stone group members,64,delete_billingmilestonegroupmembers
+256,Can view billing mile stone group members,64,view_billingmilestonegroupmembers
+257,Can add billing mile stone groups,65,add_billingmilestonegroups
+258,Can change billing mile stone groups,65,change_billingmilestonegroups
+259,Can delete billing mile stone groups,65,delete_billingmilestonegroups
+260,Can view billing mile stone groups,65,view_billingmilestonegroups
+261,Can add billing mile stone types,66,add_billingmilestonetypes
+262,Can change billing mile stone types,66,change_billingmilestonetypes
+263,Can delete billing mile stone types,66,delete_billingmilestonetypes
+264,Can view billing mile stone types,66,view_billingmilestonetypes
+265,Can add catalyst formulation components,67,add_catalystformulationcomponents
+266,Can change catalyst formulation components,67,change_catalystformulationcomponents
+267,Can delete catalyst formulation components,67,delete_catalystformulationcomponents
+268,Can view catalyst formulation components,67,view_catalystformulationcomponents
+269,Can add catalyst geometry types,68,add_catalystgeometrytypes
+270,Can change catalyst geometry types,68,change_catalystgeometrytypes
+271,Can delete catalyst geometry types,68,delete_catalystgeometrytypes
+272,Can view catalyst geometry types,68,view_catalystgeometrytypes
+273,Can add catalyst standard formulations,69,add_catalyststandardformulations
+274,Can change catalyst standard formulations,69,change_catalyststandardformulations
+275,Can delete catalyst standard formulations,69,delete_catalyststandardformulations
+276,Can view catalyst standard formulations,69,view_catalyststandardformulations
+277,Can add catalyst types,70,add_catalysttypes
+278,Can change catalyst types,70,change_catalysttypes
+279,Can delete catalyst types,70,delete_catalysttypes
+280,Can view catalyst types,70,view_catalysttypes
+281,Can add companies,71,add_companies
+282,Can change companies,71,change_companies
+283,Can delete companies,71,delete_companies
+284,Can view companies,71,view_companies
+285,Can add controlling cases,72,add_controllingcases
+286,Can change controlling cases,72,change_controllingcases
+287,Can delete controlling cases,72,delete_controllingcases
+288,Can view controlling cases,72,view_controllingcases
+289,Can add edge hardening types,73,add_edgehardeningtypes
+290,Can change edge hardening types,73,change_edgehardeningtypes
+291,Can delete edge hardening types,73,delete_edgehardeningtypes
+292,Can view edge hardening types,73,view_edgehardeningtypes
+293,Can add flow directions,74,add_flowdirections
+294,Can change flow directions,74,change_flowdirections
+295,Can delete flow directions,74,delete_flowdirections
+296,Can view flow directions,74,view_flowdirections
+297,Can add guarantee parameters,75,add_guaranteeparameters
+298,Can change guarantee parameters,75,change_guaranteeparameters
+299,Can delete guarantee parameters,75,delete_guaranteeparameters
+300,Can view guarantee parameters,75,view_guaranteeparameters
+301,Can add guarantee types,76,add_guaranteetypes
+302,Can change guarantee types,76,change_guaranteetypes
+303,Can delete guarantee types,76,delete_guaranteetypes
+304,Can view guarantee types,76,view_guaranteetypes
+305,Can add hg operating conditions,77,add_hgoperatingconditions
+306,Can change hg operating conditions,77,change_hgoperatingconditions
+307,Can delete hg operating conditions,77,delete_hgoperatingconditions
+308,Can view hg operating conditions,77,view_hgoperatingconditions
+309,Can add module materials,78,add_modulematerials
+310,Can change module materials,78,change_modulematerials
+311,Can delete module materials,78,delete_modulematerials
+312,Can view module materials,78,view_modulematerials
+313,Can add module styles,79,add_modulestyles
+314,Can change module styles,79,change_modulestyles
+315,Can delete module styles,79,delete_modulestyles
+316,Can view module styles,79,view_modulestyles
+317,Can add module types,80,add_moduletypes
+318,Can change module types,80,change_moduletypes
+319,Can delete module types,80,delete_moduletypes
+320,Can view module types,80,view_moduletypes
+321,Can add operating conditions,81,add_operatingconditions
+322,Can change operating conditions,81,change_operatingconditions
+323,Can delete operating conditions,81,delete_operatingconditions
+324,Can view operating conditions,81,view_operatingconditions
+325,Can add operating condition types,82,add_operatingconditiontypes
+326,Can change operating condition types,82,change_operatingconditiontypes
+327,Can delete operating condition types,82,delete_operatingconditiontypes
+328,Can view operating condition types,82,view_operatingconditiontypes
+329,Can add payment terms,83,add_paymentterms
+330,Can change payment terms,83,change_paymentterms
+331,Can delete payment terms,83,delete_paymentterms
+332,Can view payment terms,83,view_paymentterms
+333,Can add plant locations,84,add_plantlocations
+334,Can change plant locations,84,change_plantlocations
+335,Can delete plant locations,84,delete_plantlocations
+336,Can view plant locations,84,view_plantlocations
+337,Can add scope items,85,add_scopeitems
+338,Can change scope items,85,change_scopeitems
+339,Can delete scope items,85,delete_scopeitems
+340,Can view scope items,85,view_scopeitems
+341,Can add scope types,86,add_scopetypes
+342,Can change scope types,86,change_scopetypes
+343,Can delete scope types,86,delete_scopetypes
+344,Can view scope types,86,view_scopetypes
+345,Can add shipping terms,87,add_shippingterms
+346,Can change shipping terms,87,change_shippingterms
+347,Can delete shipping terms,87,delete_shippingterms
+348,Can view shipping terms,87,view_shippingterms
+349,Can add signoff,88,add_signoff
+350,Can change signoff,88,change_signoff
+351,Can delete signoff,88,delete_signoff
+352,Can view signoff,88,view_signoff
+353,Can add signoff template,89,add_signofftemplate
+354,Can change signoff template,89,change_signofftemplate
+355,Can delete signoff template,89,delete_signofftemplate
+356,Can view signoff template,89,view_signofftemplate
+357,Can add standard formulation components,90,add_standardformulationcomponents
+358,Can change standard formulation components,90,change_standardformulationcomponents
+359,Can delete standard formulation components,90,delete_standardformulationcomponents
+360,Can view standard formulation components,90,view_standardformulationcomponents
+361,Can add user profile,91,add_userprofile
+362,Can change user profile,91,change_userprofile
+363,Can delete user profile,91,delete_userprofile
+364,Can view user profile,91,view_userprofile
+365,Can add corrugated catalysts,92,add_corrugatedcatalysts
+366,Can change corrugated catalysts,92,change_corrugatedcatalysts
+367,Can delete corrugated catalysts,92,delete_corrugatedcatalysts
+368,Can view corrugated catalysts,92,view_corrugatedcatalysts
+369,Can add honeycomb catalysts,93,add_honeycombcatalysts
+370,Can change honeycomb catalysts,93,change_honeycombcatalysts
+371,Can delete honeycomb catalysts,93,delete_honeycombcatalysts
+372,Can view honeycomb catalysts,93,view_honeycombcatalysts
+373,Can add plate catalysts,94,add_platecatalysts
+374,Can change plate catalysts,94,change_platecatalysts
+375,Can delete plate catalysts,94,delete_platecatalysts
+376,Can view plate catalysts,94,view_platecatalysts
+377,Can add round honeycomb catalysts,95,add_roundhoneycombcatalysts
+378,Can change round honeycomb catalysts,95,change_roundhoneycombcatalysts
+379,Can delete round honeycomb catalysts,95,delete_roundhoneycombcatalysts
+380,Can view round honeycomb catalysts,95,view_roundhoneycombcatalysts
+381,Can add catalyst based parts,96,add_catalystbasedparts
+382,Can change catalyst based parts,96,change_catalystbasedparts
+383,Can delete catalyst based parts,96,delete_catalystbasedparts
+384,Can view catalyst based parts,96,view_catalystbasedparts
+385,Can add module sealing location,97,add_modulesealinglocation
+386,Can change module sealing location,97,change_modulesealinglocation
+387,Can delete module sealing location,97,delete_modulesealinglocation
+388,Can view module sealing location,97,view_modulesealinglocation
+389,Can add module details,98,add_moduledetails
+390,Can change module details,98,change_moduledetails
+391,Can delete module details,98,delete_moduledetails
+392,Can view module details,98,view_moduledetails
+393,Can add module jacking type,99,add_modulejackingtype
+394,Can change module jacking type,99,change_modulejackingtype
+395,Can delete module jacking type,99,delete_modulejackingtype
+396,Can view module jacking type,99,view_modulejackingtype
+397,Can add session,100,add_session
+398,Can change session,100,change_session
+399,Can delete session,100,delete_session
+400,Can view session,100,view_session
+401,Can add site,101,add_site
+402,Can change site,101,change_site
+403,Can delete site,101,delete_site
+404,Can view site,101,view_site
+405,Can add test workbook,102,add_testworkbook
+406,Can change test workbook,102,change_testworkbook
+407,Can delete test workbook,102,delete_testworkbook
+408,Can view test workbook,102,view_testworkbook
+409,Can add reactor test run,103,add_reactortestrun
+410,Can change reactor test run,103,change_reactortestrun
+411,Can delete reactor test run,103,delete_reactortestrun
+412,Can view reactor test run,103,view_reactortestrun
+413,Can add test worksheet,104,add_testworksheet
+414,Can change test worksheet,104,change_testworksheet
+415,Can delete test worksheet,104,delete_testworksheet
+416,Can view test worksheet,104,view_testworksheet
+417,Can add reactor location,105,add_reactorlocation
+418,Can change reactor location,105,change_reactorlocation
+419,Can delete reactor location,105,delete_reactorlocation
+420,Can view reactor location,105,view_reactorlocation
+421,Can add request type,106,add_requesttype
+422,Can change request type,106,change_requesttype
+423,Can delete request type,106,delete_requesttype
+424,Can view request type,106,view_requesttype

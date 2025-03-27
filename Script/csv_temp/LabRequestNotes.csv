@@ -1,0 +1,933 @@
+id,created_time,note,created_by_id,lab_request_id
+1,2023-08-14 15:38:34.333125,The AV is at the report AV of 24.75 which is lower than the historical test AV,8,19
+2,2023-08-28 12:46:11.125314,CM21ST 267mm,8,20
+3,2023-09-11 10:49:12.236496,"AP=1053, Length=250",8,21
+4,2023-09-21 16:38:21.083629,This is for unit 7290,11,24
+5,2023-10-03 14:33:20.197524,Pacific Gas and Electric Company,12,16
+6,2023-10-03 14:33:34.681771,Colusa Unit 2,12,16
+7,2023-10-03 14:36:13.378427,CM21+,12,16
+8,2023-10-03 14:36:26.722163,129mm,12,16
+9,2023-10-04 08:58:36.167422,Customer: Jamaica Bay; Type: CM21+LHT; Length: 591,11,25
+10,2023-10-05 14:08:36.437819,CM21+ Calpine Los Esteros L=256 AP-1668,8,27
+11,2023-10-05 16:19:40.375886,S12-17Sta 81mm AP-2800,8,28
+12,2023-10-09 13:05:50.952285,1 Layer,12,16
+13,2023-10-16 11:35:18.949998,CO oxidation is required for this test!,8,30
+14,2023-10-16 11:41:02.458182,S37-15STa 525mm,8,30
+15,2023-10-16 13:17:18.328551,Product Spec CM21 310mm,8,31
+16,2023-10-17 08:04:36.314838,Xcel Cherokee U5,12,32
+17,2023-10-17 08:04:52.004862,CM21+,12,32
+18,2023-10-17 08:05:13.662101,109mm,12,32
+19,2023-10-17 08:05:30.849712,1 Layer,12,32
+20,2023-10-20 16:07:48.173026,CM21 L-165mm AP 1629,8,33
+21,2023-10-20 17:49:15.237728,"2-Layer, Test NOx manually between layers, can be bench or pilot, L-416mm x 2, S33-15STb AP1016 Flow is vertical up, so Bottom is 1st layer, top is 2nd layer",8,34
+22,2023-10-20 18:33:49.785932,L-769mm S33-15STb AP-1016 Can be bench or pilot,8,35
+23,2023-10-20 18:35:20.030621,First Layer sample should be 4884-0101-0431 not what is shown!!!,8,34
+24,2023-10-25 12:29:26.105122,Customer: UAMPS Product: CM21+ Length: 111,11,36
+25,2023-10-30 11:29:09.126852,Southern Company Plant Franklin 2A,12,37
+26,2023-10-30 11:31:05.833643,CM21ST 151mm,12,37
+27,2023-10-30 11:32:03.078465,1 Layer,12,37
+28,2023-10-30 13:10:48.326743,SCR: CM21+ 175-mm AP-1668 CO: Ramp temp from 162-430,8,38
+29,2023-11-01 16:54:47.779106,Unit 4 - Customer: EIF Channelview Type: CM21+ Length: 275,11,40
+30,2023-11-06 09:11:01.871252,Located in WPS folder in L drive. Under East Syracuse,12,41
+31,2023-11-06 09:12:29.006900,CM33T 540mm,12,41
+32,2023-11-06 09:12:37.116337,1 Layer,12,41
+33,2023-11-07 10:38:11.704670,Non Cormetech Catalyst,12,39
+34,2023-11-07 10:38:26.407754,Baytown Olefins Plant Train 3,12,39
+35,2023-11-07 10:38:50.407707,Ran as CM37 in 2022,12,39
+36,2023-11-07 10:39:03.517085,2 Layers 408mm each,12,39
+37,2023-11-07 14:49:35.164853,CM21+ 154mm AP-1668,8,42
+38,2023-11-10 10:13:11.569041,Independence (Sithe) Unit 1 2203,12,45
+39,2023-11-10 09:51:25.156742,1 Layer CM21+ 192mm,12,45
+40,2023-11-10 10:14:03.132777,Independence (Sithe) Unit 1 2203,12,46
+41,2023-11-10 09:53:52.964258,1 Layer CM21+ 192mm,12,46
+42,2023-11-10 10:14:45.855029,Independence (Sithe) Unit 2 2431,12,47
+43,2023-11-10 09:55:56.000988,1 Layer CM21+ 192mm,12,47
+44,2023-11-10 10:15:34.824919,Independence (Sithe) Unit 3 2370,12,48
+45,2023-11-10 10:05:10.332133,1 Layer CM21+ 192mm,12,48
+46,2023-11-10 11:00:09.040971,Independence (Sithe) Unit 3 2370,12,49
+47,2023-11-10 10:06:48.290730,1 Layer CM21+ 192mm,12,49
+48,2023-11-10 11:00:52.978890,Independence (Sithe) Unit 4 2286,12,50
+49,2023-11-10 10:08:13.471284,1 Layer CM21+ 192mm,12,50
+50,2023-11-10 10:09:41.941574,1 Layer CM21+ 192mm,12,51
+51,2023-11-10 11:01:22.214471,Independence (Sithe) Unit 4 2286,12,51
+52,2023-11-10 17:19:54.745278,"S14-15MPb AP-2445 L-202mm Need both CO ox and deNOx test for both conditions. For 2nd (low load) condition, the target deNOx is 92.1%",8,52
+53,2023-11-13 12:59:24.014028,"S14-15MPb AP-2445 L-202mm Need both CO ox and deNOx test for both conditions. For 2nd (low load) condition, the target deNOx is 92.1%",8,53
+54,2023-11-14 11:04:25.461502,Customer: Ethos Energy Product: CM33 Length: 514,11,54
+55,2023-11-15 14:36:00.839797,Product Spec S14-15STb Target Length	87 Target AP 2445,8,55
+56,2023-11-15 16:25:53.177462,S33-15STa 660mm AP-1075,8,56
+57,2023-11-15 16:53:01.597651,CM21+MHT L-348 AP-1674,8,57
+58,2023-11-16 14:35:42.735385,1 Layer CM21TG-ACT 120mm,12,59
+59,2023-11-16 14:36:32.382643,Garrison Unit 1 2647,12,59
+60,2023-11-17 09:30:22.148337,Customer: Public Service Company of New Mexico Product: CM21+ Length: 124,11,58
+61,2023-11-21 15:49:43.362483,Customer: Vistra Product: CM21 Length: 360,11,60
+62,2023-11-21 16:20:08.123922,Customer: Interpipeline Product: S14-15STb Length: 69,11,61
+63,2023-11-21 17:14:59.426878,NOTE: We did inject 12% NO2 for the Ko and previous test.,11,62
+64,2023-11-21 17:17:49.551536,Customer: J Power (CMI Jackson in lab folders) Product: S14-15NDb Length: 138,11,62
+65,2023-11-29 10:13:24.955704,CM21+LHT 222mm   please add 100 ppm CO injection to understand if any oxidation occurs.,8,63
+66,2023-11-29 15:49:57.439599,Customer: Dominion Product: CM21+ Length: 248,11,65
+67,2023-11-29 17:17:24.769322,S59-15STa 957mm,8,64
+68,2023-11-30 11:40:08.134715,S27-15STa 431mm AP-1335,8,66
+69,2023-11-30 16:03:05.248414,Customer: Lakeland Electric Product: S21-15STa Length: 167,11,67
+70,2023-12-01 16:11:39.419421,Customer: Valero Product: S21-15STc Length: 296,11,68
+71,2023-12-04 09:34:50.023129,4 separate tests at the same condition,12,69
+72,2023-12-04 09:34:59.680761,1 layer tests,12,69
+73,2023-12-04 09:37:31.977477,S21-15STc 388mm,12,69
+74,2023-12-04 09:38:46.551584,Sentinel Replacement 2021 (4558),12,69
+75,2023-12-04 10:00:11.192098,Sabine River Works (2898),12,70
+76,2023-12-04 10:00:22.912742,Ethylene Cracking Furnace BA 109,12,70
+77,2023-12-04 10:00:55.168328,CM33ST 1043mm 1 Layer,12,70
+78,2023-12-04 10:01:07.795424,28% WATER!!!,12,70
+79,2023-12-04 10:43:30.884828,CM21+ 151mm 1 Layer,12,71
+80,2023-12-04 10:43:57.826119,Vistra Energy - Kendall,12,71
+81,2023-12-04 10:44:09.560663,Unit 3,12,71
+82,2023-12-07 16:35:25.070696,Sentinel Replacement 2021 (4558),12,72
+83,2023-12-07 16:35:42.383999,S21-12STc 388mm,12,72
+84,2023-12-07 16:35:50.041961,1 Layer,12,72
+85,2023-12-07 16:36:42.314152,Sentinel Unit 1,12,72
+86,2023-12-11 14:20:58.507074,S12-17MPa Target Length 50mm Target AP 2800,8,73
+87,2023-12-11 14:25:12.317458,S12-17MPa Target Length 50mm Target AP 2800,8,74
+88,2023-12-11 19:39:49.995579,CM21 AP-1629 L-295mm K~54,8,75
+90,2023-12-11 20:49:17.367361,L1: CM21 L245mm AP1629 L2: CM27 L151 AP1258,8,81
+91,2023-12-19 16:06:58.625733,Please request BET-SA for M as well. LEMUR would not add this test.,8,83
+92,2024-01-02 11:11:48.257307,AP=930 L-490mm,8,84
+93,2024-01-02 11:20:56.499356,AP=930 L-490mm,8,87
+94,2024-01-02 15:43:01.378080,Please measure CO oxidation of catalyst. Customer: Diamond Generating Corporation Product: CM27MHT Length: 660,11,88
+95,2024-01-03 13:20:31.632439,Tiverton Power (Cogentrix),12,89
+96,2024-01-03 13:20:43.055392,Unit G001,12,89
+97,2024-01-03 13:21:07.918279,CM27 370mm 1 Layer,12,89
+98,2024-01-03 13:46:47.189250,Valero Corpus Christi,12,90
+99,2024-01-03 13:48:34.919497,CM21ST 294mm 1 Layer,12,90
+100,2024-01-03 13:57:46.463478,Owner: PRO-TEC Product Spec S27-15STa Length 840 AP 1335,8,91
+101,2024-01-03 14:59:03.951969,Owner: Calpine L-244 AP-1629 CM21,8,92
+102,2024-01-04 11:50:35.421811,"owner:Tenaris Global City (USA) Corp, CM59Tg 676mm, 580 AP, please double the AV to 28.4 Nm/hr as the original test was two-layer",17,94
+103,2024-01-04 18:45:02.092236,1006-1511-0695 is Unit 3A,12,93
+104,2024-01-04 18:45:34.359549,1006-1511-0702 is Unit 3B,12,93
+105,2024-01-04 18:46:04.863105,Gila River Unit 3A and 3B (Salt River Project),12,93
+106,2024-01-04 18:46:27.770796,CM27 270mm 1 Layer (2 Tests),12,93
+107,2024-01-08 11:44:35.554965,Customer: Vistra Product: CM21 Length: 360,11,95
+108,2024-01-08 11:45:27.669008,Unit 1 (0493) Unit 2 (0422),11,95
+109,2024-01-08 12:32:04.058955,S21-15STc,12,96
+110,2024-01-08 12:32:26.201698,217mm,12,96
+111,2024-01-08 12:33:07.437973,AP 1709,12,96
+112,2024-01-08 12:35:02.058430,"Florida Municipal Power Agency, Treasure Coast, Unit 1",12,96
+113,2024-01-08 12:35:16.357253,1 Layer,12,96
+114,2024-01-08 14:08:04.239608,Gulf SRC Sriracha Power Block 2 Product S14-15NDa L=66mm AP-2445,8,98
+115,2024-01-10 13:25:52.001326,Customer: OG&E Product: S21-15MPa Length: 113 AP: 1709 Unit 1,11,99
+116,2024-01-10 13:28:13.727687,***CO TEST AS RAMP - 240-380C***,11,99
+117,2024-01-10 14:05:10.487229,Customer: OG&E Product: S21-15MPa Length: 165 AP: 1709 Unit 2,11,100
+118,2024-01-10 14:05:18.472316,***CO TEST AS RAMP - 240-380C***,11,100
+119,2024-01-10 17:16:16.090082,Customer: Dominion Product: CM21 Length: 169 AP: 1629,11,101
+120,2024-01-10 17:16:44.482896,U1 -0108 U2 -0981,11,101
+121,2024-01-11 16:32:35.404146,Customer: Vistra Product: CM21 AP: 1629 Length: 360,11,102
+122,2024-01-11 16:33:25.037835,Unit 1 (0493 and 0487) Unit 2 (0422 and 0449),11,102
+123,2024-01-11 16:34:40.580102,K: 40-60,11,102
+124,2024-01-18 12:10:28.488912,Los Angeles World Airports Central Utility Plant S21-15STc 256mm Ko-67.7 but suspect Cr- deactivation,8,103
+125,2024-01-18 12:23:38.891465,Los Angeles World Airports Central Utility Plant S21-15STc 256mm Ko-67.7 but suspect Cr- deactivation,8,104
+126,2024-01-23 17:18:56.173614,Calpine Pastoria 4 CM21 Last K:63.5 L-170 AP1629,8,105
+127,2024-01-24 15:18:38.395011,"Turlock Irrigation District, Almond Power, Ko-43.9, AP-1674 CM21+MHT",8,106
+128,2024-01-26 15:48:36.945874,CM21ST,12,107
+129,2024-01-26 15:48:50.869252,264mm,12,107
+130,2024-01-26 15:49:04.229041,AP 1709,12,107
+131,2024-01-26 15:49:45.940521,City of Burbank Magnolia Replacement 2015,12,107
+132,2024-01-29 17:05:16.526002,Enterprise (Mont Belvieu PDH Aux Boiler A),11,109
+133,2024-01-29 17:02:21.840225,CM21TG-ACT,11,109
+134,2024-01-29 17:02:33.748310,284 mm,11,109
+135,2024-01-29 17:02:42.718067,AP 1709,11,109
+136,2024-01-29 17:04:50.617655,Guideline 71.1,11,109
+137,2024-02-06 15:13:27.957672,Customer: Jamaica Bay (or NextEra Energy or MPH Rockaway or Florida Power & Light depending where you're looking),11,110
+138,2024-02-06 15:15:33.437650,CM21+ AP 1668 length 593,11,110
+139,2024-02-16 13:28:37.653968,Luna Unit 1,11,111
+140,2024-02-16 14:22:44.785499,CM27 AP 1258 Length 170 prev K 59,11,111
+141,2024-02-16 14:25:37.914847,K 69,11,99
+142,2024-02-16 14:26:24.625320,K 71,11,100
+143,2024-02-21 15:06:13.089861,Calpine U2 CM21 1629 165 K 68,11,112
+144,2024-02-21 16:42:57.799759,Duke SGT6 S14-15ETb 2445 124mm K 68,11,113
+145,2024-03-01 09:36:57.674198,FMPA S14-15STb 2445 length 40 Ko 83,11,114
+146,2024-03-05 14:44:06.725722,Ko file here: \\CTTR-SHR-02\Laboratory\COP\COP GCF Package Boilers (2491),8,116
+147,2024-03-05 14:48:56.147728,K is really a guess: ~60   CM21 L-320mm AP-1668,8,116
+148,2024-03-05 14:52:45.585522,Owner: Phillips 66 Company Facility: Gulf Coast Fractionators,8,116
+149,2024-03-05 15:20:13.869758,S21-15STa L-320 AP-1709 K est-70,8,117
+150,2024-03-05 15:14:14.524254,Owner: Phillips 66 Company Facility: Gulf Coast Fractionators,8,117
+151,2024-03-05 15:15:12.610364,This is for Unit BO101A,8,117
+152,2024-03-05 15:19:59.853993,S21-15STa L-320 AP-1709 K est-70,8,118
+153,2024-03-05 15:19:28.306714,Owner: Phillips 66 Company Facility: Gulf Coast Fractionators,8,118
+154,2024-03-05 15:20:36.479773,This is for Unit BO101B,8,118
+155,2024-03-06 01:20:30.827444,CM33TB,12,115
+156,2024-03-06 01:21:13.765493,437mm,12,115
+157,2024-03-06 01:21:07.717954,1070,12,115
+158,2024-03-06 01:21:30.265579,Hamakua Energy,12,115
+159,2024-03-06 01:21:42.235443,1 layer,12,115
+160,2024-03-06 01:22:08.222853,Unit 1,12,115
+161,2024-03-06 01:26:39.609634,Expected k 54-58,12,115
+162,2024-03-06 01:29:54.077263,Adela- please run bulk qual on the contamination sample supplied by Steve T,12,115
+163,2024-03-15 15:12:06.569687,See prior testing for Caledonia from M Conger email dated 3/15. Units 2 and 3 should have similar performance to Unit 1 tested in May 2023 since all 3 units have a similar age.,8,120
+164,2024-03-15 15:13:48.148904,See prior testing for Caledonia from M Conger email dated 3/15. Units 2 and 3 should have similar performance to Unit 1 tested in May 2023 since all 3 units have a similar age.,8,121
+165,2024-03-15 16:15:47.491544,K~60 CM21 AP-1629 Calpine Otay Mesa L-220,8,122
+166,2024-03-18 11:08:49.491115,Diamond Generating Company CM27MHT 1312 length 655 prev K 50,11,119
+167,2024-03-27 13:13:23.029573,"CM21 (some prior lab test based on CM21+, but CM21 is correct) AP-1629",8,123
+168,2024-03-27 13:14:31.208613,Length 225  K range for prior samples: 67-69,8,123
+169,2024-03-27 13:15:02.429851,Owner: Calpine Plant: Morgan 3,8,123
+170,2024-03-27 16:36:09.260036,CM21+ AP-1668 L:165 K expected 63-67,8,125
+171,2024-03-27 16:36:54.453605,Owner: Calpine Unit: Jack Fusco formally Brazos Valley Poiwer,8,125
+172,2024-03-27 18:03:19.358928,CM27TMHT AP-1312 L-535 L  K expected - 41-43,8,126
+173,2024-03-27 18:05:47.509521,Owner: Lower Colorado River Authority  Facility: Winchester Power Park,8,126
+174,2024-04-01 14:08:23.388500,2 layer corrugated with each layer @ 170-176mm. Prior testing is here: \\CTTR-SHR-02\Laboratory\Panda as Temple (NOT Stonewall!),8,128
+175,2024-04-01 14:07:47.871182,AP - 1466; K expected 44-54,8,128
+176,2024-04-01 14:11:27.187543,Owner: Temple Generation   Facility: Panda Temple Tower,8,128
+177,2024-04-04 11:41:47.067540,S12-17ET,12,129
+178,2024-04-04 11:42:08.974066,101mm,12,129
+179,2024-04-04 11:42:37.024442,2800,12,129
+180,2024-04-04 11:43:16.323563,City of Medicine Hat/ City of Medicine Hat Power Plant,12,129
+181,2024-04-04 11:43:29.185594,1 Layer,12,129
+182,2024-04-04 11:43:42.281432,Unit 17,12,129
+183,2024-04-04 11:44:49.804639,60-63,12,129
+184,2024-04-04 11:47:39.522075,AP=930 L-490mm Owner: Calpine Facility: Bethlehem K range expected: 60-66,8,127
+185,2024-04-04 15:11:09.287753,Please run XFR on FF and RR first and we will review chemistry to ensure direction of flow. Please let me know if it is obvious from appearance the direction of flow.  NOTE: CO added at 100 ppm to test for oxidation.,8,130
+186,2024-04-04 15:11:16.148575,Duke SGT6 S14-15ETb 2445 124mm K 68,8,130
+187,2024-04-04 15:11:26.712279,EXPEDITED,8,130
+188,2024-04-08 11:17:35.306613,CM14MFC AP-2350 (prior testing uses this AP) L-60,8,131
+189,2024-04-08 11:18:09.045579,Owner - Vistra Plant- Ennis,8,131
+190,2024-04-08 14:26:40.778440,"Last year's K at 349C was a bit high historically @ 81, expect 75-81 @ 349C testing condition",8,131
+191,2024-04-08 11:21:18.876733,"Last years CO ox at 315 was 94.7 removal, expect 91-94; last years VOC ox was 63.1",8,131
+192,2024-04-08 11:22:36.354365,"Measure CO removal at 349C and set deNOx at 315C condition, add K measurement and VOC removal",8,131
+193,2024-04-08 13:25:39.653551,Siemens/EIF Unit 3 CM21+ 275 AP 1668 prev K 57.6,11,132
+194,2024-04-11 14:07:42.902348,Please run XFR on FF and RR first and we will review chemistry to ensure direction of flow. Please let me know if it is obvious from appearance the direction of flow. NOTE: CO added at 100 ppm to test for oxidation.,8,133
+195,2024-04-11 14:07:52.918623,Duke SGT6 S14-15ETb 2445 124mm K 68,8,133
+196,2024-04-11 14:08:04.903903,EXPEDITED,8,133
+197,2024-04-15 14:18:39.221919,CM21ST,12,134
+198,2024-04-15 14:18:52.898446,151mm,12,134
+199,2024-04-15 14:19:05.727200,1709,12,134
+200,2024-04-15 14:19:22.885053,"Southern Company, Plant Harris",12,134
+201,2024-04-15 14:19:31.216515,1 Layer,12,134
+202,2024-04-15 14:19:44.405774,Unit 1a and 1b,12,134
+203,2024-04-15 14:21:22.430205,66-69,12,134
+204,2024-04-15 14:24:23.358356,CM21ST,12,135
+205,2024-04-15 14:24:29.173678,151mm,12,135
+206,2024-04-15 14:24:44.756008,1709,12,135
+207,2024-04-15 14:24:56.557812,"Southern Company, Plant Harris",12,135
+208,2024-04-15 14:25:09.966266,1 Layer,12,135
+209,2024-04-15 14:25:18.701905,Units 2a and 2b,12,135
+210,2024-04-15 14:25:23.561743,66-69,12,135
+211,2024-04-15 14:32:15.532606,CM21,12,136
+212,2024-04-15 14:33:24.689287,310mm,12,136
+213,2024-04-15 14:33:34.034202,1629,12,136
+214,2024-04-15 14:35:11.658814,"Vistra, Ontolaunee",12,136
+215,2024-04-15 14:35:23.784846,1 Layer,12,136
+216,2024-04-15 14:36:34.468102,Unit 2,12,136
+217,2024-04-15 14:37:02.908334,57-60,12,136
+218,2024-04-22 12:39:26.918977,Owner: Calpine Plant: Bethpage 3.1,8,137
+219,2024-04-22 12:45:54.650748,CM27T AP1312 L-565mm K est: 46-50,8,137
+220,2024-04-22 14:07:40.922220,Owner: Calpine Plant: Westbrook,8,138
+221,2024-04-22 14:08:29.223897,CM21+ AP-1668 L-350 Kest-60,8,138
+222,2024-04-25 13:51:43.783208,Calpine Pastoria Unit 1 CM21 Last K:67 L-170 AP1629,8,141
+223,2024-04-26 17:27:48.254613,"The 3 elements are from various Westlake projects. I am not sure which PCN is in which layer. When samples are removed from sleeve for XRF, please record serial number.",8,142
+224,2024-04-26 17:34:54.257249,"Depending on project, catalyst type may be: CM33Tc 483mm, S33-15ST (PCR) 507mm, S33-15STa 483mm	Please use AP-1075 for consistency.",8,142
+225,2024-04-26 17:41:15.194865,Facility Owner Westlake Facility OPCO Petro 2 - Plant 7201,8,142
+226,2024-04-26 17:42:59.412250,3 single layer tests!,8,142
+227,2024-04-26 17:48:41.572769,CM27,12,143
+228,2024-04-26 17:49:01.981728,255mm,12,143
+229,2024-04-26 17:49:14.562364,1258,12,143
+230,2024-04-26 17:50:13.335672,Southern Company Plant Rowan,12,143
+231,2024-04-26 17:50:22.882650,1 Layer,12,143
+232,2024-04-26 17:50:32.961698,Units 4A and 4B,12,143
+233,2024-04-26 17:50:56.075636,65-67,12,143
+234,2024-04-26 18:30:05.947308,S21-15STc,12,145
+235,2024-04-26 18:30:14.228681,299mm,12,145
+236,2024-04-26 18:30:22.608226,1709,12,145
+237,2024-04-26 18:31:17.824509,Pratt and Whitney Middletown 7,12,145
+238,2024-04-26 18:31:27.874714,1 Layer,12,145
+239,2024-04-26 18:31:38.813168,#7,12,145
+240,2024-04-26 18:31:58.625133,72-74,12,145
+241,2024-04-26 18:45:19.721369,CM33TB,12,146
+242,2024-04-26 18:45:26.066166,550,12,146
+243,2024-04-26 18:45:31.206834,1084,12,146
+244,2024-04-26 18:45:50.444314,Raytheon Pratt and Whitney,12,146
+245,2024-04-26 18:45:56.288102,1 Layer,12,146
+246,2024-04-26 18:46:02.600665,East Hartford,12,146
+247,2024-04-26 18:46:13.149719,63-65,12,146
+248,2024-04-26 19:13:12.672766,CM21+,12,147
+249,2024-04-26 19:13:21.236334,260mm,12,147
+250,2024-04-26 19:13:28.377042,1668,12,147
+251,2024-04-26 19:14:04.914889,Raytheon Technologies Hamilton Sunstrand Powerhouse,12,147
+252,2024-04-26 19:14:13.900138,1 Layer,12,147
+253,2024-04-26 19:14:43.183615,no unit number,12,147
+254,2024-04-26 19:14:56.386912,56-58,12,147
+255,2024-04-29 10:23:33.954552,Calpine Los Medanos  CM27 AP-1258 L-300 K~60-64,8,148
+256,2024-04-29 10:24:10.521403,This AV matches the evaluation AV,8,148
+257,2024-04-29 12:02:42.891830,"Channelview U1, Siemens, CM21+ AP 1668 length 275 prev k 60",11,149
+258,2024-04-29 12:54:40.023590,Need photos of 'as tested' sample!  Catalyst is very fragile,8,150
+259,2024-04-29 12:59:07.751458,Competitor catalyst - AP- 1052 L-325 K last time:65-67 expect 60+,8,150
+260,2024-04-29 12:58:26.149994,Owner: Duke Plant:  Edwardsport Integrated Gasification Combined Cycle (IGCC),8,150
+261,2024-04-29 14:02:31.283588,Calpine Bethpage PN 2781 CM21+ 1668 L-227 K~68,8,152
+262,2024-04-29 14:28:09.607637,CM27TMHT AP1312 L507 Calpine Cumberland K 45-48,8,153
+263,2024-05-03 13:47:28.691024,RAMP TEST from 162.5 to 415.6 C. This is a CO Button.,8,154
+264,2024-05-03 13:48:20.307948,Mark has photos from inspection completed by Moriba.,8,154
+265,2024-05-06 12:17:34.606206,Dominion 1B 248 CM21ST 1709 prev k 63,11,155
+266,2024-05-06 13:48:22.560762,Dominion 6A (-1171) 6B (-1199) 207 CM21+ 1668 prev K's 64-65,11,156
+267,2024-05-06 14:23:29.519281,CM21+,12,157
+268,2024-05-06 14:23:39.019364,446mm,12,157
+269,2024-05-06 14:23:51.912768,1668,12,157
+270,2024-05-06 14:24:34.506792,ExxonMobil Baytown Olefins Plant Train 2,12,157
+271,2024-05-06 14:24:44.194975,1 Layer,12,157
+272,2024-05-06 14:24:53.696044,Train 2 (2551),12,157
+273,2024-05-06 14:25:19.245102,60-63,12,157
+274,2024-05-06 14:25:50.075313,L:\BOP\BOP Train 2 (2551)\Field inspections,12,157
+275,2024-05-07 13:18:13.743709,Edit NOx - Type 2 Warehouse	 Edit Pressure Drop Warehouse Contractually Specified	False	False Catalyst Type	S21-15STc 406mm	S21-15STc 406mm Number of Layers	1	1 Target AV (m/hr)	21.33	17.84 Gas Temperature ( °C)	315.56	315.56 NOx Inlet (ppmvd)	48.2,3,158
+276,2024-05-09 12:29:54.490768,XCEL U9 (-1528) U10 (-1531); L 125 CM21+ 1668 prev K 70,11,159
+277,2024-05-09 17:19:41.364276,Salt River Project L 147 CM21TG_ACT 1715 prev k 73,11,160
+278,2024-05-10 15:01:36.683363,TEST CO AS RAMP: 250-400 C,11,151
+279,2024-05-10 15:07:00.469227,"St. Joseph, SCR (L 45 S14-15STb 2445 prev K 78) CO (L 40 plate, previously tested Spring 23 in micro)",11,151
+280,2024-05-11 11:00:55.186548,Tracy has historically been tested at low load with a high NO2 fraction.  This test is at full load but requires an estimated SO2 conversion value as well.,8,162
+281,2024-05-11 11:02:28.607162,Owner: NV Enery Project: Frank A Tracy,8,162
+282,2024-05-11 11:04:05.225593,L-153mm CM21+ AP-1668 K approx 70,8,162
+283,2024-05-13 09:13:04.117062,Full Load Conditions; prior testing was low load high NO2 testing.,8,161
+284,2024-05-13 09:14:54.966942,CM21+ AP-1668 L-153 Kest~70,8,161
+285,2024-05-13 09:15:45.582602,Owner: NV Energy Plant: Frank A Tracy,8,161
+286,2024-05-13 15:01:34.048019,SO2 should be lowest maintainable concentration [250ppm?],8,161
+287,2024-05-13 16:17:34.202070,"EXPEDITED Inspection completed as Owner: Sisu Energy and Environmental, LLC Facility: Tulsa Office",8,163
+288,2024-05-13 16:18:44.443305,S12-17MTb AP-2725 L-187 K~49,8,163
+289,2024-05-14 10:55:31.637869,Ramp Temperature from 162.8 to 427.7 measuring outlet CO,8,165
+290,2024-05-14 10:55:54.111048,New catalyst; not sure of performance expectations.,8,165
+291,2024-05-14 10:56:29.664930,Inspection in not in LEMUR due to entry issues.,8,165
+292,2024-05-14 12:16:27.031643,Owner: Calpine Plant: Russell City,8,167
+293,2024-05-14 12:17:32.539858,AP:1668 CM21+ L-182 K expected ~70,8,167
+294,2024-05-14 13:21:48.633488,Calpine Channel,8,168
+295,2024-05-14 13:22:36.854318,L-305 CM21+ AP-1668 K~67,8,168
+296,2024-05-14 14:55:48.842320,Owner: Calpine Plant: Bethpage 3.1 CM27T AP1312 L-565mm K est: 46-50,8,169
+297,2024-05-19 15:04:39.375933,CM14ST AP-2425 L-137 K-52,8,171
+298,2024-05-19 15:04:02.811584,Owner: Veolia Energy Facility: University of Minnesota,8,171
+299,2024-06-07 16:34:53.946741,2 CO samples were received from Bethpage at the sample time. The sample for this test is the square block sample with dimensions Length 93mm Height 223mm Width 234mm,8,172
+300,2024-06-07 16:35:27.761936,There is no inspection in LEMUR for this sample.,8,172
+301,2024-06-07 16:36:02.829749,Determine CO oxidation from temp 204.4 to 426.7 ramp,8,172
+302,2024-06-10 11:31:58.357807,Luna; 1292-1464 (U1) and LUNA-2-1-24-0520 (U2); CM27 1258 L 170 prev K 56 (U1) 60 (U2),11,173
+303,2024-06-10 15:01:12.730908,Siemens/EIF Unit 2 CM21+ 275 AP 1668 prev k 58,11,174
+304,2024-06-11 13:06:28.582723,"CM21+, L-280 Calpine Metcalf AP - 1668 (seems to be a concensus value)",8,175
+305,2024-06-11 13:06:57.291401,K expected 62-68,8,175
+306,2024-06-11 17:02:21.850748,Owner- Brookfield Renewable Energy Group -Facility - Carr Street,8,176
+307,2024-06-11 17:03:47.231372,"L-260, Ap-1668 or 1674 are ok, CM21+",8,176
+308,2024-06-11 17:05:07.049714,The AV in this lab order is 38 which is the AV where we report the results and does not require correction. The old AV is 47.8,8,176
+309,2024-06-11 17:31:28.188586,"CM42B, AP- 810 (or 795). L-500",8,177
+310,2024-06-11 17:31:42.251687,"Ethos Energy, Doswell",8,177
+311,2024-06-11 17:32:22.113306,Expected K - ~53,8,177
+312,2024-06-18 13:48:13.518773,CM21+,12,180
+313,2024-06-18 13:48:25.943068,417mm,12,180
+314,2024-06-18 13:48:35.538768,1668,12,180
+315,2024-06-18 13:49:17.167608,(DTE) Marina Thermal Facility Cogen 2440,12,180
+316,2024-06-18 13:49:27.871742,1 Layer,12,180
+317,2024-06-18 13:49:43.279566,Unit 1,12,180
+318,2024-06-18 13:50:08.640912,67-70,12,180
+319,2024-06-18 13:50:31.254006,L:\MTF Cogen (DTE)\MTF Cogen (2440)\Field inspections,12,180
+320,2024-06-18 14:12:35.430235,CM21ST,12,181
+321,2024-06-18 14:12:44.915511,151mm,12,181
+322,2024-06-18 14:12:50.151052,1709,12,181
+323,2024-06-18 14:13:04.357740,Southern Company Plant Franklin,12,181
+324,2024-06-18 14:13:13.810993,1 Layer,12,181
+325,2024-06-18 14:13:34.830418,Unit 2A,12,181
+326,2024-06-18 14:14:01.491111,60,12,181
+327,2024-06-19 09:10:59.101011,CM21+MHT Target Length 297 Target AP 1674,8,182
+328,2024-06-19 09:19:29.186503,Owner Cove Point Facility Cove Point Unit 214JA,8,182
+329,2024-06-19 09:20:21.919806,K range 44-48,8,182
+330,2024-06-19 13:28:28.241628,CO Button - I entered a sample name since the inspection did not provide a sample number.,8,183
+331,2024-06-19 11:05:23.906275,The inspection photos of the test button are here: http://lemur/samples/crate/inspect/183/view,8,183
+332,2024-06-19 11:37:04.145465,CM27,12,179
+333,2024-06-19 11:37:14.973719,200mm,12,179
+334,2024-06-19 11:37:34.431589,1258,12,179
+335,2024-06-19 11:38:14.548553,Cooperative Energy Batesville Plant,12,179
+336,2024-06-19 11:38:26.830880,1 Layer,12,179
+337,2024-06-19 11:38:43.894378,Unit 1 - 0827-1206-0394,12,179
+338,2024-06-19 11:39:00.957088,Unit 2 - 0827-1206-0391,12,179
+339,2024-06-19 11:39:13.738941,Unit 3 - 0827-1206-0398,12,179
+340,2024-06-19 11:41:01.971516,60-63,12,179
+341,2024-06-19 13:44:28.467755,Gulf SRC Sriracha Power Block 2 Product S14-15NDa L=66mm AP-2445,8,184
+342,2024-06-19 13:45:08.948238,Kguess 75,8,184
+343,2024-06-19 14:40:28.367990,Product Spec CM14ST L-87 Target AP	2425,8,186
+344,2024-06-19 14:41:00.121511,K expected 80-83,8,186
+345,2024-06-19 14:41:11.481956,Calpine York,8,186
+346,2024-06-20 16:38:37.111949,Owner - Taiwan Power  Facility Tunghsiao,8,187
+347,2024-06-20 16:39:49.602562,S12-17MTa Target Length 153 Target AP 2800,8,187
+348,2024-06-20 16:40:27.283312,Expect K range 34-39,8,187
+349,2024-06-20 16:44:51.234700,Owner - Taiwan Power Facility Tunghsiao,8,189
+350,2024-06-20 16:45:04.078635,S12-17MTa Target Length 153 Target AP 2800,8,189
+351,2024-06-20 16:45:15.094404,Expect K range 34-39,8,189
+352,2024-06-21 14:20:32.860576,Southern Company/Georgia Power CM21+ 1668 L 235 prev K ~66,11,178
+353,2024-06-21 14:21:11.930086,2023 McDonough samples were added in error; I can't remove them,11,178
+354,2024-06-21 16:42:24.335562,2 layer corrugated with each layer @ 170-176mm. Prior testing is here: \\CTTR-SHR-02\Laboratory\Panda as Temple (NOT Stonewall!),8,190
+355,2024-06-21 16:42:40.431129,AP - 1466; K expected 44-54,8,190
+356,2024-06-21 16:42:51.509620,Owner: Temple Generation Facility: Panda Temple Tower,8,190
+357,2024-06-24 14:22:16.972666,CM21+,12,191
+358,2024-06-24 14:22:29.489605,164mm,12,191
+359,2024-06-24 14:22:35.287490,1668,12,191
+360,2024-06-24 14:22:51.213264,"Consumers Energy, Zeeland",12,191
+361,2024-06-24 14:22:59.809227,1 Layer,12,191
+362,2024-06-24 14:23:07.449965,Unit 2B,12,191
+363,2024-06-24 14:24:25.770016,65-68,12,191
+364,2024-07-17 17:00:38.434633,"Sample is only 87mm, so maybe FF and RR has not meaning.",8,193
+365,2024-07-29 10:53:41.552949,check conditions and setup against previous testing of these units:,8,196
+366,2024-07-29 10:54:02.609628,\\CTTR-SHR-02\Laboratory\Hay Road\Field,8,196
+367,2024-07-29 10:58:14.303658,K appears to be running 85-100 in previous testing.,8,196
+368,2024-07-29 10:59:32.474218,Target Length 500mm,8,196
+369,2024-07-29 11:32:49.064785,City of Roseville U2 CM21+ AP 1668 L 436 prev k 65,11,195
+370,2024-07-29 12:16:27.195470,"Length 355, no k guess, this unit has chromium, so K changes.",8,197
+371,2024-07-29 12:18:24.968514,45-cell AP- 1037 length-355,8,197
+372,2024-07-29 13:32:36.856452,S14-15STb AP 2445 Length 79,8,198
+373,2024-07-29 13:33:01.169373,expected K 75,8,198
+374,2024-07-30 15:55:52.508866,PBF Torrance 2F4  K exp 65-68 but possible poisoning,8,199
+375,2024-07-30 15:56:48.397570,S14-15STc Design L- 130mm AP-2445,8,199
+376,2024-08-05 10:34:09.684414,S37-15STa,12,200
+377,2024-08-05 10:34:19.420437,770mm,12,200
+378,2024-08-05 10:34:39.906560,920,12,200
+379,2024-08-05 10:35:11.552980,Nevada Gold Mines Boiler 4,12,200
+380,2024-08-05 10:35:19.678497,1 layer,12,200
+381,2024-08-05 10:35:35.256715,Boiler 4 (4323),12,200
+382,2024-08-05 10:36:00.008335,Low K. K < 20,12,200
+383,2024-08-05 10:45:51.888047,BASF B-7280 S27-15STa 1335 603 prev 56,11,201
+384,2024-08-05 12:31:01.174388,AP1312 design L 542 CM27T K- 53 to 56 range,8,202
+385,2024-08-05 14:19:30.897029,CM21+,12,203
+386,2024-08-05 14:19:44.741766,207mm,12,203
+387,2024-08-05 14:19:51.898066,1668,12,203
+388,2024-08-05 14:20:05.758505,Vicinity Kendall,12,203
+389,2024-08-05 14:20:16.196079,1 Layer,12,203
+390,2024-08-05 14:20:30.339015,no unit number,12,203
+391,2024-08-05 14:21:05.549915,67-70,12,203
+392,2024-08-07 11:52:58.371003,Gulf SRC Sriracha Power Block 2 Product S14-15NDa L=66mm AP-2445 Kguess 75,8,205
+393,2024-08-12 11:31:55.493048,phillips 66 U3 s14-15stb 2445 L 111 prev k 84.6,11,206
+394,2024-08-19 12:20:15.292069,TVA Johnsonville  S14-15STb AP 2445 L-64 Kguess 84,8,207
+395,2024-08-20 11:56:18.033996,Flow must be determine by calculating surface area from plate size and number of plates as done in the past.,8,208
+396,2024-08-20 11:58:07.532495,Length 354 expected K - 77.0 and 76.6 in prior 2 field samples.,8,208
+397,2024-08-23 12:14:48.523659,x,8,183
+398,2024-08-23 12:30:15.278853,Ramp temperature from 200 to 437.8,8,183
+399,2024-09-04 14:13:09.555052,Citgo Lemont North PCN 4087 S14-15STa 78mm AP-2445,8,210
+400,2024-09-04 14:14:19.726708,Last 3 K's: 68.31 64.82 62.48,8,210
+401,2024-09-04 16:33:03.690811,Citgo Lemont South PCN 4088 S14-15STa 78mm AP-2445,8,211
+402,2024-09-04 17:09:33.218577,Previous K's - 68.27 65.81 64.71,8,211
+403,2024-09-05 09:24:08.851310,Owner - Taiwan Power Facility Tunghsiao,8,212
+404,2024-09-05 09:24:02.445010,S12-17MTa Target Length 153 Target AP 280,8,212
+405,2024-09-05 09:24:18.899951,Expect K range 34-39,8,212
+406,2024-09-06 12:03:27.912212,Salt River Project unit K7 CM21+ 1668 L 210 prev K 73,11,213
+407,2024-09-06 12:58:42.509677,Only run the 294.4 temperature. the other condition submitted by mistake.,8,211
+408,2024-09-09 11:23:27.438764,Protec CGL3 RTF and DFF (both units have same test conditions),8,218
+409,2024-09-09 11:24:40.169107,K may be around 30 due to chromium poisioning.,8,218
+410,2024-09-09 11:25:47.916122,S27-15STa 814mm AP-1335,8,218
+411,2024-09-09 12:46:37.114775,"Note there are 2 test in the lab order. A 2-Layer and a 1-layer test. Test NOx manually between layers, can be bench or pilot, L-416mm x 2, S33-15STb AP1016 Flow is vertical up, so Bottom is 1st layer, top is 2nd layer",8,219
+412,2024-09-09 12:55:37.373387,L-769mm S33-15STb AP-1016,8,220
+413,2024-09-09 12:55:52.391777,Shintech Plaquemine,8,220
+414,2024-09-09 15:56:51.875295,Valero 54F2 S21-15STd 1668 L 296 prev K 60.69,11,223
+415,2024-09-13 14:14:06.379836,CM21+,12,224
+416,2024-09-13 14:15:22.011856,192mm,12,224
+417,2024-09-13 14:16:48.856386,1668,12,224
+418,2024-09-13 14:18:49.957235,Vistra Independence Station,12,224
+419,2024-09-13 14:19:03.790850,1 Layer,12,224
+420,2024-09-13 14:20:05.074327,Unit 1,12,224
+421,2024-09-13 14:20:22.278438,65-68,12,224
+422,2024-09-13 14:20:45.421375,Include BET Surface Area for the Front on both samples,12,224
+423,2024-09-13 14:36:39.469718,CM21+,12,226
+424,2024-09-13 14:36:53.019883,192mm,12,226
+425,2024-09-13 14:37:06.229309,1668,12,226
+426,2024-09-13 14:37:21.746188,Vistra Independence Station,12,226
+427,2024-09-13 14:37:33.262323,1 Layer,12,226
+428,2024-09-13 14:37:51.358838,Unit 2,12,226
+429,2024-09-13 14:38:06.640062,65-68,12,226
+430,2024-09-13 14:38:19.754385,Add BET Surface Area Front to both samples,12,226
+431,2024-09-13 17:02:01.991793,CM21+ Cell Type 70 Target Length 154 Target AP1668 K 70-74,8,227
+432,2024-09-13 17:02:22.543747,Taiyanggong Thermal Power Plant,8,227
+433,2024-09-16 16:09:18.962289,CM27T,12,228
+434,2024-09-16 16:09:34.405441,296mm,12,228
+435,2024-09-16 16:09:43.063582,1312,12,228
+436,2024-09-16 16:10:02.723175,ExxonMobil Beaumont ERS Train A (2757),12,228
+437,2024-09-16 16:10:11.099177,3 Layers,12,228
+438,2024-09-16 16:10:23.196652,Train A,12,228
+439,2024-09-16 16:10:51.010468,Can be tested in Full Bench,12,228
+440,2024-09-16 16:11:04.012103,Please contact Brian A with any questions,12,228
+441,2024-09-16 16:35:58.413165,CM27T,12,229
+442,2024-09-16 16:36:10.743196,296mm,12,229
+443,2024-09-16 16:36:22.933380,1312,12,229
+444,2024-09-16 16:36:44.551732,ExxonMobil Beaumont ERS Train A (2757),12,229
+445,2024-09-16 16:37:05.105022,3 Layer Ramp and 1 Layer Ramp,12,229
+446,2024-09-16 16:37:18.436455,ERS Train A,12,229
+447,2024-09-16 16:37:39.270753,This is a CO Ramp from 200 to 450C,12,229
+448,2024-09-16 16:38:10.262708,2 seperate tests. 3 layer Ramp and then 1 layer Ramp,12,229
+449,2024-09-16 16:38:42.624869,The actual flow for the 1 Layer should be the same as the 3 layer,12,229
+450,2024-09-16 16:39:14.285469,Run the 3 Layer first. If there is no oxidation please consult with Brian A before running the 1 Layer ramp,12,229
+451,2024-09-23 13:42:41.471532,J Power/CMI Jackson S14-15NDb 2445 L 138 prev K 82,11,230
+452,2024-09-25 17:29:54.595436,"NOTE: ONLY 4 layers can be added to LEMUR, but this is a 5-layer test. All layers must be tested in the correct order and direction of flow.  If any samples have blocked cells due to face damage, try to open them up so flow is full for each sample.",8,231
+453,2024-09-25 17:31:11.708178,All samples must be tested at the full received length of the sample.,8,231
+454,2024-09-30 16:25:20.377216,"CERAM catalyst - AP=1142 Length- 702mm Expected K - 50-55, for hi NO2 conditions, K - 10-20",8,232
+455,2024-10-08 10:11:36.819749,Flow is 61.09 Nm3/hr based on button size of 69.7mm diameter and 42.448mm depth.,8,235
+456,2024-10-08 09:50:37.407521,This is a CO ramp test. Ramp temperature from 204.4 to 426.7C (800F),5,235
+457,2024-10-07 12:39:29.177297,S14-15STb AP 2445 Length 79,8,236
+458,2024-10-07 12:40:12.618382,expected K 75-80,8,236
+459,2024-10-07 13:14:51.684537,S12-17Sta 81mm AP-2800,8,237
+460,2024-10-07 13:15:54.101601,K guess 79,8,237
+461,2024-10-07 13:20:06.086267,S12-17Sta 81mm AP-2800,8,238
+462,2024-10-07 13:20:15.902537,K guess 79,8,238
+463,2024-10-07 14:17:10.421706,Product Spec	S14-15STc Cell Type	110 Target Length	97 AP 2445,8,239
+464,2024-10-07 14:18:15.274361,This sample was mistakenly inspected as Russell City. Inspection is here: http://lemur/samples/crate/inspect/185/view,8,239
+465,2024-10-07 14:18:45.474133,expected K - 74,8,239
+466,2024-10-08 10:25:51.662562,"Final Ugs and flow target will be based on button dimensions. SV target is 305,250",8,240
+467,2024-10-08 10:24:48.352131,This is a CO ramp test. Ramp temperature from 204.4 to 426.7C (800F),8,240
+468,2024-10-09 13:44:51.741698,Need photos of 'as tested' sample! Catalyst is very fragile	congerma	2024-04-29	 Competitor catalyst - AP- 1052 L-325 K may be decreasing K of 42 on sister unit in 2024	 Owner: Duke Plant: Edwardsport Integrated Gasification Combined Cycle (IGCC),8,242
+469,2024-10-09 17:27:47.418929,CM21ST Target Length361 Target AP1709,8,244
+470,2024-10-09 17:28:08.655230,Kexpected 58-62,8,244
+471,2024-10-14 08:50:02.731186,Product Spec S27-15STb Target Length 588 AP-1335,8,245
+472,2024-10-14 08:54:50.765986,K loss expected due to chromium. K may be in range of 30-35,8,245
+473,2024-10-14 12:54:21.299486,CM21+(obs) AP 1668 L 276 K est- 51,8,246
+474,2024-10-14 13:13:01.037113,Lab folder is here: \\CTTR-SHR-02\Laboratory\Pepco Atlantic (2458),8,246
+475,2024-10-14 16:54:12.076593,Run at minimum flow if ugs target cannot be met.  Use AP=1181 consistant with prior testing.  MUST MEASURE CO OXIDATION AS WELL!,8,247
+476,2024-10-14 17:41:02.291839,COVE-7B-L1-AUX-27-0924 should be renamed to COVE-Aux-5B-L1-27-0924,8,247
+477,2024-10-14 17:41:38.040574,COVE-7B-L2-AUX-27-0924 should be renamed to COVE-Aux-5B-L2-27-0924,8,247
+478,2024-10-14 18:39:17.253738,S14-15STb,12,248
+479,2024-10-14 18:39:28.820333,50mm,12,248
+480,2024-10-14 18:39:38.242981,2445,12,248
+481,2024-10-14 18:41:44.714257,Tenaska Westmoreland Unit 1,12,248
+482,2024-10-14 18:40:25.569842,1 Layer,12,248
+483,2024-10-14 18:40:39.229446,Unit 1,12,248
+484,2024-10-14 18:40:52.434579,80-90,12,248
+485,2024-10-14 18:44:14.385329,Same as LR-24-00164,12,249
+486,2024-10-14 18:44:25.558621,Tenaska Westmoreland Unit 2,12,249
+487,2024-10-17 12:36:01.332877,BP CM21+ AP 1668 L 375 prev k 61.59,11,251
+488,2024-10-17 16:06:59.844090,GRDA U3 CM27ST AP 1335 L 93 prev k 76,11,252
+489,2024-10-18 17:06:47.298088,Spec CM21+ Target Length 281 Target AP 1668 K~65-70,8,253
+490,2024-10-18 17:24:20.846741,CM21+ Target Length	125 Target AP 1668 K~65-70,8,254
+491,2024-10-18 17:45:44.255521,Spec	S27-15STa Target Length 522 Target AP 1335,8,255
+492,2024-10-18 17:46:06.619987,K 52-58,8,255
+493,2024-10-18 17:46:42.630627,Sample is broken. It looks like it can be tested in 2 pieces. Lab needs to plan.,8,255
+494,2024-10-18 21:26:51.593317,Spec	S27-15STa Target Length 465 Target AP 1335 K- 55-60,8,256
+495,2024-10-18 21:40:53.175154,Product Spec	S14-15STb Target Length 53 Target AP	2445,8,257
+496,2024-10-18 21:41:44.135801,Kdesign was 76.5 but tested at 88.6 so no idea what K will be.,8,257
+497,2024-10-21 10:54:26.309901,Lightstone CM21TG-ACT AP 1715 L 157 prev K 61 (U1) 64 (U2) 64 (U3),11,258
+498,2024-10-28 11:35:08.473482,CM27 AP1258 L375 K60,8,262
+499,2024-10-28 12:02:51.086672,CM21+ Length203 Target AP1668 K65,8,263
+500,2024-10-28 14:01:06.579858,S12-17MTb L146 AP2725 K44,8,264
+501,2024-10-30 10:43:50.683584,CM21ST,12,266
+502,2024-10-30 10:44:01.738427,151mm,12,266
+503,2024-10-30 10:44:10.693616,1709,12,266
+504,2024-10-30 10:44:38.984189,Southern Company Franklin,12,266
+505,2024-10-30 10:45:03.007711,1 Layer,12,266
+506,2024-10-30 10:45:10.915285,Unit 2B,12,266
+507,2024-10-30 10:45:50.271034,60-64,12,266
+508,2024-10-30 12:27:11.179013,CM27ST,12,267
+509,2024-10-30 12:27:20.945854,795mm,12,267
+510,2024-10-30 12:27:28.811658,1335,12,267
+511,2024-10-30 12:28:11.780804,Exelon Hyperion,12,267
+512,2024-10-30 12:28:26.490304,1 Layer,12,267
+513,2024-10-30 12:29:02.184920,Unit 11 is 2825-0102-0186,12,267
+514,2024-10-30 12:29:18.969068,Unit 22 is 2825-0102-0174,12,267
+515,2024-10-30 12:29:44.601288,58-62 for both Units,12,267
+516,2024-10-30 16:51:43.888948,CM27,12,268
+517,2024-10-30 16:51:53.800284,145mm,12,268
+518,2024-10-30 16:52:00.489166,1258,12,268
+519,2024-10-30 16:54:16.732680,ExxonMobil Baytown Olefins Plant,12,268
+520,2024-10-30 16:54:31.860990,2 Layers cut from same log,12,268
+521,2024-10-30 16:54:48.238922,Train 5,12,268
+522,2024-10-30 16:55:04.239975,48-52,12,268
+523,2024-10-30 16:55:37.858188,L:\Exxon\ExxonMobil Baytown\ExxonMobil Baytown Olefins HRSG(907),12,268
+524,2024-10-31 15:26:43.188588,CM27 Target Length-244 Target AP 1258 K guess - 53,8,269
+525,2024-10-31 15:30:57.333772,CM27 Target Length-244 Target AP 1258 K guess - 53,8,271
+526,2024-10-31 16:02:34.735487,27 Target Length-244 Target AP 1258 K guess - 53,8,272
+527,2024-11-04 10:48:29.332671,CM21 AP 1629 L 275 prev k 56,11,273
+528,2024-11-04 16:51:58.159663,S14-15STc AP 2445 L 52 prev K 86 (A) 82 (B),11,275
+529,2024-11-05 10:18:52.975963,S49-15STb AP 700 L 656 (each) prev K 40,11,276
+530,2024-11-06 11:45:38.840365,S14-15STb 53mm AP 2445 K-80-85,8,265
+531,2024-11-11 13:37:51.362140,S14-15STb AP 2425 L 104 prev k 72,11,277
+532,2024-11-12 12:12:41.385355,Each layers A and B samples must be combined into 1 pilot sample.,8,279
+533,2024-11-12 12:14:12.091122,All samples: Hitachi AP-350 Pitch-5.7 L-550 in lab 1100 in field,8,279
+534,2024-11-12 12:42:13.884059,Each layers A and B samples must be combined into 1 pilot sample.,8,280
+535,2024-11-12 12:42:35.455264,All samples: Hitachi AP-350 Pitch-5.7 L-550 in lab 1100 in field,8,280
+536,2024-11-12 15:31:46.463418,"Layers 1, 3, and 4 single-layer MR1 activity tests",17,281
+537,2024-11-12 15:31:26.477468,"Layers 1, 3 and 4 SO2 oxidation system test",17,281
+538,2024-11-13 09:47:39.470116,"Haldor Topsoe catalyst, AP=477 pitch L 1080 with 2 layers installed for pilot tests, micro will be as long of a sample as possible taken form the entrance end",8,282
+539,2024-11-13 16:02:03.069461,"5 Pt Temp ramp: 204.4, 260.0, 315.6, 371.1, 426.7",8,240
+540,2024-11-13 16:00:52.221889,"5 Pt Temp ramp: 204.4, 260.0, 315.6, 371.1, 426.7",8,235
+541,2024-11-13 16:33:24.227074,Hitachi AP-350 L-580,8,284
+542,2024-11-15 12:52:42.683403,CM27 AP1258 L690,8,285
+543,2024-11-15 13:10:08.509988,Product CM33TB L660 AP1084,8,286
+544,2024-11-15 16:27:29.025092,CM91DB Length 970mm,29,287
+545,2024-11-15 16:33:41.274904,Plate Pitch 5.7mm Length 625mm,29,270
+546,2024-11-15 16:34:49.446650,PCS Bench sample for Job #240536 Gibson U5,29,270
+547,2024-11-21 14:17:07.322706,700 mm plate length,28,289
+548,2024-11-21 14:17:29.674097,"Layer 1 is 7.0 pitch, Layers 2 and 3 are 5.7",28,289
+549,2024-11-21 14:17:47.289810,Combine N and S samples for each layer for bench testing,28,289
+550,2024-11-21 14:21:52.501225,"Sample is CM094 DustBuster, 399 AP",28,290
+551,2024-11-21 14:22:12.724402,1400 mm length,28,290
+552,2024-11-21 16:53:22.422103,Plates must be cut and prepped for 1/4 bench!,8,291
+553,2024-11-21 16:54:17.028078,"Determine CO ox at temperatures of 176.7, 232.2, 287.8, 343.3 398.9",8,291
+554,2024-11-21 16:56:38.082657,Plates must be cut and prepped for 1/4 bench!,8,292
+555,2024-11-21 16:56:47.317945,"Determine CO ox at temperatures of 176.7, 232.2, 287.8, 343.3 398.9",8,292
+556,2024-11-21 17:41:07.442719,CM21,12,293
+557,2024-11-21 17:41:13.352199,225mm,12,293
+558,2024-11-21 17:41:18.449261,1629,12,293
+559,2024-11-21 17:44:01.257988,Tenaska Virginia Generating Station,12,293
+560,2024-11-21 17:44:09.258453,1 layer,12,293
+561,2024-11-21 17:45:04.693380,Unit 3,12,293
+562,2024-11-21 17:45:38.783046,64-67,12,293
+563,2024-11-21 18:17:13.049623,CM21,12,294
+564,2024-11-21 18:17:19.284796,295,12,294
+565,2024-11-21 18:17:27.837636,1629,12,294
+566,2024-11-21 18:17:51.608717,Calpine Delta Energy Center,12,294
+567,2024-11-21 18:18:05.750993,1 Layer,12,294
+568,2024-11-21 18:18:47.214170,Unit 2,12,294
+569,2024-11-21 18:19:10.595598,56-59,12,294
+570,2024-11-21 19:15:38.297705,Spec	S14-15STa Target Length 95 Target AP	2425 K-80,8,295
+571,2024-11-21 20:57:17.144980,CM21+ Calpine Los Esteros L=256 AP-1668 K-67,8,296
+572,2024-11-21 21:35:18.927746,"Determine CO ox at temperatures of 176.7, 232.2, 287.8, 343.3 398.9",8,297
+573,2024-11-21 21:49:21.188619,"SV flow target is 266,889 hr-1; Based on inspection sizing of diatmeter=70mm and L=60mm, this is a UGS of 4.45. When actual dimensions are entered, UGs might change slightly",8,297
+574,2024-11-22 13:01:02.753026,Plate Pitch 5.7 Length 630mm,29,299
+575,2024-11-22 13:02:34.362049,Plate Pitch 5.7 Length 630mm,29,300
+576,2024-11-22 13:43:15.930928,"Determine CO ox at temperatures of 160, 204.4, 260, 315.6 426.7",12,301
+577,2024-11-22 13:40:28.816077,"SV flow target is 266,889 hr-1; Based on inspection sizing of diatmeter=70mm and L=60mm, this is a UGS of 4.45. When actual dimensions are entered, UGs might change slightly",12,301
+578,2024-11-26 09:46:05.014559,OGE S21-15MPa AP 1709 L 113 prev 63 NOx,11,302
+579,2024-11-26 09:52:54.149517,OGE S21-15MPb AP 1709 L 165 prev 64,11,303
+580,2024-11-26 09:57:22.872221,**5 POINT CO TEST - 240 275 310 345 380 C**,11,303
+581,2024-11-26 09:58:41.010944,**5 POINT CO TEST - 240 275 310 345 380 C**,11,302
+582,2024-11-26 10:27:47.219738,OGE S21-15MPb AP 1709 L 165 prev 68,11,304
+583,2024-11-26 10:27:55.460660,**5 POINT CO TEST - 240 275 310 345 380 C**,11,304
+584,2024-11-27 15:06:07.373216,"For RETEST- Use 5pt CO Ox. 176.7, 232.2, 287.8, 343.3, 398.9",12,229
+585,2024-12-02 10:17:48.924025,All samples 1350 mm length,28,306
+586,2024-12-02 15:34:40.162820,NOx concentration for deNOx test is 275.,8,282
+587,2024-12-03 09:26:30.688614,Layer 1: 7.1 mm - AP=494; Length = 1350 mm,27,307
+588,2024-12-03 09:27:32.125494,Layer 2: 6.8 mm - AP=538; Length = 1350 mm,27,307
+589,2024-12-03 15:43:00.803859,Inlet NOx target = 52.74,8,295
+590,2024-12-05 17:31:30.990070,Sample must be cut into 2 layers and performed as a 2-layer test!!!!!!,8,308
+591,2024-12-05 17:36:26.483007,Target L 270mmx 2; AP 795; CM42B (some prior testing might have been at AP=801,8,308
+592,2024-12-06 10:22:32.937330,CM27,12,309
+593,2024-12-06 10:22:42.734282,356mm,12,309
+594,2024-12-06 10:22:50.658150,1258,12,309
+595,2024-12-06 10:23:50.991764,Calpine Sutter,12,309
+596,2024-12-06 10:23:58.019585,1 Layer,12,309
+597,2024-12-06 10:24:06.386656,Unit 1,12,309
+598,2024-12-06 10:24:31.575990,55-58,12,309
+599,2024-12-06 17:10:54.525748,UAMPS CM21+ AP 1668 L 111 prev k 60,11,310
+600,2024-12-09 09:21:44.694465,Layer 1 R2: 26x6 - 9.4 mm Pitch - AP=399; Length = 1276 mm,27,312
+601,2024-12-09 09:23:48.501225,Layer 3 R3: 26x6 - 9.4 mm Pitch - AP=399; Length = 1276 mm,27,312
+602,2024-12-09 09:46:30.944040,OGE S21-15MPb AP 1709 L 165 prev 81,11,311
+603,2024-12-09 09:46:48.965488,**5 POINT CO TEST - 240 275 310 345 380 C**,11,311
+604,2024-12-09 09:58:32.878639,Layer 1 R1: 5.7 mm pitch - AP = 351; Length = 625 mm Single Cass. And 1250 mm Full Layer Cass.,27,312
+605,2024-12-09 09:58:37.449493,Layer 1 R1: 5.7 mm pitch - AP = 351; Length = 625 mm Single Cass. And 1250 mm Full Layer Cass.,27,312
+606,2024-12-09 09:58:50.381654,Layer 1 R3: 5.7 mm pitch - AP = 351; Length = 625 mm Single Cass. And 1250 mm Full Layer Cass.,27,312
+607,2024-12-09 09:59:06.144187,Layer 2 R1: 5.7 mm pitch - AP = 351; Length = 625 mm Single Cass. And 1250 mm Full Layer Cass.,27,312
+608,2024-12-09 09:59:24.066399,Layer 2 R2: 5.7 mm pitch - AP = 351; Length = 625 mm Single Cass. And 1250 mm Full Layer Cass.,27,312
+609,2024-12-09 09:59:37.665078,Layer 2 R3: 5.7 mm pitch - AP = 351; Length = 625 mm Single Cass. And 1250 mm Full Layer Cass.,27,312
+610,2024-12-09 09:59:52.785098,Layer 4 R1: 5.7 mm pitch - AP = 351; Length = 625 mm Single Cass. And 1250 mm Full Layer Cass.,27,312
+611,2024-12-09 10:00:04.483362,Layer 4 R2: 5.7 mm pitch - AP = 351; Length = 625 mm Single Cass. And 1250 mm Full Layer Cass.,27,312
+612,2024-12-09 10:00:21.212122,Layer 4 R3: 5.7 mm pitch - AP = 351; Length = 625 mm Single Cass. And 1250 mm Full Layer Cass.,27,312
+613,2024-12-09 10:02:29.633680,Combine GAVN-U2-L1R1-24-1121 AND GAVN-U2-L1R3-24-1121,27,312
+614,2024-12-09 10:02:41.573663,Combine GAVN-U2-L2R1-24-1121 AND GAVN-U2-L2R2-24-1121 AND GAVN-U2-L2R3-24-1121,27,312
+615,2024-12-09 10:02:52.012630,Combine GAVN-U2-L4R1-24-1121 AND GAVN-U2-L4R2-24-1121 AND GAVN-U2-L4R3-24-1121,27,312
+616,2024-12-09 11:10:48.744050,Layer 1 RxA&B - Pitch = 5.7 mm - AP = 351 - Cass. Length = 580 mm - Full Length = 1160 mm,27,313
+617,2024-12-09 11:11:00.914924,Layer 2 RxA - Pitch = 9.1 mm - AP = 410 mm - Full Length = 1224 mm,27,313
+618,2024-12-09 11:11:12.573739,Layer 2 RxB - Pitch = 9.1 mm - AP = 410 mm - Full Length = 1224 mm,27,313
+619,2024-12-09 11:11:24.715668,Layer 3 RxA&B - Pitch = 5.7 mm - AP = 351 - Cass. Length = 580 mm - Full Length = 1160 mm,27,313
+620,2024-12-09 11:11:37.732446,Layer 4 RxA&B - Pitch = 5.7 mm - AP = 351 - Cass. Length = 580 mm - Full Length = 1160 mm,27,313
+621,2024-12-09 11:12:55.199325,Combine Samples CLIF-6-1A-24-1101 AND CLIF-6-1B-24-1101,27,313
+622,2024-12-09 11:13:06.696038,Combine Samples CLIF-6-3A-24-1101 AND CLIF-6-3B-24-1101,27,313
+623,2024-12-09 11:13:20.780047,Combine Samples CLIF-6-4A-24-1101 AND CLIF-6-4B-24-1101,27,313
+624,2024-12-09 15:18:43.579071,7.1 Honeycomb L 1300mm,29,314
+625,2024-12-09 15:38:01.806419,Plate Pitch 5.7 Length 625mm,29,315
+626,2024-12-10 10:46:38.434321,Prequal for AECC Thomas Fitzhugh,1,274
+627,2024-12-10 10:47:46.848854,Prequal for Mountain Peak,1,261
+628,2024-12-11 10:19:50.981132,CM21+,12,316
+629,2024-12-11 10:19:57.219745,245mm,12,316
+630,2024-12-11 10:20:02.899358,1668,12,316
+631,2024-12-11 10:20:16.200662,Calpine Baytown,12,316
+632,2024-12-11 10:20:28.834998,1 Layer,12,316
+633,2024-12-11 10:20:38.345455,Unit 4,12,316
+634,2024-12-11 10:21:16.235584,68-72,12,316
+635,2024-12-13 10:33:37.474275,CM091DB L 970mm,29,317
+636,2024-12-13 11:02:37.549960,Plate Pitch 5.7 L670mm,29,319
+637,2024-12-13 15:12:04.095354,CM71T-ACT 1350mm,8,320
+638,2024-12-13 15:12:38.935432,CUMB-2B-4-24-1212 is very damaged. Please assess ASAP if can be shortened length testing or needs to be a micro.,8,320
+639,2024-12-13 15:40:45.834660,Product Spec S14-15STc Cell Type 110 Target Length 97 AP 2445,8,321
+640,2024-12-13 15:40:57.912397,expected K - 74,8,321
+641,2024-12-14 17:33:35.071326,2 LAYER TEST! This is a full pilot test.,8,322
+642,2024-12-14 17:35:54.369507,Product Spec CM33ST (or maybe CM33TB) AP - 1075 Length 480 x 2,8,322
+643,2024-12-14 17:36:27.977566,K 30-40 (chromium deactivation),8,322
+644,2024-12-15 14:29:28.378277,S14-15STb AP 2445 Length 79,8,323
+645,2024-12-15 14:30:14.599201,expected K 75,8,323
+646,2024-12-15 15:02:17.542436,CM21+ 247mm K-48,8,324
+647,2024-12-15 16:05:36.458117,AP=351 pitch 5.7 L2 length = 630mm L3 length = 700 mm,8,325
+648,2024-12-15 16:07:44.875973,Kest is 27 for L2 and 23 for L3,8,325
+649,2024-12-16 12:15:52.341435,NO2 does need to be included,11,326
+650,2024-12-16 12:17:37.312681,City of Roseville CM21+ AP 1668 L 436 prev k 65,11,326
+651,2024-12-16 13:01:23.439029,Dominion CM21ST AP 1709 L 249 prev k 66,11,327
+652,2024-12-16 13:30:39.747896,Imperial S14-15STb AP 2445 L 83 prev k 87,11,328
+653,2024-12-16 13:56:39.787370,2 LAYER TEST,11,276
+654,2024-12-16 14:18:13.490699,Lakeland S21-15STa L 167,11,329
+655,2025-01-02 12:32:05.064421,"Ko lab was 89, Ko design was 82. Est. K ~80",8,330
+656,2025-01-02 12:32:37.896642,Product Spec S14-15STc Target Length	87 Target AP 2445,8,330
+657,2025-01-02 13:01:58.635175,Product Spec CM21 Target Length 195 Target AP 1629,8,331
+658,2025-01-02 13:02:24.768471,K guess 64,8,331
+659,2025-01-02 16:29:11.708573,"Ramp test!! CO ox at 204.4, 260, 315.6, 371.1, 426.7 C",8,332
+660,2025-01-02 16:31:13.924252,"The SV target is 151,000/hr and the Ugs is based on the sample depth being 90mm. If the depth measured in setting up test is different than 90mm, then Ugs will need to be adjusted. Please discuss with Mark Conger.",8,332
+661,2025-01-02 16:32:33.320914,Sample will need to be cut from the larger sample.,8,332
+662,2025-01-03 13:55:15.588996,Unit 1 | Layer 1 | Pitch = 5.7 | AP = 351 | Cass. Length = 630 | Full Length = 1260,27,333
+663,2025-01-03 13:55:30.452335,Unit 1 | Layer 2 | Pitch = 5.7 | AP = 351 | Cass. Length = 630 | Full Length = 1260,27,333
+664,2025-01-03 13:55:41.786087,Unit 1 | Layer 3 | Pitch = 5.7 | AP = 351 | Cass. Length = 630 | Full Length = 1260,27,333
+665,2025-01-03 13:55:51.372083,Unit 1 | Layer 4 | Pitch = 5.7 | AP = 351 | Cass. Length = 630 | Full Length = 1260,27,333
+666,2025-01-03 15:03:48.511826,Dominion CO plate L 77,11,334
+667,2025-01-03 15:03:55.504079,**5 POINT CO TEST - 240 275 310 345 380 C**,11,334
+668,2025-01-06 11:27:08.110212,"Samples 1 and 2 are 1350 length, Samples 3 and 6 are 1325 length, Samples 4 and 5 are 1300 length",28,335
+669,2025-01-06 11:28:13.599799,All samples are CM082 --> 426 m2/m3,28,335
+670,2025-01-06 13:50:46.224147,This is Johnson Mathey Catalyst. AP=1655 (2.1mm pitch) Design L-190mm K guess 72,8,338
+671,2025-01-06 14:17:41.098339,Dominion CM21+ 1668 L 200 prev 65,11,339
+672,2025-01-07 17:03:59.833640,Calpine CM21 1629 L 245,11,340
+673,2025-01-09 13:36:36.551505,Lab should determine the AP,34,341
+674,2025-01-09 13:37:54.476092,Expected K 35 to 39 Nm/hr,34,341
+675,2025-01-10 12:09:14.125296,AP = 539 m2/m3,34,342
+676,2025-01-10 12:09:54.682870,Expected K = 33 to 36 m/hr,34,342
+677,2025-01-13 10:37:56.717792,S14-15STb AP 2425 L 104 prev k 72,11,343
+678,2025-01-13 14:54:32.823119,2nd Test Sample Element ID TBD.,6,347
+679,2025-01-13 15:47:08.959959,DeNOx and CO Oxidation conditions can be combined into 1 single condition.,6,350
+680,2025-01-14 08:23:38.418832,SO2 target is 2378 ppm,8,320
+681,2025-01-14 09:40:37.982649,"Generic Sample ID, actual Sample ID TBD.",6,351
+682,2025-01-14 09:48:31.384730,"Generic Sample ID, actual Sample ID TBD.",6,352
+683,2025-01-14 09:56:07.571912,See STOMPI for complete test conditions.,6,353
+684,2025-01-14 11:23:40.274900,See STOMPI for complete test conditions.,6,354
+685,2025-01-14 11:27:27.887877,See STOMPI for complete test conditions.,6,355
+686,2025-01-14 11:31:42.833975,See STOMPI for complete test conditions.,6,356
+687,2025-01-14 11:56:01.458789,See STOMPI for complete test conditions.,6,357
+688,2025-01-14 13:35:36.954047,See STOMPI for complete test conditions.,6,358
+689,2025-01-14 14:59:52.761306,See STOMPI for complete test conditions.,6,359
+690,2025-01-14 15:11:13.167687,See STOMPI for complete test conditions.,6,360
+691,2025-01-14 15:14:17.796982,See STOMPI for complete test conditions.,6,361
+692,2025-01-14 15:16:37.058125,Plate Pitch 5.7 Length 630mm,29,345
+693,2025-01-14 15:31:52.175072,"The Ugs is based on the inspection depth of 39mm. If sample is not 39mm in depth, the ugs will need to be changed to hit the SV of 325,000/hr",8,363
+694,2025-01-14 15:33:15.665049,"5 Temps needs @ 204.4, 260.0, 315.6, 371.1, 426.7 C",8,363
+695,2025-01-14 15:51:27.195931,Plate Pitch 5.7 Length 630mm,29,362
+696,2025-01-14 16:01:29.115800,Plate Pitch 5.7 Length 625mm,29,364
+697,2025-01-14 16:05:21.147610,See STOMPI for complete test conditions.,6,365
+698,2025-01-14 16:10:47.826822,See STOMPI for complete test conditions.,6,367
+699,2025-01-14 16:19:38.568361,See STOMPI for complete test conditions.,6,368
+700,2025-01-14 16:25:05.990918,See STOMPI for complete test conditions.,6,369
+701,2025-01-14 16:26:46.503613,K estimated to be 48,1,366
+702,2025-01-14 16:29:03.481908,See STOMPI for complete test conditions.,6,370
+703,2025-01-14 16:33:00.627125,See STOMPI for complete test conditions.,6,371
+704,2025-01-14 16:37:24.430117,Prequal for TVA Kingston,1,366
+705,2025-01-14 20:02:56.516621,"Ugs was determined by depth of 82mm, if length is anything other than this, then Ugs needs to be adjusted to keep SV at 125,000/hr",8,372
+706,2025-01-14 20:03:38.186260,"Please determine CO ox at: 176.7, 232.2, 287.8, 343.3, 426.7 C",8,372
+707,2025-01-14 21:15:07.412110,No SV to check on this one! Ugs is set.,8,373
+708,2025-01-14 21:15:45.578612,"Please obtain CO ox at 176.7, 232.2, 287.8, 343.3, 426.7 C",8,373
+709,2025-01-15 09:43:47.333140,See STOMPI for complete test conditions.,6,374
+710,2025-01-15 09:49:02.277014,See STOMPI for complete test conditions.,6,375
+711,2025-01-15 09:53:33.927718,See STOMPI for complete test conditions.,6,376
+712,2025-01-15 11:15:05.231334,See STOMPI for complete test conditions.,6,377
+713,2025-01-15 11:19:19.517471,See STOMPI for complete test conditions.,6,378
+714,2025-01-15 11:19:26.684794,"Generic Sample ID, actual Sample ID TBD.",6,378
+715,2025-01-15 11:22:41.619709,See STOMPI for complete test conditions.,6,379
+716,2025-01-15 11:22:45.294736,"Generic Sample ID, actual Sample ID TBD.",6,379
+717,2025-01-15 11:27:09.119508,See STOMPI for complete test conditions.,6,380
+718,2025-01-15 11:27:13.199360,"Generic Sample ID, actual Sample ID TBD.",6,380
+719,2025-01-15 11:30:23.205086,See STOMPI for complete test conditions.,6,381
+720,2025-01-15 11:30:26.673906,"Generic Sample ID, actual Sample ID TBD.",6,381
+721,2025-01-15 11:34:00.219728,See STOMPI for complete test conditions.,6,382
+722,2025-01-15 11:34:12.991272,.,6,382
+723,2025-01-15 11:37:34.366519,See STOMPI for complete test conditions.,6,383
+724,2025-01-15 11:37:39.488809,"Generic Sample ID, actual Sample ID TBD.",6,383
+725,2025-01-15 11:47:12.118201,See STOMPI for complete test conditions.,6,384
+726,2025-01-15 11:50:05.779447,See STOMPI for complete test conditions.,6,385
+727,2025-01-15 11:50:09.274474,"Generic Sample ID, actual Sample ID TBD.",6,385
+728,2025-01-15 11:53:17.871801,See STOMPI for complete test conditions.,6,386
+729,2025-01-15 11:55:55.612456,See STOMPI for complete test conditions.,6,387
+730,2025-01-15 11:58:14.691872,See STOMPI for complete test conditions.,6,388
+731,2025-01-15 16:40:29.161502,Product Spec CM14ST Target Length 84 Target AP 2350,8,389
+732,2025-01-15 16:40:54.803151,K estimate - 85,8,389
+733,2025-01-16 13:25:08.523297,Steele Creek Format Reporting is required for these.,8,390
+734,2025-01-16 13:25:17.122625,Please add actual face velocity to report (5.3m/s) and report for 735 deg F instead of deg C,8,390
+735,2025-01-16 13:27:06.872689,expected K L1: 38 L2:29 L3:17,8,390
+736,2025-01-16 13:28:25.414431,All plates are ~5.7mm pitch,8,390
+737,2025-01-16 16:10:43.636078,Product Spec CM21 Length 215 Target AP 1629,8,392
+738,2025-01-16 16:11:07.667768,K estimate - 63,8,392
+739,2025-01-17 16:39:42.068481,CERAM HC Pitch 6.7 mm || Length 1130 mm || AP 511 m2/m3,29,393
+740,2025-01-21 12:50:49.426190,See STOMPI for complete test conditions.,6,396
+741,2025-01-21 13:05:34.647595,See STOMPI for complete test conditions.,6,397
+742,2025-01-21 13:05:41.250315,"Generic Sample ID, actual Sample ID TBD.",6,397
+743,2025-01-21 13:06:23.968618,"1st layer is ST catalyst (6376), 2nd layer is M3c catalyst (6381).",6,397
+744,2025-01-21 14:11:16.383078,See STOMPI for complete test conditions.,6,398
+745,2025-01-21 14:12:03.025593,"Load PN 6318 (ET Material) as 1st layer, PN 6317 (MM Material) as 2nd layer.",6,398
+746,2025-01-21 14:19:57.226270,See STOMPI for complete test conditions.,6,399
+747,2025-01-21 14:31:32.041999,See STOMPI for complete test conditions.,6,400
+748,2025-01-21 14:31:37.358272,"Generic Sample ID, actual Sample ID TBD.",6,400
+749,2025-01-21 14:40:36.018267,See STOMPI for complete test conditions.,6,401
+750,2025-01-21 14:40:40.518665,"Generic Sample ID, actual Sample ID TBD.",6,401
+751,2025-01-21 14:43:37.043461,See STOMPI for complete test conditions.,6,402
+752,2025-01-21 14:43:40.667542,"Generic Sample ID, actual Sample ID TBD.",6,402
+753,2025-01-21 14:47:57.881350,See STOMPI for complete test conditions.,6,403
+754,2025-01-21 14:48:02.925390,"Generic Sample ID, actual Sample ID TBD.",6,403
+755,2025-01-21 14:53:08.163068,See STOMPI for complete test conditions.,6,404
+756,2025-01-21 14:53:12.254892,"Generic Sample ID, actual Sample ID TBD.",6,404
+757,2025-01-21 14:58:09.767611,Also need to run S12-17MTc Standard Activity Test Condition.,6,401
+758,2025-01-22 09:49:24.780140,See STOMPI for complete test conditions.,6,405
+759,2025-01-22 09:49:28.823257,"Generic Sample ID, actual Sample ID TBD.",6,405
+760,2025-01-22 09:56:05.429725,See STOMPI for complete test conditions.,6,406
+761,2025-01-22 09:56:10.352671,"Generic Sample ID, actual Sample ID TBD.",6,406
+762,2025-01-22 10:01:17.119755,See STOMPI for complete test conditions.,6,407
+763,2025-01-22 10:01:21.088793,"Generic Sample ID, actual Sample ID TBD.",6,407
+764,2025-01-22 10:25:08.320509,See STOMPI for complete test conditions.,6,408
+765,2025-01-22 10:25:12.691395,"Generic Sample ID, actual Sample ID TBD.",6,408
+766,2025-01-22 10:28:33.835656,See STOMPI for complete test conditions.,6,409
+767,2025-01-22 10:28:37.549796,"Generic Sample ID, actual Sample ID TBD.",6,409
+768,2025-01-22 10:31:58.989693,See STOMPI for complete test conditions.,6,410
+769,2025-01-22 10:32:03.978319,"Generic Sample ID, actual Sample ID TBD.",6,410
+770,2025-01-22 12:21:06.696518,See STOMPI for complete test conditions.,6,411
+771,2025-01-22 12:21:10.288294,"Generic Sample ID, actual Sample ID TBD.",6,411
+772,2025-01-22 12:23:48.065694,See STOMPI for complete test conditions.,6,412
+773,2025-01-22 12:23:52.688000,"Generic Sample ID, actual Sample ID TBD.",6,412
+774,2025-01-22 12:26:22.244847,See STOMPI for complete test conditions.,6,413
+775,2025-01-22 12:26:27.768095,"Generic Sample ID, actual Sample ID TBD.",6,413
+776,2025-01-22 12:29:12.733666,See STOMPI for complete test conditions.,6,414
+777,2025-01-22 12:29:17.049001,"Generic Sample ID, actual Sample ID TBD.",6,414
+778,2025-01-22 12:33:03.900630,See STOMPI for complete test conditions.,6,415
+779,2025-01-22 12:33:07.780314,"Generic Sample ID, actual Sample ID TBD.",6,415
+780,2025-01-22 12:36:40.454516,See STOMPI for complete test conditions.,6,416
+781,2025-01-22 12:36:43.850170,"Generic Sample ID, actual Sample ID TBD.",6,416
+782,2025-01-22 15:49:11.247600,See STOMPI for complete test conditions.,6,417
+783,2025-01-22 16:00:25.103822,See STOMPI for complete test conditions.,6,418
+784,2025-01-22 16:02:22.563520,"Generic Sample ID entered for LL4, actual Sample ID TBD.",6,418
+785,2025-01-22 16:11:06.129757,See STOMPI for complete test conditions.,6,419
+786,2025-01-22 16:29:50.070963,See STOMPI for complete test conditions.,6,420
+787,2025-01-22 16:29:55.371859,"Generic Sample ID, actual Sample ID TBD.",6,420
+788,2025-01-22 16:35:17.983345,See STOMPI for complete test conditions.,6,421
+789,2025-01-22 16:38:56.230315,See STOMPI for complete test conditions.,6,422
+790,2025-01-23 09:53:13.205274,See STOMPI for complete test conditions.,6,423
+791,2025-01-23 09:53:22.410375,"Generic Sample IDs, actual Sample IDs TBD.",6,423
+792,2025-01-23 10:00:09.758298,See STOMPI for complete test conditions.,6,424
+793,2025-01-23 10:00:17.652435,"Generic Sample IDs, actual Sample IDs TBD.",6,424
+794,2025-01-23 10:06:38.128630,See STOMPI for complete test conditions.,6,425
+795,2025-01-23 10:06:45.588155,"Generic Sample IDs, actual Sample IDs TBD.",6,425
+796,2025-01-23 10:19:04.941727,See STOMPI for complete test conditions.,6,426
+797,2025-01-23 10:19:10.283373,"Generic Sample ID, actual Sample ID TBD.",6,426
+798,2025-01-23 10:21:51.963141,See STOMPI for complete test conditions.,6,427
+799,2025-01-23 10:21:55.834994,"Generic Sample ID, actual Sample ID TBD.",6,427
+800,2025-01-23 10:26:38.592929,See STOMPI for complete test conditions.,6,428
+801,2025-01-23 10:26:43.626073,"Generic Sample IDs, actual Sample IDs TBD.",6,428
+802,2025-01-23 10:37:00.039942,See STOMPI for complete test conditions.,6,429
+803,2025-01-23 10:37:04.642308,"Generic Sample IDs, actual Sample IDs TBD.",6,429
+804,2025-01-23 10:42:03.526098,See STOMPI for complete test conditions.,6,430
+805,2025-01-23 10:42:07.781658,"Generic Sample IDs, actual Sample IDs TBD.",6,430
+806,2025-01-23 10:45:49.794154,See STOMPI for complete test conditions.,6,431
+807,2025-01-23 10:45:53.971733,"Generic Sample ID, actual Sample ID TBD.",6,431
+808,2025-01-23 10:48:30.419487,See STOMPI for complete test conditions.,6,432
+809,2025-01-23 10:48:34.911889,"Generic Sample ID, actual Sample ID TBD.",6,432
+810,2025-01-23 15:19:03.537401,Dominion CO plate L 57,11,433
+811,2025-01-23 15:19:18.813424,**5 POINT CO TEST - 240 275 310 345 380 C**,11,433
+812,2025-01-23 16:57:48.282983,Target Length 361 Target AP 1668 CM21+,8,434
+813,2025-01-23 16:58:06.652413,K guess 55,8,434
+814,2025-01-29 15:25:12.444310,Must cut 2 samples from the element for the 1/4 bench.,8,435
+815,2025-01-29 15:25:44.625063,2 Layers!,8,435
+816,2025-01-29 15:27:02.722043,Product Spec CM33T Target Length 340 Target AP 1065,8,435
+817,2025-01-29 15:27:19.947723,K guess - 51,8,435
+818,2025-01-30 15:59:55.582236,Temperature decreased to match order 2500044.  Will give slightly conservative results for solaris.,1,336
+819,2025-01-30 16:12:57.503688,**5 POINT CO TEST - 240 275 310 345 380 C**,11,437
+820,2025-01-30 16:15:00.965778,OGE S21-15MPb AP 1709 L 165,11,437
+821,2025-01-30 16:15:13.814266,Please run the CO ramp first,11,437
+822,2025-01-30 17:19:49.502700,"Element is only 143 mm, so FF and 'rear' are requested. This request is expedited. A separate order for activity testing will be entered.",8,438
+823,2025-01-30 17:29:42.041661,S14-15MTb 144mm AP 2445,8,439
+824,2025-01-30 17:30:33.581406,No K guess as I don't have hours or prior testing. Ko design was 42,8,439
+825,2025-01-30 18:38:31.624265,Plate Pitch 5.7 Length 630mm,29,394
+826,2025-01-31 14:39:59.184335,See STOMPI for complete test conditions.,6,440
+827,2025-02-05 11:57:46.037129,Plate || Pitch 5.7mm || Length 625 mm || AP 351,29,442
+828,2025-02-05 12:00:03.089459,Plate || Pitch 5.7mm || Length 625 mm || AP 351,29,443
+829,2025-02-05 12:11:09.760992,Please lightly clean sample prior to testing.  Will need to test on 1/4 bench,8,391
+830,2025-02-05 12:12:32.044817,S33-15STa 744mm K in range of 38-58,8,391
+831,2025-02-05 15:08:15.798540,Please only test this if there are sections available OTHER than the quarter bench section.,11,445
+832,2025-02-05 16:36:35.365585,"There is only 1 test needed. I could not delete the 2nd test, but the conditions are the same.",8,391
+833,2025-02-07 13:18:56.223623,S12-17STc Target Length 72 Target AP 2725,8,446
+834,2025-02-07 13:19:17.147096,K expected 90-98 based on Ko @98.,8,446
+835,2025-02-07 13:19:35.846743,Note that CO oxidation is also requested,8,446
+836,2025-02-07 16:59:13.124848,Pitch 5.7 || Length 670 || AP 351,29,448
+837,2025-02-07 19:23:12.209487,Pitch 5.7 || Length 625 || AP 351,29,447
+838,2025-02-07 19:40:29.870011,Pitch 5.7mm || Length 625 mm || AP 351,29,449
+839,2025-02-11 15:57:06.200630,HIGH NO2 TEST,11,450
+840,2025-02-11 16:18:19.543793,City of Roseville CM21+ AP 1668 L 436 prev k 65,11,450
+841,2025-02-11 16:18:35.513294,This is a retest,11,450
+842,2025-02-13 19:35:54.008567,Plate || Pitch 5.7mm || Length 625 mm || AP 351,29,451
+843,2025-02-13 20:13:15.458118,Honeycomb || Pitch 8.2 || Length 1295,29,452
+844,2025-02-13 20:36:43.889474,Plate || Pitch 7.0mm || Length 625 mm || AP 285,29,453
+845,2025-02-14 11:14:02.376353,See STOMPI for complete test conditions.,6,454
+846,2025-02-14 11:14:08.437010,"Generic Sample IDs, actual Sample IDs TBD.",6,454
+847,2025-02-17 13:06:50.198509,"5 Temperatures are 162.8, 204.4, 260.0, 315.6, 398.9",8,455
+848,2025-02-24 10:47:15.413360,Plate || Pitch 7.0mm || Length 625 mm || AP 285,29,457
+849,2025-02-24 10:50:18.930749,Pitch 5.7 || Length 670 || AP 351,29,458
+850,2025-02-25 15:21:23.189129,CM21+ AP 1668 L 147,11,459
+851,2025-02-25 16:21:03.850909,CM21+ AP 1668 L 147,11,460
+852,2025-02-26 13:37:52.368453,Actual test sample ID added.  6333-0101-0007,6,381
+853,2025-02-26 14:13:48.773530,"Actual sample IDs added for testing.  Load PN 6376 sample as 1st layer, load PN 6381 sample as 2nd layer.",6,397
+854,2025-02-26 14:23:22.466716,PCN 6349 = ET Layer = Layer 1     /     PCN 6350 = MM Layer = Layer 2,6,406
+855,2025-02-26 14:44:21.018343,See STOMPI for complete test conditions.,6,461
+856,2025-02-26 14:44:26.415303,"Generic Sample ID, actual Sample ID TBD.",6,461
+857,2025-02-26 14:53:23.398816,See STOMPI for complete test conditions.,6,462
+858,2025-02-26 14:53:28.681333,"Generic Sample ID, actual Sample ID TBD.",6,462
+859,2025-02-26 15:06:24.524805,See STOMPI for complete test conditions.,6,463
+860,2025-02-26 15:06:30.081034,"Generic Sample IDs, actual Sample IDs TBD.",6,463
+861,2025-02-26 15:07:20.674102,PCN 6401 = ET Layer = Layer 1     /     PCN 6402 = MM Layer = Layer 2,6,463
+862,2025-02-26 16:16:29.703556,See STOMPI for complete test conditions.,6,464
+863,2025-02-26 16:16:34.759190,"Generic Sample ID, actual Sample ID TBD.",6,464
+864,2025-02-26 16:22:32.962477,See STOMPI for complete test conditions.,6,465
+865,2025-02-26 16:22:37.324141,"Generic Sample ID, actual Sample ID TBD.",6,465
+866,2025-02-26 16:29:28.189969,See STOMPI for complete test conditions.,6,466
+867,2025-02-26 16:29:32.946063,"Generic Sample ID, actual Sample ID TBD.",6,466
+868,2025-02-26 16:35:06.586661,See STOMPI for complete test conditions.,6,467
+869,2025-02-26 16:35:11.330112,"Generic Sample ID, actual Sample ID TBD.",6,467
+870,2025-02-27 09:38:02.191563,See STOMPI for complete test conditions.,6,468
+871,2025-02-27 09:38:21.552106,2 layer test.  2 layers of 6371-0101-0201.,6,468
+872,2025-02-27 10:53:54.191877,Actual sample IDs added for testing.,6,425
+873,2025-02-27 10:55:45.941123,Actual sample ID added for testing.,6,383
+874,2025-02-27 10:57:34.344335,Actual sample ID added for testing.,6,411
+875,2025-02-27 12:09:38.298263,"Generic Sample ID, actual Sample ID TBD.",6,469
+876,2025-02-27 12:09:53.952564,Standard Activity Test only.,6,469
+877,2025-02-27 12:24:09.912365,Will need to be tested in Micro.,6,470
+878,2025-02-27 12:24:14.182250,See STOMPI for complete test conditions.,6,470
+879,2025-02-27 12:24:20.230807,"Generic Sample ID, actual Sample ID TBD.",6,470
+880,2025-02-27 12:24:41.550732,Single layer test for Standard Test Condition.,6,470
+881,2025-02-27 12:48:27.644436,See STOMPI for complete test conditions.,6,471
+882,2025-02-27 12:48:31.341403,"Generic Sample ID, actual Sample ID TBD.",6,471
+883,2025-02-27 12:53:32.295406,See STOMPI for complete test conditions.,6,472
+884,2025-02-27 12:53:35.913472,"Generic Sample ID, actual Sample ID TBD.",6,472
+885,2025-02-27 12:56:36.914410,See STOMPI for complete test conditions.,6,473
+886,2025-02-27 12:56:40.650429,"Generic Sample ID, actual Sample ID TBD.",6,473
+887,2025-02-27 13:10:31.345957,See STOMPI for complete test conditions.,6,474
+888,2025-02-27 13:10:35.951813,"Generic Sample ID, actual Sample ID TBD.",6,474
+889,2025-02-27 13:17:14.341296,See STOMPI for complete test conditions.,6,475
+890,2025-02-27 13:17:18.456334,"Generic Sample ID, actual Sample ID TBD.",6,475
+891,2025-02-27 15:41:46.989871,See STOMPI for complete test conditions.,6,476
+892,2025-02-27 15:41:51.741492,"Generic Sample IDs, actual Sample IDs TBD.",6,476
+893,2025-02-27 15:48:23.626677,"Can use element 6338-0101-0546 for 2nd layer of test load, if desired.",6,354
+894,2025-02-28 12:30:16.849052,See STOMPI for complete test conditions.,6,477
+895,2025-02-28 12:30:21.336553,"Generic Sample IDs, actual Sample IDs TBD.",6,477
+896,2025-02-28 12:35:44.933752,Previous LR 25-00005,11,478
+897,2025-02-28 12:36:14.878352,See STOMPI for complete test conditions.,6,479
+898,2025-02-28 12:36:19.853536,"Generic Sample ID, actual Sample ID TBD.",6,479
+899,2025-02-28 12:37:03.864217,**5 POINT CO TEST - 240 275 310 345 380 C**,11,478
+900,2025-02-28 12:39:41.956067,See STOMPI for complete test conditions.,6,480
+901,2025-02-28 12:39:45.802276,"Generic Sample ID, actual Sample ID TBD.",6,480
+902,2025-02-28 12:52:10.972735,Actual sample ID added for testing.,6,475
+903,2025-02-28 13:01:26.406465,Actual sample ID added for testing.,6,420
+904,2025-02-28 13:01:37.038977,Actual sample ID added for testing.,6,426
+905,2025-02-28 13:01:48.239903,Actual sample ID added for testing.,6,427
+906,2025-02-28 13:02:38.810537,Actual sample ID added for testing.,6,367
+907,2025-02-28 13:03:00.126229,Actual sample ID added for testing.,6,409
+908,2025-02-28 13:09:00.327020,Waiting on new test sample with higher Pt loading to arrive from Cleveland in Durham.,6,351
+909,2025-02-28 13:16:50.668471,See STOMPI for complete test conditions.,6,481
+910,2025-02-28 13:16:55.633515,"Generic Sample IDs, actual Sample IDs TBD.",6,481
+911,2025-02-28 13:28:21.716663,Actual sample IDs added for testing.,6,424
+912,2025-02-28 13:47:37.417984,These tests are already completed.  Lab request entered post testing.,6,482
+913,2025-02-28 14:30:11.019037,See STOMPI for complete test conditions.,6,483
+914,2025-02-28 14:30:15.425884,"Generic Sample IDs, actual Sample IDs TBD.",6,483
+915,2025-02-28 14:37:16.184499,See STOMPI for complete test conditions.,6,484
+916,2025-02-28 14:37:21.477193,"Generic Sample IDs, actual Sample IDs TBD.",6,484
+917,2025-02-28 14:40:51.217732,"Generic Sample ID, actual Sample ID TBD.",6,357
+918,2025-02-28 14:46:13.170395,See STOMPI for complete test conditions.,6,485
+919,2025-02-28 14:46:17.929243,"Generic Sample IDs, actual Sample IDs TBD.",6,485
+920,2025-03-03 10:01:47.011173,Plate || Pitch 5.7mm || Length 625 mm || AP 351,29,486
+921,2025-03-03 10:05:04.444145,Plate || Pitch 5.7mm || Length 625 mm || AP 351,29,487
+922,2025-03-03 12:51:04.939531,Target Length 1136 Product Spec	S42-15STc AP-825,8,488
+923,2025-03-03 12:52:04.992801,"No K guess, less than 54.8",8,488
+924,2025-03-03 12:52:26.278032,"The sample is broken, but should be testable. Please confirm.",8,488
+925,2025-03-03 14:46:25.886426,Actual sample ID added for testing.,6,385
+926,2025-03-04 12:27:27.590933,Test strategy and conditions were updated in STOMPI on 3/4/2025.  Test sheet updated to reflect revised strategy and conditions.  Please see STOMPI for updated conditions.,6,397
+927,2025-03-05 18:29:02.488364,CM21TG-ACT,12,489
+928,2025-03-05 18:29:10.819898,156mm,12,489
+929,2025-03-05 18:29:15.832110,1715,12,489
+930,2025-03-05 18:29:38.431251,"NRG Energy, Saguaro",12,489
+931,2025-03-05 18:29:46.435987,1 layer,12,489
+932,2025-03-05 18:29:58.726180,Unit 1,12,489
+933,2025-03-05 18:30:06.178874,72-75,12,489

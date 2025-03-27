@@ -1,0 +1,801 @@
+Install & Import
+pip install streamlit
+
+streamlit run first_app.py
+
+# Import convention
+>>> import streamlit as st
+Pre-release features
+pip uninstall streamlit
+pip install streamlit-nightly --upgrade
+Learn more about experimental features
+
+Command line
+streamlit --help
+streamlit run your_script.py
+streamlit hello
+streamlit config show
+streamlit cache clear
+streamlit docs
+streamlit --version
+Magic commands
+# Magic commands implicitly
+# call st.write().
+"_This_ is some **Markdown**"
+my_variable
+"dataframe:", my_data_frame
+
+Display text
+st.write("Most objects") # df, err, func, keras!
+st.write(["st", "is <", 3])
+st.write_stream(my_generator)
+st.write_stream(my_llm_stream)
+
+st.text("Fixed width text")
+st.markdown("_Markdown_")
+st.latex(r""" e^{i\pi} + 1 = 0 """)
+st.title("My title")
+st.header("My header")
+st.subheader("My sub")
+st.code("for i in range(8): foo()")
+st.html("<p>Hi!</p>")
+Display data
+st.dataframe(my_dataframe)
+st.table(data.iloc[0:10])
+st.json({"foo":"bar","fu":"ba"})
+st.metric("My metric", 42, 2)
+
+Display media
+st.image("./header.png")
+st.audio(data)
+st.video(data)
+st.video(data, subtitles="./subs.vtt")
+st.logo("logo.jpg")
+Display charts
+st.area_chart(df)
+st.bar_chart(df)
+st.bar_chart(df, horizontal=True)
+st.line_chart(df)
+st.map(df)
+st.scatter_chart(df)
+
+st.altair_chart(chart)
+st.bokeh_chart(fig)
+st.graphviz_chart(fig)
+st.plotly_chart(fig)
+st.pydeck_chart(chart)
+st.pyplot(fig)
+st.vega_lite_chart(df, spec)
+
+# Work with user selections
+event = st.plotly_chart(
+    df,
+    on_select="rerun"
+)
+event = st.altair_chart(
+    chart,
+    on_select="rerun"
+)
+event = st.vega_lite_chart(
+    df,
+    spec,
+    on_select="rerun"
+)
+To use newer versions of Bokeh, see our custom component streamlit-bokeh.
+
+Add elements to sidebar
+# Just add it after st.sidebar:
+a = st.sidebar.radio("Select one:", [1, 2])
+
+# Or use "with" notation:
+with st.sidebar:
+    st.radio("Select one:", [1, 2])
+Columns
+# Two equal columns:
+col1, col2 = st.columns(2)
+col1.write("This is column 1")
+col2.write("This is column 2")
+
+# Three different columns:
+col1, col2, col3 = st.columns([3, 1, 1])
+# col1 is larger.
+
+# Bottom-aligned columns
+col1, col2 = st.columns(2, vertical_alignment="bottom")
+
+# You can also use "with" notation:
+with col1:
+    st.radio("Select one:", [1, 2])
+Tabs
+# Insert containers separated into tabs:
+tab1, tab2 = st.tabs(["Tab 1", "Tab2"])
+tab1.write("this is tab 1")
+tab2.write("this is tab 2")
+
+# You can also use "with" notation:
+with tab1:
+    st.radio("Select one:", [1, 2])
+Expandable containers
+expand = st.expander("My label", icon=":material/info:")
+expand.write("Inside the expander.")
+pop = st.popover("Button label")
+pop.checkbox("Show all")
+
+# You can also use "with" notation:
+with expand:
+    st.radio("Select one:", [1, 2])
+Control flow
+# Stop execution immediately:
+st.stop()
+# Rerun script immediately:
+st.rerun()
+# Navigate to another page:
+st.switch_page("pages/my_page.py")
+
+# Define a navigation widget in your entrypoint file
+pg = st.navigation(
+    st.Page("page1.py", title="Home", url_path="home", default=True)
+    st.Page("page2.py", title="Preferences", url_path="settings")
+)
+pg.run()
+
+# Group multiple widgets:
+with st.form(key="my_form"):
+    username = st.text_input("Username")
+    password = st.text_input("Password")
+    st.form_submit_button("Login")
+
+# Define a dialog function
+@st.dialog("Welcome!")
+def modal_dialog():
+    st.write("Hello")
+
+modal_dialog()
+
+# Define a fragment
+@st.fragment
+def fragment_function():
+    df = get_data()
+    st.line_chart(df)
+    st.button("Update")
+
+fragment_function()
+Display interactive widgets
+st.button("Click me")
+st.download_button("Download file", data)
+st.link_button("Go to gallery", url)
+st.page_link("app.py", label="Home")
+st.data_editor("Edit data", data)
+st.checkbox("I agree")
+st.feedback("thumbs")
+st.pills("Tags", ["Sports", "Politics"])
+st.radio("Pick one", ["cats", "dogs"])
+st.segmented_control("Filter", ["Open", "Closed"])
+st.toggle("Enable")
+st.selectbox("Pick one", ["cats", "dogs"])
+st.multiselect("Buy", ["milk", "apples", "potatoes"])
+st.slider("Pick a number", 0, 100)
+st.select_slider("Pick a size", ["S", "M", "L"])
+st.text_input("First name")
+st.number_input("Pick a number", 0, 10)
+st.text_area("Text to translate")
+st.date_input("Your birthday")
+st.time_input("Meeting time")
+st.file_uploader("Upload a CSV")
+st.audio_input("Record a voice message")
+st.camera_input("Take a picture")
+st.color_picker("Pick a color")
+
+# Use widgets' returned values in variables:
+for i in range(int(st.number_input("Num:"))):
+    foo()
+if st.sidebar.selectbox("I:",["f"]) == "f":
+    b()
+my_slider_val = st.slider("Quinn Mallory", 1, 88)
+st.write(slider_val)
+
+# Disable widgets to remove interactivity:
+st.slider("Pick a number", 0, 100, disabled=True)
+Build chat-based apps
+# Insert a chat message container.
+with st.chat_message("user"):
+    st.write("Hello 👋")
+    st.line_chart(np.random.randn(30, 3))
+
+# Display a chat input widget at the bottom of the app.
+st.chat_input("Say something")
+
+# Display a chat input widget inline.
+with st.container():
+    st.chat_input("Say something")
+Learn how to Build a basic LLM chat app
+
+Mutate data
+# Add rows to a dataframe after
+# showing it.
+element = st.dataframe(df1)
+element.add_rows(df2)
+
+# Add rows to a chart after
+# showing it.
+element = st.line_chart(df1)
+element.add_rows(df2)
+Display code
+with st.echo():
+    st.write("Code will be executed and printed")
+Placeholders, help, and options
+# Replace any single element.
+element = st.empty()
+element.line_chart(...)
+element.text_input(...)  # Replaces previous.
+
+# Insert out of order.
+elements = st.container()
+elements.line_chart(...)
+st.write("Hello")
+elements.text_input(...)  # Appears above "Hello".
+
+st.help(pandas.DataFrame)
+st.get_option(key)
+st.set_option(key, value)
+st.set_page_config(layout="wide")
+st.query_params[key]
+st.query_params.from_dict(params_dict)
+st.query_params.get_all(key)
+st.query_params.clear()
+st.html("<p>Hi!</p>")
+Connect to data sources
+st.connection("pets_db", type="sql")
+conn = st.connection("sql")
+conn = st.connection("snowflake")
+
+class MyConnection(BaseConnection[myconn.MyConnection]):
+    def _connect(self, **kwargs) -> MyConnection:
+        return myconn.connect(**self._secrets, **kwargs)
+    def query(self, query):
+        return self._instance.query(query)
+Optimize performance
+Cache data objects
+# E.g. Dataframe computation, storing downloaded data, etc.
+@st.cache_data
+def foo(bar):
+    # Do something expensive and return data
+    return data
+# Executes foo
+d1 = foo(ref1)
+# Does not execute foo
+# Returns cached item by value, d1 == d2
+d2 = foo(ref1)
+# Different arg, so function foo executes
+d3 = foo(ref2)
+# Clear the cached value for foo(ref1)
+foo.clear(ref1)
+# Clear all cached entries for this function
+foo.clear()
+# Clear values from *all* in-memory or on-disk cached functions
+st.cache_data.clear()
+Cache global resources
+# E.g. TensorFlow session, database connection, etc.
+@st.cache_resource
+def foo(bar):
+    # Create and return a non-data object
+    return session
+# Executes foo
+s1 = foo(ref1)
+# Does not execute foo
+# Returns cached item by reference, s1 == s2
+s2 = foo(ref1)
+# Different arg, so function foo executes
+s3 = foo(ref2)
+# Clear the cached value for foo(ref1)
+foo.clear(ref1)
+# Clear all cached entries for this function
+foo.clear()
+# Clear all global resources from cache
+st.cache_resource.clear()
+Display progress and status
+# Show a spinner during a process
+with st.spinner(text="In progress"):
+    time.sleep(3)
+    st.success("Done")
+
+# Show and update progress bar
+bar = st.progress(50)
+time.sleep(3)
+bar.progress(100)
+
+with st.status("Authenticating...") as s:
+    time.sleep(2)
+    st.write("Some long response.")
+    s.update(label="Response")
+
+st.balloons()
+st.snow()
+st.toast("Warming up...")
+st.error("Error message")
+st.warning("Warning message")
+st.info("Info message")
+st.success("Success message")
+st.exception(e)
+Personalize apps for users
+# Authenticate users
+if not st.experimental_user.is_logged_in:
+    st.login("my_provider")
+f"Hi, {st.experimental_user.name}"
+st.logout()
+
+# Get dictionaries of cookies and headers
+st.context.cookies
+st.context.headers
+
+Dataframes
+Dataframes are a great way to display and edit data in a tabular format. Working with Pandas DataFrames and other tabular data structures is key to data science workflows. If developers and data scientists want to display this data in Streamlit, they have multiple options: st.dataframe and st.data_editor. If you want to solely display data in a table-like UI, st.dataframe is the way to go. If you want to interactively edit data, use st.data_editor. We explore the use cases and advantages of each option in the following sections.
+
+Display dataframes with st.dataframe
+Streamlit can display dataframes in a table-like UI via st.dataframe :
+
+import streamlit as st
+import pandas as pd
+
+df = pd.DataFrame(
+    [
+        {"command": "st.selectbox", "rating": 4, "is_widget": True},
+        {"command": "st.balloons", "rating": 5, "is_widget": False},
+        {"command": "st.time_input", "rating": 3, "is_widget": True},
+    ]
+)
+
+st.dataframe(df, use_container_width=True)
+
+Built with Streamlit 🎈
+Fullscreen
+open_in_new
+st.dataframe UI features
+st.dataframe provides additional functionality by using glide-data-grid under the hood:
+
+Column sorting: To sort columns, select their headers, or select "Sort ascending" or "Sort descending" from the header menu (more_vert).
+Column resizing: To resize columns, drag and drop column header borders, or select "Autosize" from the header menu.
+Column hiding: To hide columns, select "Hide column" from the header menu.
+Reorder and pin columns: To reorder columns or pin them on the left, drag and drop column headers or select "Pin column" from the header menu, respectively.
+Format numbers, dates, and times: To change the format of numeric columns, select an option under "Format" in the header menu.
+Dataframe resizing: To resize dataframes, drag and drop the bottom right corner.
+Fullscreen view: To enlarge dataframes to fullscreen, select the fullscreen icon (fullscreen) in the toolbar.
+Search: To search through the data, select the search icon (search) in the toolbar or use hotkeys (⌘+F or Ctrl+F).
+Download: To download the data as a CSV file, select the download icon (download) in the toolbar.
+Copy to clipboard: To copy the data to the clipboard, select one or multiple cells, use the hotkeys (⌘+C or Ctrl+C), and paste them into your favorite spreadsheet software.
+
+Try out all the UI features using the embedded app from the prior section.
+
+In addition to Pandas DataFrames, st.dataframe also supports other common Python types, e.g., list, dict, or numpy array. It also supports Snowpark and PySpark DataFrames, which allow you to lazily evaluate and pull data from databases. This can be useful for working with large datasets.
+
+Edit data with st.data_editor
+Streamlit supports editable dataframes via the st.data_editor command. Check out its API in st.data_editor. It shows the dataframe in a table, similar to st.dataframe. But in contrast to st.dataframe, this table isn't static! The user can click on cells and edit them. The edited data is then returned on the Python side. Here's an example:
+
+df = pd.DataFrame(
+    [
+        {"command": "st.selectbox", "rating": 4, "is_widget": True},
+        {"command": "st.balloons", "rating": 5, "is_widget": False},
+        {"command": "st.time_input", "rating": 3, "is_widget": True},
+    ]
+)
+
+edited_df = st.data_editor(df) # 👈 An editable dataframe
+
+favorite_command = edited_df.loc[edited_df["rating"].idxmax()]["command"]
+st.markdown(f"Your favorite command is **{favorite_command}** 🎈")
+
+Built with Streamlit 🎈
+Fullscreen
+open_in_new
+Try it out by double-clicking on any cell. You'll notice you can edit all cell values. Try editing the values in the rating column and observe how the text output at the bottom changes:
+
+st.data_editor UI features
+st.data_editor also supports a few additional things:
+
+Add and delete rows: You can do this by setting num_rows= "dynamic" when calling st.data_editor. This will allow users to add and delete rows as needed.
+Copy and paste support: Copy and paste both between st.data_editor and spreadsheet software like Google Sheets and Excel.
+Access edited data: Access only the individual edits instead of the entire edited data structure via Session State.
+Bulk edits: Similar to Excel, just drag a handle to edit neighboring cells.
+Automatic input validation: Column Configuration provides strong data type support and other configurable options. For example, there's no way to enter letters into a number cell. Number cells can have a designated min and max.
+Edit common data structures: st.data_editor supports lists, dicts, NumPy ndarray, and more!
+
+Add and delete rows
+With st.data_editor, viewers can add or delete rows via the table UI. This mode can be activated by setting the num_rows parameter to "dynamic":
+
+edited_df = st.data_editor(df, num_rows="dynamic")
+To add new rows, click the plus icon (add) in the toolbar. Alternatively, click inside a shaded cell below the bottom row of the table.
+To delete rows, select one or more rows using the checkboxes on the left. Click the delete icon (delete) or press the delete key on your keyboard.
+
+Built with Streamlit 🎈
+Fullscreen
+open_in_new
+Copy and paste support
+The data editor supports pasting in tabular data from Google Sheets, Excel, Notion, and many other similar tools. You can also copy-paste data between st.data_editor instances. This functionality, powered by the Clipboard API, can be a huge time saver for users who need to work with data across multiple platforms. To try it out:
+
+Copy data from this Google Sheets document to your clipboard.
+Single click any cell in the name column in the app above. Paste it in using hotkeys (⌘+V or Ctrl+V).
+push_pin
+Note
+Every cell of the pasted data will be evaluated individually and inserted into the cells if the data is compatible with the column type. For example, pasting in non-numerical text data into a number column will be ignored.
+
+star
+Tip
+If you embed your apps with iframes, you'll need to allow the iframe to access the clipboard if you want to use the copy-paste functionality. To do so, give the iframe clipboard-write and clipboard-read permissions. E.g.
+
+<iframe allow="clipboard-write;clipboard-read;" ... src="https://your-app-url"></iframe>
+As developers, ensure the app is served with a valid, trusted certificate when using TLS. If users encounter issues with copying and pasting data, direct them to check if their browser has activated clipboard access permissions for the Streamlit application, either when prompted or through the browser's site settings.
+
+Access edited data
+Sometimes, it is more convenient to know which cells have been changed rather than getting the entire edited dataframe back. Streamlit makes this easy through the use of Session State. If a key parameter is set, Streamlit will store any changes made to the dataframe in Session State.
+
+This snippet shows how you can access changed data using Session State:
+
+st.data_editor(df, key="my_key", num_rows="dynamic") # 👈 Set a key
+st.write("Here's the value in Session State:")
+st.write(st.session_state["my_key"]) # 👈 Show the value in Session State
+In this code snippet, the key parameter is set to "my_key". After the data editor is created, the value associated to "my_key" in Session State is displayed in the app using st.write. This shows the additions, edits, and deletions that were made.
+
+This can be useful when working with large dataframes and you only need to know which cells have changed, rather than access the entire edited dataframe.
+
+
+Built with Streamlit 🎈
+Fullscreen
+open_in_new
+Use all we've learned so far and apply them to the above embedded app. Try editing cells, adding new rows, and deleting rows.
+
+Notice how edits to the table are reflected in Session State. When you make any edits, a rerun is triggered which sends the edits to the backend. The widget's state is a JSON object containing three properties: edited_rows, added_rows, and deleted rows:.
+
+priority_high
+Warning
+When going from st.experimental_data_editor to st.data_editor in 1.23.0, the data editor's representation in st.session_state was changed. The edited_cells dictionary is now called edited_rows and uses a different format ({0: {"column name": "edited value"}} instead of {"0:1": "edited value"}). You may need to adjust your code if your app uses st.experimental_data_editor in combination with st.session_state."
+
+edited_rows is a dictionary containing all edits. Keys are zero-based row indices and values are dictionaries that map column names to edits (e.g. {0: {"col1": ..., "col2": ...}}).
+added_rows is a list of newly added rows. Each value is a dictionary with the same format as above (e.g. [{"col1": ..., "col2": ...}]).
+deleted_rows is a list of row numbers that have been deleted from the table (e.g. [0, 2]).
+st.data_editor does not support reordering rows, so added rows will always be appended to the end of the dataframe with any edits and deletions applicable to the original rows.
+
+Bulk edits
+The data editor includes a feature that allows for bulk editing of cells. Similar to Excel, you can drag a handle across a selection of cells to edit their values in bulk. You can even apply commonly used keyboard shortcuts in spreadsheet software. This is useful when you need to make the same change across multiple cells, rather than editing each cell individually.
+
+Edit common data structures
+Editing doesn't just work for Pandas DataFrames! You can also edit lists, tuples, sets, dictionaries, NumPy arrays, or Snowpark & PySpark DataFrames. Most data types will be returned in their original format. But some types (e.g. Snowpark and PySpark) are converted to Pandas DataFrames. To learn about all the supported types, read the st.data_editor API.
+
+For example, you can easily let the user add items to a list:
+
+edited_list = st.data_editor(["red", "green", "blue"], num_rows= "dynamic")
+st.write("Here are all the colors you entered:")
+st.write(edited_list)
+Or numpy arrays:
+
+import numpy as np
+
+st.data_editor(np.array([
+	["st.text_area", "widget", 4.92],
+	["st.markdown", "element", 47.22]
+]))
+Or lists of records:
+
+st.data_editor([
+    {"name": "st.text_area", "type": "widget"},
+    {"name": "st.markdown", "type": "element"},
+])
+Or dictionaries and many more types!
+
+st.data_editor({
+	"st.text_area": "widget",
+	"st.markdown": "element"
+})
+Automatic input validation
+The data editor includes automatic input validation to help prevent errors when editing cells. For example, if you have a column that contains numerical data, the input field will automatically restrict the user to only entering numerical data. This helps to prevent errors that could occur if the user were to accidentally enter a non-numerical value. Additional input validation can be configured through the Column configuration API. Keep reading below for an overview of column configuration, including validation options.
+
+Configuring columns
+You can configure the display and editing behavior of columns in st.dataframe and st.data_editor via the Column configuration API. We have developed the API to let you add images, charts, and clickable URLs in dataframe and data editor columns. Additionally, you can make individual columns editable, set columns as categorical and specify which options they can take, hide the index of the dataframe, and much more.
+
+Column configuration includes the following column types: Text, Number, Checkbox, Selectbox, Date, Time, Datetime, List, Link, Image, Line chart, Bar chart, and Progress. There is also a generic Column option. See the embedded app below to view these different column types. Each column type is individually previewed in the Column configuration API documentation.
+
+
+Built with Streamlit 🎈
+Fullscreen
+open_in_new
+Format values
+A format parameter is available in column configuration for Text, Date, Time, and Datetime columns. Chart-like columns can also be formatted. Line chart and Bar chart columns have a y_min and y_max parameters to set the vertical bounds. For a Progress column, you can declare the horizontal bounds with min_value and max_value.
+
+Validate input
+When specifying a column configuration, you can declare not only the data type of the column but also value restrictions. All column configuration elements allow you to make a column required with the keyword parameter required=True.
+
+For Text and Link columns, you can specify the maximum number of characters with max_chars or use regular expressions to validate entries through validate. Numerical columns, including Number, Date, Time, and Datetime have min_value and max_value parameters. Selectbox columns have a configurable list of options.
+
+The data type for Number columns is float by default. Passing a value of type int to any of min_value, max_value, step, or default will set the type for the column as int.
+
+Configure an empty dataframe
+You can use st.data_editor to collect tabular input from a user. When starting from an empty dataframe, default column types are text. Use column configuration to specify the data types you want to collect from users.
+
+import streamlit as st
+import pandas as pd
+
+df = pd.DataFrame(columns=['name','age','color'])
+colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet']
+config = {
+    'name' : st.column_config.TextColumn('Full Name (required)', width='large', required=True),
+    'age' : st.column_config.NumberColumn('Age (years)', min_value=0, max_value=122),
+    'color' : st.column_config.SelectboxColumn('Favorite Color', options=colors)
+}
+
+result = st.data_editor(df, column_config = config, num_rows='dynamic')
+
+if st.button('Get results'):
+    st.write(result)
+
+Built with Streamlit 🎈
+Fullscreen
+open_in_new
+Additional formatting options
+In addition to column configuration, st.dataframe and st.data_editor have a few more parameters to customize the display of your dataframe.
+
+hide_index : Set to True to hide the dataframe's index.
+column_order : Pass a list of column labels to specify the order of display.
+disabled : Pass a list of column labels to disable them from editing. This let's you avoid disabling them individually.
+Handling large datasets
+st.dataframe and st.data_editor have been designed to theoretically handle tables with millions of rows thanks to their highly performant implementation using the glide-data-grid library and HTML canvas. However, the maximum amount of data that an app can realistically handle will depend on several other factors, including:
+
+The maximum size of WebSocket messages: Streamlit's WebSocket messages are configurable via the server.maxMessageSize config option, which limits the amount of data that can be transferred via the WebSocket connection at once.
+The server memory: The amount of data that your app can handle will also depend on the amount of memory available on your server. If the server's memory is exceeded, the app may become slow or unresponsive.
+The user's browser memory: Since all the data needs to be transferred to the user's browser for rendering, the amount of memory available on the user's device can also affect the app's performance. If the browser's memory is exceeded, it may crash or become unresponsive.
+In addition to these factors, a slow network connection can also significantly slow down apps that handle large datasets.
+
+When handling large datasets with more than 150,000 rows, Streamlit applies additional optimizations and disables column sorting. This can help to reduce the amount of data that needs to be processed at once and improve the app's performance.
+
+Limitations
+Streamlit casts all column names to strings internally, so st.data_editor will return a DataFrame where all column names are strings.
+The dataframe toolbar is not currently configurable.
+While Streamlit's data editing capabilities offer a lot of functionality, editing is enabled for a limited set of column types (TextColumn, NumberColumn, LinkColumn, CheckboxColumn, SelectboxColumn, DateColumn, TimeColumn, and DatetimeColumn). We are actively working on supporting editing for other column types as well, such as images, lists, and charts.
+Almost all editable datatypes are supported for index editing. However, pandas.CategoricalIndex and pandas.MultiIndex are not supported for editing.
+Sorting is not supported for st.data_editor when num_rows="dynamic".
+Sorting is deactivated to optimize performance on large datasets with more than 150,000 rows.
+We are continually working to improve Streamlit's handling of DataFrame and add functionality to data editing, so keep an eye out for updates.
+How Streamlit widgets store options
+Several Streamlit UI elements, such as st.selectbox or st.radio, accept multiple-choice options via an options argument. The user of your application can typically select one or more of these options. The selected value is returned by the widget function. For example:
+
+number = st.selectbox("Pick a number, any number", options=[1, 2, 3])
+# number == whatever value the user has selected from the UI.
+When you call a function like st.selectbox and pass an Iterable to options, the Iterable and current selection are saved into a hidden portion of Session State called the Widget Metadata.
+
+When the user of your application interacts with the st.selectbox widget, the broswer sends the index of their selection to your Streamlit server. This index is used to determine which values from the original options list, saved in the Widget Metadata from the previous page execution, are returned to your application.
+
+The key detail is that the value returned by st.selectbox (or similar widget function) is from an Iterable saved in Session State during a previous execution of the page, NOT the values passed to options on the current execution. There are a number of architectural reasons why Streamlit is designed this way, which we won't go into here. However, this is how we end up comparing instances of different classes when we think we are comparing instances of the same class.
+
+A pathological example
+The above explanation might be a bit confusing, so here's a pathological example to illustrate the idea.
+
+import streamlit as st
+from dataclasses import dataclass
+
+@dataclass
+class Student:
+    student_id: int
+    name: str
+
+Marshall_A = Student(1, "Marshall")
+if "B" not in st.session_state:
+    st.session_state.B = Student(1, "Marshall")
+Marshall_B = st.session_state.B
+
+options = [Marshall_A,Marshall_B]
+selected = st.selectbox("Pick", options)
+
+# This comparison does not return expected results:
+selected == Marshall_A
+# This comparison evaluates as expected:
+selected == Marshall_B
+As a final note, we used @dataclass in the example for this section to illustrate a point, but in fact it is possible to encounter these same problems with classes, in general. Any class which checks class identity inside of a comparison operator—such as __eq__ or __gt__—can exhibit these issues.
+
+Using Enum classes in Streamlit
+The Enum class from the Python standard library is a powerful way to define custom symbolic names that can be used as options for st.multiselect or st.selectbox in place of str values.
+
+For example, you might add the following to your streamlit page:
+
+from enum import Enum
+import streamlit as st
+
+# class syntax
+class Color(Enum):
+    RED = 1
+    GREEN = 2
+    BLUE = 3
+
+selected_colors = set(st.multiselect("Pick colors", options=Color))
+
+if selected_colors == {Color.RED, Color.GREEN}:
+    st.write("Hooray, you found the color YELLOW!")
+If you're using the latest version of Streamlit, this Streamlit page will work as it appears it should. When a user picks both Color.RED and Color.GREEN, they are shown the special message.
+
+However, if you've read the rest of this page you might notice something tricky going on. Specifically, the Enum class Color gets redefined every time this script is run. In Python, if you define two Enum classes with the same class name, members, and values, the classes and their members are still considered unique from each other. This should cause the above if condition to always evaluate to False. In any script rerun, the Color values returned by st.multiselect would be of a different class than the Color defined in that script run.
+
+If you run the snippet above with Streamlit version 1.28.0 or less, you will not be able see the special message. Thankfully, as of version 1.29.0, Streamlit introduced a configuration option to greatly simplify the problem. That's where the enabled-by-default enumCoercion configuration option comes in.
+
+Understanding the enumCoercion configuration option
+When enumCoercion is enabled, Streamlit tries to recognize when you are using an element like st.multiselect or st.selectbox with a set of Enum members as options.
+
+If Streamlit detects this, it will convert the widget's returned values to members of the Enum class defined in the latest script run. This is something we call automatic Enum coercion.
+
+This behavior is configurable via the enumCoercion setting in your Streamlit config.toml file. It is enabled by default, and may be disabled or set to a stricter set of matching criteria.
+
+If you find that you still encounter issues with enumCoercion enabled, consider using the custom class patterns described above, such as moving your Enum class definition to a separate module file.
+
+Widgets
+When you've got the data or model into the state that you want to explore, you can add in widgets like st.slider(), st.button() or st.selectbox(). It's really straightforward — treat widgets as variables:
+
+import streamlit as st
+x = st.slider('x')  # 👈 this is a widget
+st.write(x, 'squared is', x * x)
+On first run, the app above should output the text "0 squared is 0". Then every time a user interacts with a widget, Streamlit simply reruns your script from top to bottom, assigning the current state of the widget to your variable in the process.
+
+For example, if the user moves the slider to position 10, Streamlit will rerun the code above and set x to 10 accordingly. So now you should see the text "10 squared is 100".
+
+Widgets can also be accessed by key, if you choose to specify a string to use as the unique key for the widget:
+
+import streamlit as st
+st.text_input("Your name", key="name")
+
+# You can access the value at any point with:
+st.session_state.name
+Every widget with a key is automatically added to Session State. For more information about Session State, its association with widget state, and its limitations, see Session State API Reference Guide.
+
+Use checkboxes to show/hide data
+One use case for checkboxes is to hide or show a specific chart or section in an app. st.checkbox() takes a single argument, which is the widget label. In this sample, the checkbox is used to toggle a conditional statement.
+
+import streamlit as st
+import numpy as np
+import pandas as pd
+
+if st.checkbox('Show dataframe'):
+    chart_data = pd.DataFrame(
+       np.random.randn(20, 3),
+       columns=['a', 'b', 'c'])
+
+    chart_data
+Use a selectbox for options
+Use st.selectbox to choose from a series. You can write in the options you want, or pass through an array or data frame column.
+
+Let's use the df data frame we created earlier.
+
+import streamlit as st
+import pandas as pd
+
+df = pd.DataFrame({
+    'first column': [1, 2, 3, 4],
+    'second column': [10, 20, 30, 40]
+    })
+
+option = st.selectbox(
+    'Which number do you like best?',
+     df['first column'])
+
+'You selected: ', option
+Layout
+Streamlit makes it easy to organize your widgets in a left panel sidebar with st.sidebar. Each element that's passed to st.sidebar is pinned to the left, allowing users to focus on the content in your app while still having access to UI controls.
+
+For example, if you want to add a selectbox and a slider to a sidebar, use st.sidebar.slider and st.sidebar.selectbox instead of st.slider and st.selectbox:
+
+import streamlit as st
+
+# Add a selectbox to the sidebar:
+add_selectbox = st.sidebar.selectbox(
+    'How would you like to be contacted?',
+    ('Email', 'Home phone', 'Mobile phone')
+)
+
+# Add a slider to the sidebar:
+add_slider = st.sidebar.slider(
+    'Select a range of values',
+    0.0, 100.0, (25.0, 75.0)
+)
+Beyond the sidebar, Streamlit offers several other ways to control the layout of your app. st.columns lets you place widgets side-by-side, and st.expander lets you conserve space by hiding away large content.
+
+import streamlit as st
+
+left_column, right_column = st.columns(2)
+# You can use a column just like st.sidebar:
+left_column.button('Press me!')
+
+# Or even better, call Streamlit functions inside a "with" block:
+with right_column:
+    chosen = st.radio(
+        'Sorting hat',
+        ("Gryffindor", "Ravenclaw", "Hufflepuff", "Slytherin"))
+    st.write(f"You are in {chosen} house!")
+push_pin
+Note
+st.echo and st.spinner are not currently supported inside the sidebar or layout options. Rest assured, though, we're currently working on adding support for those too!
+
+Show progress
+When adding long running computations to an app, you can use st.progress() to display status in real time.
+
+First, let's import time. We're going to use the time.sleep() method to simulate a long running computation:
+
+import time
+Now, let's create a progress bar:
+
+import streamlit as st
+import time
+
+'Starting a long computation...'
+
+# Add a placeholder
+latest_iteration = st.empty()
+bar = st.progress(0)
+
+for i in range(100):
+  # Update the progress bar with each iteration.
+  latest_iteration.text(f'Iteration {i+1}')
+  bar.progress(i + 1)
+  time.sleep(0.1)
+
+'...and now we\'re done!'
+
+Pages
+As apps grow large, it becomes useful to organize them into multiple pages. This makes the app easier to manage as a developer and easier to navigate as a user. Streamlit provides a powerful way to create multipage apps using st.Page and st.navigation. Just create your pages and connect them with navigation as follows:
+
+Create an entry point script that defines and connects your pages
+Create separate Python files for each page's content
+Use st.Page to define your pages and st.navigation to connect them
+Here's an example of a three-page app:
+
+streamlit_app.py
+import streamlit as st
+
+# Define the pages
+main_page = st.Page("main_page.py", title="Main Page", icon="🎈")
+page_2 = st.Page("page_2.py", title="Page 2", icon="❄️")
+page_3 = st.Page("page_3.py", title="Page 3", icon="🎉")
+
+# Set up navigation
+pg = st.navigation([main_page, page_2, page_3])
+
+# Run the selected page
+pg.run()
+main_page.py
+import streamlit as st
+
+# Main page content
+st.markdown("# Main page 🎈")
+st.sidebar.markdown("# Main page 🎈")
+page_2.py
+import streamlit as st
+
+st.markdown("# Page 2 ❄️")
+st.sidebar.markdown("# Page 2 ❄️")
+page_3.py
+import streamlit as st
+
+st.markdown("# Page 3 🎉")
+st.sidebar.markdown("# Page 3 🎉")
+
+Now run streamlit run streamlit_app.py and view your shiny new multipage app! The navigation menu will automatically appear, allowing users to switch between pages.
+
+
+Our documentation on Multipage apps teaches you how to add pages to your app, including how to define pages, structure and run multipage apps, and navigate between pages. Once you understand the basics, create your first multipage app!
+
+Custom components
+If you can't find the right component within the Streamlit library, try out custom components to extend Streamlit's built-in functionality. Explore and browse through popular, community-created components in the Components gallery. If you dabble in frontend development, you can build your own custom component with Streamlit's components API.
+
+Static file serving
+As you learned in Streamlit fundamentals, Streamlit runs a server that clients connect to. That means viewers of your app don't have direct access to the files which are local to your app. Most of the time, this doesn't matter because Streamlt commands handle that for you. When you use st.image(<path-to-image>) your Streamlit server will access the file and handle the necessary hosting so your app viewers can see it. However, if you want a direct URL to an image or file you'll need to host it. This requires setting the correct configuration and placing your hosted files in a directory named static. For example, your project could look like:
+
+your-project/
+├── static/
+│   └── my_hosted-image.png
+└── streamlit_app.py
+To learn more, read our guide on Static file serving.
+
+App testing
+Good development hygiene includes testing your code. Automated testing allows you to write higher quality code, faster! Streamlit has a built-in testing framework that let's you build tests easily. Use your favorite testing framework to run your tests. We like pytest. When you test a Streamlit app, you simulate running the app, declare user input, and inspect the results. You can use GitHub workflows to automate your tests and get instant alerts about breaking changes. Learn more in our guide to App testing.
+
+
+Selecting Data
+Configure row selection with the following properties:
+
+rowSelection: Type of row selection, set to either 'single' or 'multiple' to enable selection. 'single' will use single row selection, such that when you select a row, any previously selected row gets unselected. 'multiple' allows multiple rows to be selected.
+rowMultiSelectWithClick: Set to true to allow multiple rows to be selected with clicks. For example, if you click to select one row and then click to select another row, the first row will stay selected as well. Clicking a selected row in this mode will deselect the row. This is useful for touch devices where ^ Ctrl and ⇧ Shift clicking is not an option.
+suppressRowDeselection: Set to true to prevent rows from being deselected if you hold down ^ Ctrl and click the row (i.e. once a row is selected, it remains selected until another row is selected in its place). By default the grid allows deselection of rows.
+suppressRowClickSelection: If true, rows won't be selected when clicked. Use, for example, when you want checkbox selection or your managing selection from a custom component and don't want to select the row when the row is clicked.

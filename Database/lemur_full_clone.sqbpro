@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="lemur_full_clone.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="0"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="36322"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><table title="AuditLog" custom_title="0" dock_id="20" table="4,8:mainAuditLog"/><table title="AuditLog" custom_title="0" dock_id="19" table="4,8:mainAuditLog"/><table title="LoadBench" custom_title="0" dock_id="18" table="4,9:mainLoadBench"/><table title="AuditLog" custom_title="0" dock_id="17" table="4,8:mainAuditLog"/><table title="TestConditionTypes" custom_title="0" dock_id="16" table="4,18:mainTestConditionTypes"/><table title="AuditLog" custom_title="0" dock_id="15" table="4,8:mainAuditLog"/><table title="AuditLog" custom_title="0" dock_id="13" table="4,8:mainAuditLog"/><table title="AuditLog" custom_title="0" dock_id="14" table="4,8:mainAuditLog"/><table title="AuditLog" custom_title="0" dock_id="12" table="4,8:mainAuditLog"/><table title="AuditLog" custom_title="0" dock_id="11" table="4,8:mainAuditLog"/><table title="TestConditionTypes" custom_title="0" dock_id="10" table="4,18:mainTestConditionTypes"/><table title="AuditLog" custom_title="0" dock_id="1" table="4,8:mainAuditLog"/><table title="AuditLog" custom_title="0" dock_id="21" table="4,8:mainAuditLog"/><dock_state state="000000ff00000000fd000000010000000200000a3c00000616fc0100000001fc0000000000000a3c0000012400fffffffa000000140100000015fb000000160064006f0063006b00420072006f00770073006500310100000000ffffffff0000011800fffffffb000000160064006f0063006b00420072006f00770073006500320000000000ffffffff0000000000000000fb000000160064006f0063006b00420072006f00770073006500330000000000ffffffff0000000000000000fb000000160064006f0063006b00420072006f00770073006500340000000000ffffffff0000000000000000fb000000160064006f0063006b00420072006f00770073006500350000000000ffffffff0000000000000000fb000000160064006f0063006b00420072006f00770073006500360000000000ffffffff0000000000000000fb000000160064006f0063006b00420072006f00770073006500370000000000ffffffff0000000000000000fb000000160064006f0063006b00420072006f00770073006500380000000000ffffffff0000000000000000fb000000160064006f0063006b00420072006f00770073006500390000000000ffffffff0000000000000000fb000000180064006f0063006b00420072006f007700730065003100300100000000ffffffff0000011800fffffffb000000180064006f0063006b00420072006f007700730065003100310100000000ffffffff0000011800fffffffb000000180064006f0063006b00420072006f007700730065003100320100000000ffffffff0000011800fffffffb000000180064006f0063006b00420072006f007700730065003100330100000000ffffffff0000011800fffffffb000000180064006f0063006b00420072006f007700730065003100340100000000ffffffff0000011800fffffffb000000180064006f0063006b00420072006f007700730065003100350100000000ffffffff0000011800fffffffb000000180064006f0063006b00420072006f007700730065003100360100000000ffffffff0000011800fffffffb000000180064006f0063006b00420072006f007700730065003100370100000000ffffffff0000011800fffffffb000000180064006f0063006b00420072006f007700730065003100380100000000ffffffff0000012400fffffffb000000180064006f0063006b00420072006f007700730065003100390100000000ffffffff0000011800fffffffb000000180064006f0063006b00420072006f007700730065003200300100000000ffffffff0000011800fffffffb000000180064006f0063006b00420072006f007700730065003200310100000000ffffffff0000012400ffffff0000040e0000000000000004000000040000000800000008fc00000000"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="AuditLog" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_" freeze_columns="0"><sort/><column_widths><column index="1" value="29"/><column index="2" value="68"/><column index="3" value="94"/><column index="4" value="87"/><column index="5" value="62"/><column index="6" value="69"/><column index="7" value="50"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="LoadBench" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_" freeze_columns="0"><sort/><column_widths><column index="1" value="31"/><column index="2" value="51"/><column index="3" value="109"/><column index="4" value="89"/><column index="5" value="132"/><column index="6" value="49"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="LoadSchedules" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_" freeze_columns="0"><sort/><column_widths><column index="1" value="31"/><column index="2" value="51"/><column index="3" value="109"/><column index="4" value="48"/><column index="5" value="156"/><column index="6" value="156"/><column index="7" value="66"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="LoadTestSummary2" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_" freeze_columns="0"><sort/><column_widths><column index="1" value="92"/><column index="2" value="118"/><column index="3" value="85"/><column index="4" value="124"/><column index="5" value="210"/><column index="6" value="93"/><column index="7" value="109"/><column index="8" value="109"/><column index="9" value="48"/><column index="10" value="156"/><column index="11" value="156"/><column index="12" value="132"/><column index="13" value="49"/><column index="14" value="86"/><column index="15" value="300"/><column index="16" value="300"/><column index="17" value="127"/><column index="18" value="125"/><column index="19" value="130"/><column index="20" value="123"/><column index="21" value="131"/><column index="22" value="123"/><column index="23" value="138"/><column index="24" value="300"/><column index="25" value="300"/><column index="26" value="54"/><column index="27" value="46"/><column index="28" value="62"/><column index="29" value="46"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="LoadTestSummaryView3" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_" freeze_columns="0"><sort/><column_widths/><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="ReactorTestConditions" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_" freeze_columns="0"><sort/><column_widths><column index="1" value="31"/><column index="2" value="85"/><column index="3" value="124"/><column index="4" value="300"/><column index="5" value="54"/><column index="6" value="46"/><column index="7" value="78"/><column index="8" value="54"/><column index="9" value="78"/><column index="10" value="54"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="TestConditionTypes" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_" freeze_columns="0"><sort/><column_widths><column index="1" value="29"/><column index="2" value="120"/><column index="3" value="56"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="SQL 1">------------------------------------------------------------------------------
+-- 1) Metrics for test counts and distinct loads completed
+--    (by week, month, year, bench_type, reactor, request_type, test_condition_type)
+------------------------------------------------------------------------------
+
+CREATE VIEW IF NOT EXISTS V_Metrics_LoadsAndTests AS
+SELECT
+    -- Time buckets (using load_start from LoadSchedules)
+    strftime('%Y', LS.load_start) AS year,
+    strftime('%m', LS.load_start) AS month,
+    strftime('%W', LS.load_start) AS week,
+
+    -- Bench/Equipment info
+    LS.bench_type              AS bench_type,      -- &quot;Quarter Bench&quot; or &quot;Full Bench&quot;
+    LS.reactor                 AS reactor,         -- e.g. &quot;r1&quot;, &quot;r2&quot;, &quot;r3&quot; or NULL for Quarter Bench
+
+    -- Request Type
+    RTYPE.request_type         AS request_type,
+
+    -- Test Condition Type
+    TCT.test_condition_type    AS test_condition_type,
+
+    -- Total (valid) tests performed
+    COUNT(DISTINCT RTST.id)    AS total_test_count,
+
+    -- Distinct loads that have reached &quot;Test Complete&quot;, &quot;QC Complete&quot;, or &quot;Report Delivered&quot;
+    COUNT(
+      DISTINCT CASE 
+        WHEN LB.status IN ('Test Complete','QC Complete','Report Delivered') 
+        THEN RL.id
+      END
+    ) AS distinct_loads_completed
+
+FROM LoadSchedules            AS LS
+JOIN ReactorLoads             AS RL   ON RL.id = LS.load_id
+JOIN LoadBench                AS LB   ON LB.load_id = RL.id
+JOIN LabRequests              AS LR   ON LR.id = RL.lab_request_id
+JOIN RequestTypes             AS RTYPE ON RTYPE.id = LR.request_type_id
+
+JOIN ReactorTests             AS RTST ON RTST.load_id = RL.id
+JOIN ReactorTestConditions    AS RTC  ON RTC.id = RTST.test_condition_id
+JOIN TestConditionTypes       AS TCT  ON TCT.id = RTC.test_type_id
+
+-- Exclude &quot;PRESSURE DROP&quot; from the test count
+WHERE UPPER(TRIM(TCT.test_condition_type)) &lt;&gt; 'PRESSURE DROP'
+
+GROUP BY
+    strftime('%Y', LS.load_start),
+    strftime('%m', LS.load_start),
+    strftime('%W', LS.load_start),
+    LS.bench_type,
+    LS.reactor,
+    RTYPE.request_type,
+    TCT.test_condition_type;
+</sql><sql name="SQL 2">CREATE VIEW IF NOT EXISTS V_Equipment_Usage AS
+SELECT
+    strftime('%Y', LS.load_start) AS year,
+    strftime('%m', LS.load_start) AS month,
+    strftime('%W', LS.load_start) AS week,
+    LS.bench_type AS bench_type,   -- &quot;Quarter Bench&quot; or &quot;Full Bench&quot;
+    LS.reactor    AS reactor,       -- e.g. &quot;r1&quot;, &quot;r2&quot;, &quot;r3&quot; or NULL for Quarter Bench
+    SUM((julianday(LS.load_end) - julianday(LS.load_start)) * 24) AS hours_used
+FROM LoadSchedules AS LS
+-- Only include loads where the calculated hours are zero or positive
+WHERE julianday(LS.load_end) &gt;= julianday(LS.load_start)
+GROUP BY
+    strftime('%Y', LS.load_start),
+    strftime('%m', LS.load_start),
+    strftime('%W', LS.load_start),
+    LS.bench_type,
+    LS.reactor;
+</sql><sql name="SQL 3">CREATE VIEW IF NOT EXISTS V_Equipment_Usage_By_Request_Type AS
+SELECT
+    strftime('%Y', LS.load_start) AS year,
+    strftime('%m', LS.load_start) AS month,
+    strftime('%W', LS.load_start) AS week,
+    LS.bench_type        AS bench_type,
+    LS.reactor           AS reactor,
+    RTYPE.request_type   AS request_type,
+    SUM((julianday(LS.load_end) - julianday(LS.load_start)) * 24) AS hours_used
+FROM LoadSchedules    AS LS
+JOIN ReactorLoads     AS RL    ON RL.id = LS.load_id
+JOIN LabRequests      AS LR    ON LR.id = RL.lab_request_id
+JOIN RequestTypes     AS RTYPE ON RTYPE.id = LR.request_type_id
+-- Exclude loads with negative time differences
+WHERE julianday(LS.load_end) &gt;= julianday(LS.load_start)
+GROUP BY
+    strftime('%Y', LS.load_start),
+    strftime('%m', LS.load_start),
+    strftime('%W', LS.load_start),
+    LS.bench_type,
+    LS.reactor,
+    RTYPE.request_type;
+</sql><sql name="SQL 4">CREATE VIEW v_LoadDetails AS
+SELECT 
+    -- Basic Load Info
+    RL.id AS load_id,
+    
+    -- From the LabRequests table
+    LR.number AS lr_number,
+    LR.job_number,
+    LR.pcn,
+    LR.time_submitted AS lr_time_submitted,
+    
+    -- Who created the LabRequest
+    AU.username AS created_by,
+    
+    -- The request type (Development, Field Samples, etc.)
+    RT.request_type,
+    
+    -- From the LoadBench table
+    LB.testing_area,
+    LB.status,
+    LB.priority,
+    
+    -- From the LoadSchedules table
+    LS.load_start,
+    LS.load_end,
+    LS.reactor,
+    
+    -- Count of valid tests (excluding &quot;PRESSURE DROP&quot;)
+    COUNT(
+      DISTINCT CASE 
+         WHEN TRIM(UPPER(TCT.test_condition_type)) &lt;&gt; 'PRESSURE DROP'
+              OR TCT.test_condition_type IS NULL
+         THEN RTST.id 
+      END
+    ) AS total_test_count,
+
+    -- Group all distinct test-condition descriptions (also ignoring Pressure Drop)
+    GROUP_CONCAT(
+      DISTINCT CASE 
+         WHEN TRIM(UPPER(TCT.test_condition_type)) &lt;&gt; 'PRESSURE DROP'
+              OR TCT.test_condition_type IS NULL
+         THEN RTC.description 
+      END,
+      '; '
+    ) AS testconditiondescription
+
+FROM ReactorLoads RL
+
+-- Link to LabRequests
+JOIN LabRequests LR 
+    ON RL.lab_request_id = LR.id
+
+-- So we can show who created the LabRequest
+LEFT JOIN auth_user AU 
+    ON LR.created_by_id = AU.id
+
+-- Request type
+LEFT JOIN RequestTypes RT 
+    ON LR.request_type_id = RT.id
+
+-- Link to LoadBench (for testing_area/status/priority)
+LEFT JOIN LoadBench LB 
+    ON LB.load_id = RL.id
+
+-- Link to LoadSchedules (for load_start/load_end/reactor)
+LEFT JOIN LoadSchedules LS 
+    ON LS.load_id = RL.id
+
+-- Link to ReactorTests so we can count how many tests were done for each load
+LEFT JOIN ReactorTests RTST 
+    ON RTST.load_id = RL.id
+
+-- Link to ReactorTestConditions so we can see test descriptions
+LEFT JOIN ReactorTestConditions RTC 
+    ON RTST.test_condition_id = RTC.id
+
+-- Link to TestConditionTypes so we can filter out &quot;PRESSURE DROP&quot;
+LEFT JOIN TestConditionTypes TCT
+    ON RTC.test_type_id = TCT.id
+
+-- Group by the ReactorLoad so each load is exactly one row
+GROUP BY RL.id;
+</sql><sql name="Edit View v_LoadDetails">CREATE VIEW LoadTestSummary1 AS
+SELECT
+    RL.id AS ReactorLoadID,
+    LR.number AS LabRequestNumber,
+    LR.job_number,
+    LR.pcn,
+    LR.time_submitted,
+    AU.username AS created_by,
+    RT.request_type,
+    
+    -- Load schedule information
+    LS.bench_type AS testing_area,
+    LS.reactor,
+    LS.load_start,
+    LS.load_end,
+    LB.status AS load_status,
+    LB.priority,
+
+    -- Sample info
+    (SELECT COUNT(DISTINCT S_inner.id)
+     FROM ReactorLoadSamples RLS_inner
+     LEFT JOIN LabRequestSample LRS_inner ON RLS_inner.lab_request_sample_id = LRS_inner.id
+     LEFT JOIN Samples S_inner ON LRS_inner.sample_id = S_inner.id
+     WHERE RLS_inner.load_id = RL.id) AS sample_count,
+    
+    (SELECT STRING_AGG(S_inner.number, ', ')
+     FROM ReactorLoadSamples RLS_inner
+     LEFT JOIN LabRequestSample LRS_inner ON RLS_inner.lab_request_sample_id = LRS_inner.id
+     LEFT JOIN Samples S_inner ON LRS_inner.sample_id = S_inner.id
+     WHERE RLS_inner.load_id = RL.id) AS sample_numbers,
+    
+    (SELECT STRING_AGG(ST_inner.sample_type, ', ')
+     FROM ReactorLoadSamples RLS_inner
+     LEFT JOIN LabRequestSample LRS_inner ON RLS_inner.lab_request_sample_id = LRS_inner.id
+     LEFT JOIN Samples S_inner ON LRS_inner.sample_id = S_inner.id
+     LEFT JOIN SampleTypes ST_inner ON S_inner.sample_type_id = ST_inner.id
+     WHERE RLS_inner.load_id = RL.id) AS sample_types,
+    
+    -- Test conditions info (excluding Pressure Drop) - FIXED to count tests, not just types
+    (SELECT COUNT(RTST_inner.id)
+     FROM ReactorTests RTST_inner
+     LEFT JOIN ReactorTestConditions RTC_inner ON RTST_inner.test_condition_id = RTC_inner.id
+     LEFT JOIN TestConditionTypes TCT_inner ON RTC_inner.test_type_id = TCT_inner.id
+     WHERE RTST_inner.load_id = RL.id 
+     AND (TCT_inner.test_condition_type IS NULL OR TRIM(UPPER(TCT_inner.test_condition_type)) &lt;&gt; 'PRESSURE DROP')) AS test_condition_count,
+    
+    (SELECT STRING_AGG(TCT_inner.test_condition_type, ', ')
+     FROM ReactorTests RTST_inner
+     LEFT JOIN ReactorTestConditions RTC_inner ON RTST_inner.test_condition_id = RTC_inner.id
+     LEFT JOIN TestConditionTypes TCT_inner ON RTC_inner.test_type_id = TCT_inner.id
+     WHERE RTST_inner.load_id = RL.id 
+     AND (TCT_inner.test_condition_type IS NULL OR TRIM(UPPER(TCT_inner.test_condition_type)) &lt;&gt; 'PRESSURE DROP')) AS test_conditions,
+    
+    (SELECT STRING_AGG(RTC_inner.description, '; ')
+     FROM ReactorTests RTST_inner
+     LEFT JOIN ReactorTestConditions RTC_inner ON RTST_inner.test_condition_id = RTC_inner.id
+     LEFT JOIN TestConditionTypes TCT_inner ON RTC_inner.test_type_id = TCT_inner.id
+     WHERE RTST_inner.load_id = RL.id 
+     AND (TCT_inner.test_condition_type IS NULL OR TRIM(UPPER(TCT_inner.test_condition_type)) &lt;&gt; 'PRESSURE DROP')) AS testconditiondescription,
+    
+    -- Parameters (pivoted)
+    MAX(CASE WHEN RP.reactor_parameter = 'SO2' THEN RTCP.value END) AS SO2,
+    MAX(CASE WHEN RP.reactor_parameter = 'CO' THEN RTCP.value END) AS CO,
+    MAX(CASE WHEN RP.reactor_parameter = 'NO' THEN RTCP.value END) AS NO,
+    MAX(CASE WHEN RP.reactor_parameter = 'NO2' THEN RTCP.value END) AS NO2
+
+FROM ReactorLoads RL
+INNER JOIN LabRequests LR ON RL.lab_request_id = LR.id
+LEFT JOIN auth_user AU ON LR.created_by_id = AU.id
+LEFT JOIN RequestTypes RT ON LR.request_type_id = RT.id
+
+-- Add LoadSchedules and LoadBench info
+LEFT JOIN LoadSchedules LS ON RL.id = LS.load_id
+LEFT JOIN LoadBench LB ON RL.id = LB.load_id
+
+-- Join for test parameters
+LEFT JOIN ReactorTests RTST ON RL.id = RTST.load_id
+LEFT JOIN ReactorTestConditions RTC ON RTST.test_condition_id = RTC.id
+LEFT JOIN TestConditionTypes TCT ON RTC.test_type_id = TCT.id
+    AND (TCT.test_condition_type IS NULL OR TRIM(UPPER(TCT.test_condition_type)) &lt;&gt; 'PRESSURE DROP')
+LEFT JOIN ReactorTestConditionParameters RTCP ON RTC.id = RTCP.condition_id
+LEFT JOIN ReactorParameters RP ON RTCP.reactor_parameter_id = RP.id
+
+GROUP BY 
+    RL.id, 
+    LR.number, 
+    LR.job_number, 
+    LR.pcn, 
+    LR.time_submitted, 
+    AU.username, 
+    RT.request_type,
+    LS.bench_type,
+    LS.reactor,
+    LS.load_start,
+    LS.load_end,
+    LB.status,
+    LB.priority
+
+ORDER BY 
+    LR.time_submitted DESC;</sql><sql name="SQL 6">CREATE VIEW LoadTestSummaryView2 AS
+SELECT
+    RL.id AS load_id,
+    LR.number AS lr_number,
+    RTYP.request_type,
+    LS.load_start,
+    LS.load_end,
+    LS.reactor,
+    COUNT(CASE WHEN UPPER(TRIM(TT.test_type)) = 'SO2 OXIDATION' THEN 1 END) AS so2_oxidation_count,
+    COUNT(CASE WHEN UPPER(TRIM(TT.test_type)) = 'HG OXIDATION' THEN 1 END) AS hg_oxidation_count,
+    COUNT(CASE WHEN UPPER(TRIM(TT.test_type)) = 'NOX REMOVAL' THEN 1 END) AS nox_removal_count,
+    COUNT(CASE WHEN UPPER(TRIM(TT.test_type)) = 'CO OXIDATION' THEN 1 END) AS co_oxidation_count,
+    COUNT(CASE WHEN UPPER(TRIM(TT.test_type)) = 'VOC OXIDATION' THEN 1 END) AS voc_oxidation_count,
+    COUNT(CASE WHEN UPPER(TRIM(TT.test_type)) = 'CH2O OXIDATION' THEN 1 END) AS ch2o_oxidation_count,
+    COUNT(RT.id) AS total_test_count
+FROM ReactorLoads RL
+JOIN LabRequests LR ON RL.lab_request_id = LR.id
+JOIN RequestTypes RTYP ON LR.request_type_id = RTYP.id
+JOIN LoadSchedules LS ON RL.id = LS.load_id
+LEFT JOIN ReactorTests RT ON RL.id = RT.load_id
+LEFT JOIN ReactorTestConditions RTC ON RT.test_condition_id = RTC.id
+LEFT JOIN TestTypes TT ON RTC.test_type_id = TT.id AND UPPER(TRIM(TT.test_type)) != 'PRESSURE DROP'
+GROUP BY RL.id, LR.number, RTYP.request_type, LS.load_start, LS.load_end, LS.reactor;</sql><sql name="SQL 7">CREATE VIEW LoadTestSummary2 AS
+SELECT
+    RL.id AS ReactorLoadID,
+    LR.number AS LabRequestNumber,
+    LR.job_number,
+    LR.pcn,
+    LR.time_submitted,
+    AU.username AS created_by,
+    RT.request_type,
+    
+    -- Load schedule information
+    LS.bench_type AS testing_area,
+    LS.reactor,
+    LS.load_start,
+    LS.load_end,
+    LB.status AS load_status,
+    LB.priority,
+
+    -- Sample info
+    (SELECT COUNT(DISTINCT S_inner.id)
+     FROM ReactorLoadSamples RLS_inner
+     LEFT JOIN LabRequestSample LRS_inner ON RLS_inner.lab_request_sample_id = LRS_inner.id
+     LEFT JOIN Samples S_inner ON LRS_inner.sample_id = S_inner.id
+     WHERE RLS_inner.load_id = RL.id) AS sample_count,
+    
+    (SELECT STRING_AGG(S_inner.number, ', ')
+     FROM ReactorLoadSamples RLS_inner
+     LEFT JOIN LabRequestSample LRS_inner ON RLS_inner.lab_request_sample_id = LRS_inner.id
+     LEFT JOIN Samples S_inner ON LRS_inner.sample_id = S_inner.id
+     WHERE RLS_inner.load_id = RL.id) AS sample_numbers,
+    
+    (SELECT STRING_AGG(ST_inner.sample_type, ', ')
+     FROM ReactorLoadSamples RLS_inner
+     LEFT JOIN LabRequestSample LRS_inner ON RLS_inner.lab_request_sample_id = LRS_inner.id
+     LEFT JOIN Samples S_inner ON LRS_inner.sample_id = S_inner.id
+     LEFT JOIN SampleTypes ST_inner ON S_inner.sample_type_id = ST_inner.id
+     WHERE RLS_inner.load_id = RL.id) AS sample_types,
+    
+    -- Main test count (excluding Pressure Drop)
+    (SELECT COUNT(RTST_inner.id)
+     FROM ReactorTests RTST_inner
+     LEFT JOIN ReactorTestConditions RTC_inner ON RTST_inner.test_condition_id = RTC_inner.id
+     LEFT JOIN TestConditionTypes TCT_inner ON RTC_inner.test_type_id = TCT_inner.id
+     WHERE RTST_inner.load_id = RL.id 
+     AND (TCT_inner.test_condition_type IS NULL OR TRIM(UPPER(TCT_inner.test_condition_type)) &lt;&gt; 'PRESSURE DROP')) AS test_condition_count,
+    
+    -- Count of each test condition type
+    (SELECT COUNT(RTST_inner.id)
+     FROM ReactorTests RTST_inner
+     LEFT JOIN ReactorTestConditions RTC_inner ON RTST_inner.test_condition_id = RTC_inner.id
+     LEFT JOIN TestConditionTypes TCT_inner ON RTC_inner.test_type_id = TCT_inner.id
+     WHERE RTST_inner.load_id = RL.id 
+     AND TCT_inner.test_condition_type = 'NOx Removal') AS NOx_Removal_count,
+    
+    (SELECT COUNT(RTST_inner.id)
+     FROM ReactorTests RTST_inner
+     LEFT JOIN ReactorTestConditions RTC_inner ON RTST_inner.test_condition_id = RTC_inner.id
+     LEFT JOIN TestConditionTypes TCT_inner ON RTC_inner.test_type_id = TCT_inner.id
+     WHERE RTST_inner.load_id = RL.id 
+     AND TCT_inner.test_condition_type = 'SO2 Oxidation') AS SO2_Oxidation_count,
+    
+    (SELECT COUNT(RTST_inner.id)
+     FROM ReactorTests RTST_inner
+     LEFT JOIN ReactorTestConditions RTC_inner ON RTST_inner.test_condition_id = RTC_inner.id
+     LEFT JOIN TestConditionTypes TCT_inner ON RTC_inner.test_type_id = TCT_inner.id
+     WHERE RTST_inner.load_id = RL.id 
+     AND TCT_inner.test_condition_type = 'CO Oxidation') AS CO_Oxidation_count,
+    
+    (SELECT COUNT(RTST_inner.id)
+     FROM ReactorTests RTST_inner
+     LEFT JOIN ReactorTestConditions RTC_inner ON RTST_inner.test_condition_id = RTC_inner.id
+     LEFT JOIN TestConditionTypes TCT_inner ON RTC_inner.test_type_id = TCT_inner.id
+     WHERE RTST_inner.load_id = RL.id 
+     AND TCT_inner.test_condition_type = 'VOC Oxidation') AS VOC_Oxidation_count,
+    
+    (SELECT COUNT(RTST_inner.id)
+     FROM ReactorTests RTST_inner
+     LEFT JOIN ReactorTestConditions RTC_inner ON RTST_inner.test_condition_id = RTC_inner.id
+     LEFT JOIN TestConditionTypes TCT_inner ON RTC_inner.test_type_id = TCT_inner.id
+     WHERE RTST_inner.load_id = RL.id 
+     AND TCT_inner.test_condition_type = 'Hg Oxidation') AS Hg_Oxidation_count,
+    
+    (SELECT COUNT(RTST_inner.id)
+     FROM ReactorTests RTST_inner
+     LEFT JOIN ReactorTestConditions RTC_inner ON RTST_inner.test_condition_id = RTC_inner.id
+     LEFT JOIN TestConditionTypes TCT_inner ON RTC_inner.test_type_id = TCT_inner.id
+     WHERE RTST_inner.load_id = RL.id 
+     AND TCT_inner.test_condition_type = 'CH2O Oxidation') AS CH2O_Oxidation_count,
+    
+    (SELECT STRING_AGG(TCT_inner.test_condition_type, ', ')
+     FROM ReactorTests RTST_inner
+     LEFT JOIN ReactorTestConditions RTC_inner ON RTST_inner.test_condition_id = RTC_inner.id
+     LEFT JOIN TestConditionTypes TCT_inner ON RTC_inner.test_type_id = TCT_inner.id
+     WHERE RTST_inner.load_id = RL.id 
+     AND (TCT_inner.test_condition_type IS NULL OR TRIM(UPPER(TCT_inner.test_condition_type)) &lt;&gt; 'PRESSURE DROP')) AS test_conditions,
+    
+    (SELECT STRING_AGG(RTC_inner.description, '; ')
+     FROM ReactorTests RTST_inner
+     LEFT JOIN ReactorTestConditions RTC_inner ON RTST_inner.test_condition_id = RTC_inner.id
+     LEFT JOIN TestConditionTypes TCT_inner ON RTC_inner.test_type_id = TCT_inner.id
+     WHERE RTST_inner.load_id = RL.id 
+     AND (TCT_inner.test_condition_type IS NULL OR TRIM(UPPER(TCT_inner.test_condition_type)) &lt;&gt; 'PRESSURE DROP')) AS testconditiondescription,
+    
+    -- Parameters (pivoted)
+    MAX(CASE WHEN RP.reactor_parameter = 'SO2' THEN RTCP.value END) AS SO2,
+    MAX(CASE WHEN RP.reactor_parameter = 'CO' THEN RTCP.value END) AS CO,
+    MAX(CASE WHEN RP.reactor_parameter = 'NO' THEN RTCP.value END) AS NO,
+    MAX(CASE WHEN RP.reactor_parameter = 'NO2' THEN RTCP.value END) AS NO2
+
+FROM ReactorLoads RL
+INNER JOIN LabRequests LR ON RL.lab_request_id = LR.id
+LEFT JOIN auth_user AU ON LR.created_by_id = AU.id
+LEFT JOIN RequestTypes RT ON LR.request_type_id = RT.id
+
+-- Add LoadSchedules and LoadBench info
+LEFT JOIN LoadSchedules LS ON RL.id = LS.load_id
+LEFT JOIN LoadBench LB ON RL.id = LB.load_id
+
+-- Join for test parameters
+LEFT JOIN ReactorTests RTST ON RL.id = RTST.load_id
+LEFT JOIN ReactorTestConditions RTC ON RTST.test_condition_id = RTC.id
+LEFT JOIN TestConditionTypes TCT ON RTC.test_type_id = TCT.id
+    AND (TCT.test_condition_type IS NULL OR TRIM(UPPER(TCT.test_condition_type)) &lt;&gt; 'PRESSURE DROP')
+LEFT JOIN ReactorTestConditionParameters RTCP ON RTC.id = RTCP.condition_id
+LEFT JOIN ReactorParameters RP ON RTCP.reactor_parameter_id = RP.id
+
+GROUP BY 
+    RL.id, 
+    LR.number, 
+    LR.job_number, 
+    LR.pcn, 
+    LR.time_submitted, 
+    AU.username, 
+    RT.request_type,
+    LS.bench_type,
+    LS.reactor,
+    LS.load_start,
+    LS.load_end,
+    LB.status,
+    LB.priority
+
+ORDER BY 
+    LR.time_submitted DESC;</sql><sql name="Edit View LoadTestSummary2*">DROP VIEW IF EXISTS &quot;main&quot;.&quot;LoadTestSummary2&quot;;
+CREATE VIEW Dashboard AS
+SELECT
+    RL.id AS ReactorLoadID,
+    LR.number AS LabRequestNumber,
+    LR.job_number,
+    LR.pcn,
+    LR.time_submitted,
+    AU.username AS created_by,
+    RT.request_type,
+    
+    -- Load schedule information
+    LS.bench_type AS testing_area,
+    LS.reactor,
+    LS.load_start,
+    LS.load_end,
+    LB.status AS load_status,
+    LB.priority,
+
+    -- Sample info
+    (SELECT COUNT(DISTINCT S_inner.id)
+     FROM ReactorLoadSamples RLS_inner
+     LEFT JOIN LabRequestSample LRS_inner ON RLS_inner.lab_request_sample_id = LRS_inner.id
+     LEFT JOIN Samples S_inner ON LRS_inner.sample_id = S_inner.id
+     WHERE RLS_inner.load_id = RL.id) AS sample_count,
+    
+    (SELECT STRING_AGG(S_inner.number, ', ')
+     FROM ReactorLoadSamples RLS_inner
+     LEFT JOIN LabRequestSample LRS_inner ON RLS_inner.lab_request_sample_id = LRS_inner.id
+     LEFT JOIN Samples S_inner ON LRS_inner.sample_id = S_inner.id
+     WHERE RLS_inner.load_id = RL.id) AS sample_numbers,
+    
+    (SELECT STRING_AGG(ST_inner.sample_type, ', ')
+     FROM ReactorLoadSamples RLS_inner
+     LEFT JOIN LabRequestSample LRS_inner ON RLS_inner.lab_request_sample_id = LRS_inner.id
+     LEFT JOIN Samples S_inner ON LRS_inner.sample_id = S_inner.id
+     LEFT JOIN SampleTypes ST_inner ON S_inner.sample_type_id = ST_inner.id
+     WHERE RLS_inner.load_id = RL.id) AS sample_types,
+    
+    -- Main test count (excluding Pressure Drop)
+    (SELECT COUNT(RTST_inner.id)
+     FROM ReactorTests RTST_inner
+     LEFT JOIN ReactorTestConditions RTC_inner ON RTST_inner.test_condition_id = RTC_inner.id
+     LEFT JOIN TestConditionTypes TCT_inner ON RTC_inner.test_type_id = TCT_inner.id
+     WHERE RTST_inner.load_id = RL.id 
+     AND (TCT_inner.test_condition_type IS NULL OR TRIM(UPPER(TCT_inner.test_condition_type)) &lt;&gt; 'PRESSURE DROP')) AS test_condition_count,
+    
+    -- Count of each test condition type
+    (SELECT COUNT(RTST_inner.id)
+     FROM ReactorTests RTST_inner
+     LEFT JOIN ReactorTestConditions RTC_inner ON RTST_inner.test_condition_id = RTC_inner.id
+     LEFT JOIN TestConditionTypes TCT_inner ON RTC_inner.test_type_id = TCT_inner.id
+     WHERE RTST_inner.load_id = RL.id 
+     AND TCT_inner.test_condition_type = 'NOx Removal') AS NOx_Removal_count,
+    
+    (SELECT COUNT(RTST_inner.id)
+     FROM ReactorTests RTST_inner
+     LEFT JOIN ReactorTestConditions RTC_inner ON RTST_inner.test_condition_id = RTC_inner.id
+     LEFT JOIN TestConditionTypes TCT_inner ON RTC_inner.test_type_id = TCT_inner.id
+     WHERE RTST_inner.load_id = RL.id 
+     AND TCT_inner.test_condition_type = 'SO2 Oxidation') AS SO2_Oxidation_count,
+    
+    (SELECT COUNT(RTST_inner.id)
+     FROM ReactorTests RTST_inner
+     LEFT JOIN ReactorTestConditions RTC_inner ON RTST_inner.test_condition_id = RTC_inner.id
+     LEFT JOIN TestConditionTypes TCT_inner ON RTC_inner.test_type_id = TCT_inner.id
+     WHERE RTST_inner.load_id = RL.id 
+     AND TCT_inner.test_condition_type = 'CO Oxidation') AS CO_Oxidation_count,
+    
+    (SELECT COUNT(RTST_inner.id)
+     FROM ReactorTests RTST_inner
+     LEFT JOIN ReactorTestConditions RTC_inner ON RTST_inner.test_condition_id = RTC_inner.id
+     LEFT JOIN TestConditionTypes TCT_inner ON RTC_inner.test_type_id = TCT_inner.id
+     WHERE RTST_inner.load_id = RL.id 
+     AND TCT_inner.test_condition_type = 'VOC Oxidation') AS VOC_Oxidation_count,
+    
+    (SELECT COUNT(RTST_inner.id)
+     FROM ReactorTests RTST_inner
+     LEFT JOIN ReactorTestConditions RTC_inner ON RTST_inner.test_condition_id = RTC_inner.id
+     LEFT JOIN TestConditionTypes TCT_inner ON RTC_inner.test_type_id = TCT_inner.id
+     WHERE RTST_inner.load_id = RL.id 
+     AND TCT_inner.test_condition_type = 'Hg Oxidation') AS Hg_Oxidation_count,
+    
+    (SELECT COUNT(RTST_inner.id)
+     FROM ReactorTests RTST_inner
+     LEFT JOIN ReactorTestConditions RTC_inner ON RTST_inner.test_condition_id = RTC_inner.id
+     LEFT JOIN TestConditionTypes TCT_inner ON RTC_inner.test_type_id = TCT_inner.id
+     WHERE RTST_inner.load_id = RL.id 
+     AND TCT_inner.test_condition_type = 'CH2O Oxidation') AS CH2O_Oxidation_count,
+    
+    (SELECT STRING_AGG(TCT_inner.test_condition_type, ', ')
+     FROM ReactorTests RTST_inner
+     LEFT JOIN ReactorTestConditions RTC_inner ON RTST_inner.test_condition_id = RTC_inner.id
+     LEFT JOIN TestConditionTypes TCT_inner ON RTC_inner.test_type_id = TCT_inner.id
+     WHERE RTST_inner.load_id = RL.id 
+     AND (TCT_inner.test_condition_type IS NULL OR TRIM(UPPER(TCT_inner.test_condition_type)) &lt;&gt; 'PRESSURE DROP')) AS test_conditions,
+    
+    (SELECT STRING_AGG(RTC_inner.description, '; ')
+     FROM ReactorTests RTST_inner
+     LEFT JOIN ReactorTestConditions RTC_inner ON RTST_inner.test_condition_id = RTC_inner.id
+     LEFT JOIN TestConditionTypes TCT_inner ON RTC_inner.test_type_id = TCT_inner.id
+     WHERE RTST_inner.load_id = RL.id 
+     AND (TCT_inner.test_condition_type IS NULL OR TRIM(UPPER(TCT_inner.test_condition_type)) &lt;&gt; 'PRESSURE DROP')) AS testconditiondescription,
+    
+    -- Parameters (pivoted)
+    MAX(CASE WHEN RP.reactor_parameter = 'SO2' THEN RTCP.value END) AS SO2,
+    MAX(CASE WHEN RP.reactor_parameter = 'CO' THEN RTCP.value END) AS CO,
+    MAX(CASE WHEN RP.reactor_parameter = 'NO' THEN RTCP.value END) AS NO,
+    MAX(CASE WHEN RP.reactor_parameter = 'NO2' THEN RTCP.value END) AS NO2
+
+FROM ReactorLoads RL
+INNER JOIN LabRequests LR ON RL.lab_request_id = LR.id
+LEFT JOIN auth_user AU ON LR.created_by_id = AU.id
+LEFT JOIN RequestTypes RT ON LR.request_type_id = RT.id
+
+-- Add LoadSchedules and LoadBench info
+LEFT JOIN LoadSchedules LS ON RL.id = LS.load_id
+LEFT JOIN LoadBench LB ON RL.id = LB.load_id
+
+-- Join for test parameters
+LEFT JOIN ReactorTests RTST ON RL.id = RTST.load_id
+LEFT JOIN ReactorTestConditions RTC ON RTST.test_condition_id = RTC.id
+LEFT JOIN TestConditionTypes TCT ON RTC.test_type_id = TCT.id
+    AND (TCT.test_condition_type IS NULL OR TRIM(UPPER(TCT.test_condition_type)) &lt;&gt; 'PRESSURE DROP')
+LEFT JOIN ReactorTestConditionParameters RTCP ON RTC.id = RTCP.condition_id
+LEFT JOIN ReactorParameters RP ON RTCP.reactor_parameter_id = RP.id
+
+GROUP BY 
+    RL.id, 
+    LR.number, 
+    LR.job_number, 
+    LR.pcn, 
+    LR.time_submitted, 
+    AU.username, 
+    RT.request_type,
+    LS.bench_type,
+    LS.reactor,
+    LS.load_start,
+    LS.load_end,
+    LB.status,
+    LB.priority
+
+ORDER BY 
+    LR.time_submitted DESC</sql><sql name="SQL 9*">SELECT * FROM Dashboard;</sql><current_tab id="8"/></tab_sql></sqlb_project>

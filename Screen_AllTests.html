@@ -1,0 +1,2168 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reactor Testing Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    <style>
+        :root {
+            --dark-bg: #181818;
+            --card-bg: #242424;
+            --card-header: #2c2c2c;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --chart-grid: #333333;
+        }
+        
+        body { 
+            font-family: 'Segoe UI', sans-serif; 
+            background-color: var(--dark-bg);
+            color: var(--text-primary);
+        }
+        
+        .card { 
+            border-radius: 10px; 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3); 
+            border: none; 
+            transition: all 0.3s ease; 
+            margin-bottom: 20px;
+            background-color: var(--card-bg);
+        }
+        
+        .card:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3); 
+        }
+        
+        .card-header { 
+            border-radius: 10px 10px 0 0; 
+            font-weight: 600; 
+            padding: 12px 16px; 
+            background-color: var(--card-header);
+        }
+        
+        .metric-card { 
+            text-align: center; 
+            padding: 20px; 
+        }
+        
+        .metric-value { 
+            font-size: 2.5rem; 
+            font-weight: bold; 
+            color: var(--text-primary);
+        }
+        
+        .metric-label { 
+            font-size: 1rem; 
+            color: var(--text-secondary);
+        }
+        
+        .chart-container { 
+            position: relative; 
+            height: 400px; 
+            margin-bottom: 20px; 
+        }
+        
+        .nav-tabs .nav-link { 
+            font-weight: 500; 
+            padding: 10px 15px; 
+            border-radius: 5px 5px 0 0; 
+            color: var(--text-secondary);
+        }
+        
+        .nav-tabs .nav-link.active {
+            background-color: var(--card-bg);
+            color: var(--text-primary);
+            font-weight: bold;
+        }
+        
+        .loader { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: rgba(24, 24, 24, 0.9); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            z-index: 9999; 
+        }
+        
+        .spinner { 
+            width: 50px; 
+            height: 50px; 
+            border: 5px solid #2c2c2c; 
+            border-top: 5px solid #3498db; 
+            border-radius: 50%; 
+            animation: spin 1s linear infinite; 
+        }
+        
+        @keyframes spin { 
+            0% { transform: rotate(0deg); } 
+            100% { transform: rotate(360deg); } 
+        }
+        
+        /* KPI Card Styles */
+        .kpi-card {
+            text-align: center;
+            padding: 20px;
+            border-left: 5px solid;
+        }
+        
+        .kpi-card.positive {
+            border-left-color: #28a745;
+        }
+        
+        .kpi-card.negative {
+            border-left-color: #dc3545;
+        }
+        
+        .kpi-card.neutral {
+            border-left-color: #6c757d;
+        }
+        
+        .kpi-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--text-primary);
+        }
+        
+        .kpi-label {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+        
+        .kpi-change {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-top: 5px;
+        }
+        
+        .kpi-change.positive {
+            color: #28a745;
+        }
+        
+        .kpi-change.negative {
+            color: #dc3545;
+        }
+        
+        .date-filter-section {
+            padding: 15px;
+            background-color: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .nav-pills .nav-link {
+            color: var(--text-secondary);
+        }
+        
+        .nav-pills .nav-link.active {
+            background-color: #3498db;
+            color: var(--text-primary);
+        }
+        
+        .alert {
+            background-color: rgba(255,255,255,0.1);
+            color: var(--text-primary);
+        }
+        
+        .form-control, .form-select {
+            background-color: var(--card-bg);
+            border-color: #444;
+            color: var(--text-primary);
+        }
+        
+        .form-control:focus, .form-select:focus {
+            background-color: var(--card-bg);
+            color: var(--text-primary);
+        }
+        
+        .navbar {
+            background-color: var(--card-bg) !important;
+        }
+    </style>
+</head>
+<body>
+    <div id="loader" class="loader"><div class="spinner"></div></div>
+
+    <div class="container-fluid">
+        <!-- Navigation Bar -->
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand fw-bold" href="#">
+                    <i class="bi bi-clipboard2-data"></i> Reactor Testing Dashboard
+                </a>
+                <div class="d-flex align-items-center">
+                    <p class="mb-0 ms-3">Last updated: <span id="update-time"></span></p>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Dashboard Tabs -->
+        <ul class="nav nav-tabs mt-3" id="dashboardTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="all-tests-tab" data-bs-toggle="tab" data-bs-target="#all-tests" 
+                        type="button" role="tab" aria-controls="all-tests" aria-selected="true"
+                        onclick="changeView('all')">
+                    All Tests
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="quarter-bench-tab" data-bs-toggle="tab" data-bs-target="#quarter-bench" 
+                        type="button" role="tab" aria-controls="quarter-bench" aria-selected="false"
+                        onclick="changeView('quarter')">
+                    Quarter Bench
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="full-bench-tab" data-bs-toggle="tab" data-bs-target="#full-bench" 
+                        type="button" role="tab" aria-controls="full-bench" aria-selected="false"
+                        onclick="changeView('full')">
+                    Full Bench
+                </button>
+            </li>
+        </ul>
+
+        <!-- Tab Content -->
+        <div class="tab-content" id="dashboardTabContent">
+            <div class="tab-pane fade show active" id="dashboard-content" role="tabpanel">
+                <!-- File Upload Section -->
+                <div class="card mt-3 mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Select CSV File</h5>
+                        <div class="mb-3">
+                            <label for="csvFileInput" class="form-label">Please select the DashboardData.csv file:</label>
+                            <input class="form-control" type="file" id="csvFileInput" accept=".csv">
+                        </div>
+                        <button id="loadDataBtn" class="btn btn-primary" disabled>Load Dashboard</button>
+                        <div id="fileStatus" class="alert alert-info mt-2">No file selected</div>
+                    </div>
+                </div>
+
+                <!-- Dashboard Header -->
+                <div class="d-flex align-items-center mt-3">
+                    <h2 id="dashboard-title">All Tests Dashboard</h2>
+                </div>
+                
+                <!-- Global KPI Cards (NEW) -->
+                <div class="row mt-4" id="global-kpi-cards-row">
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <div class="card-body kpi-card neutral">
+                                <div class="kpi-label">Current Month's Test Count</div>
+                                <div class="kpi-value" id="current-month-tests">-</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <div class="card-body kpi-card neutral">
+                                <div class="kpi-label">Previous Month's Test Count</div>
+                                <div class="kpi-value" id="previous-month-tests">-</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <div class="card-body kpi-card neutral">
+                                <div class="kpi-label">Avg. Tests per Month (Current Year)</div>
+                                <div class="kpi-value" id="avg-tests-per-month">-</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Date Filter Section -->
+                <div class="date-filter-section mt-3">
+                    <div class="row align-items-end">
+                        <div class="col-md-4">
+                            <label for="monthSelector" class="form-label">Month</label>
+                            <select class="form-select" id="monthSelector">
+                                <option value="all" selected>All Months</option>
+                                <option value="1">January</option>
+                                <option value="2">February</option>
+                                <option value="3">March</option>
+                                <option value="4">April</option>
+                                <option value="5">May</option>
+                                <option value="6">June</option>
+                                <option value="7">July</option>
+                                <option value="8">August</option>
+                                <option value="9">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="yearSelector" class="form-label">Year</label>
+                            <select class="form-select" id="yearSelector">
+                                <!-- Populated dynamically based on data -->
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <button id="applyFilterBtn" class="btn btn-primary w-100" onclick="applyDateFilter()">
+                                Apply Filter
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bar Graph of Total Tests -->
+                <div class="card mt-4">
+                    <div class="card-header bg-primary text-white">
+                        <i class="bi bi-bar-chart"></i> Total Tests
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="barTotalTestsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Weekly Average Test Count Graph (NEW) -->
+                <div class="card mt-4">
+                    <div class="card-header bg-primary text-white">
+                        <i class="bi bi-graph-up"></i> Weekly Average Test Count
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="weeklyAverageChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Request Types Pie Chart -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header bg-success text-white">
+                                <i class="bi bi-pie-chart"></i> Request Types
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container">
+                                    <canvas id="requestTypesChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Time Period Analysis -->
+                <div class="card mt-4">
+                    <div class="card-header bg-info text-white">
+                        <i class="bi bi-calendar3"></i> Test Count by Time Period
+                    </div>
+                    <div class="card-body">
+                        <!-- Time period selector -->
+                        <ul class="nav nav-pills mb-3" id="time-period-tabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="weekly-tab" data-bs-toggle="pill" 
+                                    data-bs-target="#weekly-data" type="button" role="tab" 
+                                    aria-controls="weekly-data" aria-selected="true"
+                                    onclick="updateTimePeriodChart('week')">
+                                    Weekly
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="monthly-tab" data-bs-toggle="pill" 
+                                    data-bs-target="#monthly-data" type="button" role="tab" 
+                                    aria-controls="monthly-data" aria-selected="false"
+                                    onclick="updateTimePeriodChart('month')">
+                                    Monthly
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="quarterly-tab" data-bs-toggle="pill" 
+                                    data-bs-target="#quarterly-data" type="button" role="tab" 
+                                    aria-controls="quarterly-data" aria-selected="false"
+                                    onclick="updateTimePeriodChart('quarter')">
+                                    Quarterly
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="yearly-tab" data-bs-toggle="pill" 
+                                    data-bs-target="#yearly-data" type="button" role="tab" 
+                                    aria-controls="yearly-data" aria-selected="false"
+                                    onclick="updateTimePeriodChart('year')">
+                                    Yearly
+                                </button>
+                            </li>
+                        </ul>
+                        
+                        <div class="tab-content" id="time-period-tab-content">
+                            <div class="tab-pane fade show active" id="time-period-content" role="tabpanel">
+                                <div class="row">
+                                    <div class="col-md-6" id="quarter-bench-time-column">
+                                        <div class="chart-container">
+                                            <h5 class="text-center mb-3">Quarter Bench</h5>
+                                            <canvas id="quarterBenchTimeChart"></canvas>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" id="full-bench-time-column">
+                                        <div class="chart-container">
+                                            <h5 class="text-center mb-3">Full Bench</h5>
+                                            <canvas id="fullBenchTimeChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Request Type by Month -->
+                <div class="card mt-4">
+                    <div class="card-header bg-success text-white">
+                        <i class="bi bi-bar-chart-steps"></i> Request Type by Month
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6" id="quarter-bench-request-column">
+                                <div class="chart-container">
+                                    <h5 class="text-center mb-3">Quarter Bench</h5>
+                                    <canvas id="quarterBenchRequestTypeMonthChart"></canvas>
+                                </div>
+                            </div>
+                            <div class="col-md-6" id="full-bench-request-column">
+                                <div class="chart-container">
+                                    <h5 class="text-center mb-3">Full Bench</h5>
+                                    <canvas id="fullBenchRequestTypeMonthChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Test Condition by Time Period -->
+                <div class="card mt-4">
+                    <div class="card-header bg-warning text-dark">
+                        <i class="bi bi-bar-chart"></i> Test Conditions by Time Period
+                    </div>
+                    <div class="card-body">
+                        <!-- Time period selector for test conditions -->
+                        <ul class="nav nav-pills mb-3" id="test-condition-time-tabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="tc-weekly-tab" data-bs-toggle="pill" 
+                                    data-bs-target="#tc-weekly-data" type="button" role="tab" 
+                                    aria-controls="tc-weekly-data" aria-selected="true"
+                                    onclick="updateTestConditionTimePeriodChart('week')">
+                                    Weekly
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="tc-monthly-tab" data-bs-toggle="pill" 
+                                    data-bs-target="#tc-monthly-data" type="button" role="tab" 
+                                    aria-controls="tc-monthly-data" aria-selected="false"
+                                    onclick="updateTestConditionTimePeriodChart('month')">
+                                    Monthly
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="tc-quarterly-tab" data-bs-toggle="pill" 
+                                    data-bs-target="#tc-quarterly-data" type="button" role="tab" 
+                                    aria-controls="tc-quarterly-data" aria-selected="false"
+                                    onclick="updateTestConditionTimePeriodChart('quarter')">
+                                    Quarterly
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="tc-yearly-tab" data-bs-toggle="pill" 
+                                    data-bs-target="#tc-yearly-data" type="button" role="tab" 
+                                    aria-controls="tc-yearly-data" aria-selected="false"
+                                    onclick="updateTestConditionTimePeriodChart('year')">
+                                    Yearly
+                                </button>
+                            </li>
+                        </ul>
+                        
+                        <div class="tab-content" id="test-condition-tab-content">
+                            <div class="tab-pane fade show active" id="test-condition-content" role="tabpanel">
+                                <div class="row">
+                                    <div class="col-md-6" id="quarter-bench-condition-column">
+                                        <div class="chart-container">
+                                            <h5 class="text-center mb-3">Quarter Bench</h5>
+                                            <canvas id="quarterBenchTestConditionChart"></canvas>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" id="full-bench-condition-column">
+                                        <div class="chart-container">
+                                            <h5 class="text-center mb-3">Full Bench</h5>
+                                            <canvas id="fullBenchTestConditionChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Original Test Conditions and Load Status charts -->
+                <div class="row mt-4">
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-header bg-info text-white">
+                                <i class="bi bi-pie-chart"></i> Test Conditions
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container">
+                                    <canvas id="testConditionsChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-header bg-warning text-dark">
+                                <i class="bi bi-bar-chart"></i> Load Status Distribution
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container">
+                                    <canvas id="loadStatusChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Register ChartDataLabels plugin globally
+        Chart.register(ChartDataLabels);
+        
+        // Configuration
+        let selectedFile = null;
+        let allData = [];
+        let filteredData = [];
+        let dateFilteredData = []; // Data filtered by date
+        let currentView = 'all';
+        let availableYears = []; // To store available years from the data
+
+        // Chart objects
+        let charts = { 
+            weeklyAverage: null, // NEW: Weekly average chart (replacing timeSeries)
+            requestTypes: null, 
+            testConditions: null,
+            loadStatus: null,
+            quarterBenchTime: null,
+            fullBenchTime: null,
+            quarterBenchRequestTypeMonth: null,
+            fullBenchRequestTypeMonth: null,
+            quarterBenchTestCondition: null,
+            fullBenchTestCondition: null,
+            barTotalTests: null
+        };
+        
+        // Current time period for charts
+        let currentTimePeriod = 'week';
+        let currentTestConditionTimePeriod = 'week';
+        
+        // Enhanced chart colors for dark mode
+        const chartColors = [
+            '#36A2EB', '#FF6384', '#FFCE56', '#4BC0C0', 
+            '#9966FF', '#FF9F40', '#4ECDC4', '#FFC857', 
+            '#A5D6A7', '#FFA726', '#90CAF9', '#EF9A9A'
+        ];
+
+        // Global chart options for dark mode
+        const darkModeChartOptions = {
+            scales: {
+                x: {
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)'
+                    },
+                    ticks: {
+                        color: 'rgba(255, 255, 255, 0.7)'
+                    }
+                },
+                y: {
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)'
+                    },
+                    ticks: {
+                        color: 'rgba(255, 255, 255, 0.7)'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        color: 'rgba(255, 255, 255, 0.8)'
+                    }
+                },
+                title: {
+                    color: 'rgba(255, 255, 255, 0.9)'
+                },
+                datalabels: {
+                    color: 'rgba(255, 255, 255, 0.9)',
+                    font: {
+                        weight: 'bold'
+                    }
+                }
+            }
+        };
+
+        /**
+         * Formats date labels for charts based on the time period
+         * @param {string} dateStr - The date string to format
+         * @param {string} period - The period type ('week', 'month', 'quarter', 'year')
+         * @returns {string} - Formatted date label
+         */
+        function formatLabel(dateStr, period) {
+            if (!dateStr) return '';
+            
+            // For weeks (format: YYYY-WW)
+            if (period === 'week' && dateStr.includes('-W')) {
+                const [year, weekNum] = dateStr.split('-W');
+                return `Week ${weekNum}, ${year}`;
+            }
+            
+            // For months (format: YYYY-MM)
+            else if (period === 'month' && dateStr.match(/^\d{4}-\d{2}$/)) {
+                const [year, month] = dateStr.split('-');
+                const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+                                   'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                return `${monthNames[parseInt(month)-1]} ${year}`;
+            }
+            
+            // For quarters (format: YYYY-QN)
+            else if (period === 'quarter' && dateStr.includes('-Q')) {
+                const [year, quarter] = dateStr.split('-Q');
+                return `Q${quarter} ${year}`;
+            }
+            
+            // For years (format: YYYY)
+            else if (period === 'year') {
+                return dateStr;
+            }
+            
+            // Default case - return the original string
+            return dateStr;
+        }
+
+        // Helper function to sort time periods chronologically
+        function sortChronologically(keys) {
+            // For weeks (format: YYYY-WW)
+            if (keys.length > 0 && keys[0].includes('-W')) {
+                return keys.sort((a, b) => {
+                    const [yearA, weekA] = a.split('-W');
+                    const [yearB, weekB] = b.split('-W');
+                    
+                    // First compare years
+                    if (yearA !== yearB) {
+                        return parseInt(yearA) - parseInt(yearB);
+                    }
+                    
+                    // If same year, compare week numbers
+                    return parseInt(weekA) - parseInt(weekB);
+                });
+            }
+            
+            // For months (format: YYYY-MM)
+            else if (keys.length > 0 && keys[0].match(/^\d{4}-\d{2}$/)) {
+                return keys.sort();
+            }
+            
+            // For quarters (format: YYYY-QN)
+            else if (keys.length > 0 && keys[0].includes('-Q')) {
+                return keys.sort((a, b) => {
+                    const [yearA, quarterA] = a.split('-Q');
+                    const [yearB, quarterB] = b.split('-Q');
+                    
+                    // First compare years
+                    if (yearA !== yearB) {
+                        return parseInt(yearA) - parseInt(yearB);
+                    }
+                    
+                    // If same year, compare quarter numbers
+                    return parseInt(quarterA) - parseInt(quarterB);
+                });
+            }
+            
+            // For years (format: YYYY)
+            else {
+                return keys.sort();
+            }
+        }
+
+        /**
+         * Apply date filters to the data
+         * Filters the data based on selected month and year
+         */
+        function applyDateFilter() {
+            const selectedMonth = document.getElementById('monthSelector').value;
+            const selectedYear = document.getElementById('yearSelector').value;
+            
+            // If both are 'all', reset to the original filtered data
+            if (selectedMonth === 'all' && selectedYear === 'all') {
+                dateFilteredData = [...filteredData];
+                updateDashboard(dateFilteredData, currentView);
+                return;
+            }
+            
+            // Filter the data based on selected month and year
+            dateFilteredData = filteredData.filter(row => {
+                if (!row.load_start) return false;
+                
+                const date = new Date(row.load_start);
+                if (isNaN(date)) return false;
+                
+                const month = date.getMonth() + 1; // 0-indexed to 1-indexed
+                const year = date.getFullYear().toString();
+                
+                // Check if the date matches the selected filters
+                return (selectedMonth === 'all' || month.toString() === selectedMonth) && 
+                       (selectedYear === 'all' || year === selectedYear);
+            });
+            
+            // Update the dashboard with filtered data
+            updateDashboard(dateFilteredData, currentView);
+        }
+
+        // Parse CSV from file input
+        async function loadData() {
+            return new Promise((resolve, reject) => {
+                if (!selectedFile) {
+                    reject(new Error("No file selected"));
+                    return;
+                }
+
+                const reader = new FileReader();
+                
+                reader.onload = function(event) {
+                    Papa.parse(event.target.result, {
+                        header: true,
+                        dynamicTyping: true,
+                        skipEmptyLines: true,
+                        complete: (result) => {
+                            console.log('CSV parsed successfully, rows: ', result.data.length);
+                            resolve(result.data);
+                        },
+                        error: (error) => {
+                            console.error('Error parsing CSV:', error);
+                            reject(error);
+                        }
+                    });
+                };
+                
+                reader.onerror = function(event) {
+                    reject(new Error("Error reading file"));
+                };
+                
+                reader.readAsText(selectedFile);
+            });
+        }
+
+        // Filter data based on dashboard type
+        function filterData(data, view) {
+            switch(view) {
+                case 'quarter':
+                    return data.filter(row => row.testing_area === 'Quarter Bench');
+                case 'full':
+                    return data.filter(row => row.testing_area === 'Full Bench');
+                case 'all':
+                default:
+                    return data;
+            }
+        }
+
+        /**
+         * Populate the year selector dropdown with available years from the data
+         * @param {Array} data - The loaded data
+         */
+        function populateYearSelector(data) {
+            const years = new Set();
+            const yearSelector = document.getElementById('yearSelector');
+            
+            // Extract all years from the data
+            data.forEach(row => {
+                if (row.load_start) {
+                    const date = new Date(row.load_start);
+                    if (!isNaN(date)) {
+                        years.add(date.getFullYear());
+                    }
+                }
+            });
+            
+            // Convert to array and sort
+            availableYears = Array.from(years).sort((a, b) => b - a); // Sort descending
+            
+            // Clear previous options
+            yearSelector.innerHTML = '';
+            
+            // Add "All Years" option
+            const allOption = document.createElement('option');
+            allOption.value = 'all';
+            allOption.textContent = 'All Years';
+            yearSelector.appendChild(allOption);
+            
+            // Add year options
+            availableYears.forEach(year => {
+                const option = document.createElement('option');
+                option.value = year.toString();
+                option.textContent = year.toString();
+                yearSelector.appendChild(option);
+            });
+        }
+
+        /**
+         * Calculate Global KPI metrics that are not affected by filters
+         * @param {Array} data - The complete dataset (not filtered)
+         * @returns {Object} - Object containing calculated global KPIs
+         */
+        function calculateGlobalKPIs(data) {
+            const now = new Date();
+            const currentYear = now.getFullYear();
+            const currentMonth = now.getMonth() + 1; // 0-indexed to 1-indexed
+            
+            // Get previous month (handling January case)
+            const previousMonth = currentMonth === 1 ? 12 : currentMonth - 1;
+            const previousMonthYear = currentMonth === 1 ? currentYear - 1 : currentYear;
+            
+            // Tests in current month
+            const currentMonthTests = data.reduce((sum, row) => {
+                if (row.load_start) {
+                    const date = new Date(row.load_start);
+                    if (!isNaN(date) && 
+                        date.getMonth() + 1 === currentMonth && 
+                        date.getFullYear() === currentYear) {
+                        
+                        return sum + 
+                            (parseInt(row.NOx_Removal_count) || 0) + 
+                            (parseInt(row.SO2_Oxidation_count) || 0) + 
+                            (parseInt(row.CO_Oxidation_count) || 0) + 
+                            (parseInt(row.VOC_Oxidation_count) || 0) + 
+                            (parseInt(row.Hg_Oxidation_count) || 0) + 
+                            (parseInt(row.CH2O_Oxidation_count) || 0);
+                    }
+                }
+                return sum;
+            }, 0);
+            
+            // Tests in previous month
+            const previousMonthTests = data.reduce((sum, row) => {
+                if (row.load_start) {
+                    const date = new Date(row.load_start);
+                    if (!isNaN(date) && 
+                        date.getMonth() + 1 === previousMonth && 
+                        date.getFullYear() === previousMonthYear) {
+                        
+                        return sum + 
+                            (parseInt(row.NOx_Removal_count) || 0) + 
+                            (parseInt(row.SO2_Oxidation_count) || 0) + 
+                            (parseInt(row.CO_Oxidation_count) || 0) + 
+                            (parseInt(row.VOC_Oxidation_count) || 0) + 
+                            (parseInt(row.Hg_Oxidation_count) || 0) + 
+                            (parseInt(row.CH2O_Oxidation_count) || 0);
+                    }
+                }
+                return sum;
+            }, 0);
+            
+            // Tests in all months this year
+            const monthsInYear = Array.from({ length: 12 }, (_, i) => i + 1);
+            const monthlyTestCounts = monthsInYear.map(month => {
+                return data.reduce((sum, row) => {
+                    if (row.load_start) {
+                        const date = new Date(row.load_start);
+                        if (!isNaN(date) && 
+                            date.getMonth() + 1 === month && 
+                            date.getFullYear() === currentYear) {
+                            
+                            return sum + 
+                                (parseInt(row.NOx_Removal_count) || 0) + 
+                                (parseInt(row.SO2_Oxidation_count) || 0) + 
+                                (parseInt(row.CO_Oxidation_count) || 0) + 
+                                (parseInt(row.VOC_Oxidation_count) || 0) + 
+                                (parseInt(row.Hg_Oxidation_count) || 0) + 
+                                (parseInt(row.CH2O_Oxidation_count) || 0);
+                        }
+                    }
+                    return sum;
+                }, 0);
+            });
+            
+            // Calculate total tests this year
+            const totalTestsThisYear = monthlyTestCounts.reduce((sum, count) => sum + count, 0);
+            
+            // Calculate average tests per month (use elapsed months if current year)
+            const elapsedMonths = Math.min(currentMonth, 12); // Use at most 12 months
+            const avgTestsPerMonth = elapsedMonths > 0 ? 
+                (totalTestsThisYear / elapsedMonths).toFixed(1) : 0;
+            
+            return {
+                currentMonthTests,
+                previousMonthTests,
+                avgTestsPerMonth
+            };
+        }
+
+        /**
+         * Update the Global KPI cards with calculated metrics
+         * @param {Object} kpis - The calculated global KPI metrics
+         */
+        function updateGlobalKPICards(kpis) {
+            // Update the KPI cards
+            document.getElementById('current-month-tests').textContent = kpis.currentMonthTests;
+            document.getElementById('previous-month-tests').textContent = kpis.previousMonthTests;
+            document.getElementById('avg-tests-per-month').textContent = kpis.avgTestsPerMonth;
+        }
+
+        /**
+         * Update the bar chart showing total tests
+         * @param {Array} data - The filtered data
+         */
+        function updateBarTotalTestsChart(data) {
+            // Group tests by test condition
+            const testConditions = {
+                'NOx Removal': data.reduce((sum, row) => sum + (parseInt(row.NOx_Removal_count) || 0), 0),
+                'SO₂ Oxidation': data.reduce((sum, row) => sum + (parseInt(row.SO2_Oxidation_count) || 0), 0),
+                'CO Oxidation': data.reduce((sum, row) => sum + (parseInt(row.CO_Oxidation_count) || 0), 0),
+                'VOC Oxidation': data.reduce((sum, row) => sum + (parseInt(row.VOC_Oxidation_count) || 0), 0),
+                'Hg Oxidation': data.reduce((sum, row) => sum + (parseInt(row.Hg_Oxidation_count) || 0), 0),
+                'CH₂O Oxidation': data.reduce((sum, row) => sum + (parseInt(row.CH2O_Oxidation_count) || 0), 0)
+            };
+            
+            // Filter out zero values
+            Object.keys(testConditions).forEach(key => {
+                if (testConditions[key] === 0) delete testConditions[key];
+            });
+            
+            const labels = Object.keys(testConditions);
+            const values = Object.values(testConditions);
+            
+            if (charts.barTotalTests) charts.barTotalTests.destroy();
+            
+            const ctx = document.getElementById('barTotalTestsChart').getContext('2d');
+            charts.barTotalTests = new Chart(ctx, {
+                type: 'bar',
+                data: { 
+                    labels, 
+                    datasets: [{ 
+                        label: 'Number of Tests',
+                        data: values, 
+                        backgroundColor: chartColors.slice(0, labels.length),
+                        borderWidth: 1,
+                        borderColor: 'rgba(0, 0, 0, 0.1)'
+                    }] 
+                },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false, 
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Count',
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Test Condition',
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        datalabels: {
+                            anchor: 'end',
+                            align: 'top',
+                            formatter: Math.round,
+                            font: {
+                                weight: 'bold'
+                            },
+                            color: 'rgba(255, 255, 255, 0.9)'
+                        },
+                        legend: { 
+                            display: false
+                        },
+                        title: {
+                            display: true,
+                            text: 'Test Count by Condition',
+                            color: 'rgba(255, 255, 255, 0.9)'
+                        }
+                    }
+                }
+            });
+        }
+
+        /**
+         * Update the weekly average chart
+         * @param {Array} data - The filtered data
+         */
+        function updateWeeklyAverageChart(data) {
+            const weeklyData = {};
+            
+            // Group tests by week
+            data.forEach(row => {
+                if (row.load_start) {
+                    const date = new Date(row.load_start);
+                    if (!isNaN(date)) {
+                        // Skip weekends (Saturday = 6, Sunday = 0)
+                        const day = date.getDay();
+                        if (day === 0 || day === 6) {
+                            return; // Skip weekend data
+                        }
+                        
+                        // Get week number
+                        const year = date.getFullYear();
+                        const weekNum = getWeekNumber(date);
+                        if (!weekNum) return;
+                        
+                        const weekKey = `${year}-W${weekNum}`;
+                        
+                        // Count tests
+                        const testCount = 
+                            (parseInt(row.NOx_Removal_count) || 0) + 
+                            (parseInt(row.SO2_Oxidation_count) || 0) + 
+                            (parseInt(row.CO_Oxidation_count) || 0) + 
+                            (parseInt(row.VOC_Oxidation_count) || 0) +
+                            (parseInt(row.Hg_Oxidation_count) || 0) +
+                            (parseInt(row.CH2O_Oxidation_count) || 0);
+                        
+                        // Add to week data
+                        if (!weeklyData[weekKey]) {
+                            weeklyData[weekKey] = {
+                                totalTests: 0,
+                                days: new Set()
+                            };
+                        }
+                        
+                        weeklyData[weekKey].totalTests += testCount;
+                        weeklyData[weekKey].days.add(date.toISOString().split('T')[0]);
+                    }
+                }
+            });
+            
+            // Calculate average per week (divide by 5 business days)
+            const avgData = {};
+            Object.keys(weeklyData).forEach(weekKey => {
+                // Divide by 5 (workdays) instead of 7
+                avgData[weekKey] = weeklyData[weekKey].totalTests / 5;
+            });
+            
+            // Sort weeks and prepare chart data
+            const sortedWeeks = sortChronologically(Object.keys(avgData));
+            const labels = sortedWeeks.map(week => formatLabel(week, 'week'));
+            const values = sortedWeeks.map(week => avgData[week]);
+            
+            if (charts.weeklyAverage) charts.weeklyAverage.destroy();
+            
+            const ctx = document.getElementById('weeklyAverageChart').getContext('2d');
+            charts.weeklyAverage = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels,
+                    datasets: [{ 
+                        label: 'Average Tests per Business Day', 
+                        data: values, 
+                        borderColor: '#36A2EB', 
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 4,
+                        pointHoverRadius: 6
+                    }]
+                },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false, 
+                    scales: { 
+                        y: { 
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Average Number of Tests',
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Week',
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        datalabels: {
+                            display: false // Disable for line chart
+                        },
+                        title: {
+                            display: true,
+                            text: 'Weekly Average Test Count (Per 5 Business Days)',
+                            color: 'rgba(255, 255, 255, 0.9)'
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            callbacks: {
+                                label: function(context) {
+                                    return `Average: ${context.raw.toFixed(1)} tests per business day`;
+                                }
+                            }
+                        },
+                        legend: {
+                            labels: {
+                                color: 'rgba(255, 255, 255, 0.8)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Request types pie chart
+        function updateRequestTypesChart(data) {
+            const requestCounts = {};
+            
+            data.forEach(row => {
+                const type = row.request_type || 'Unknown';
+                requestCounts[type] = (requestCounts[type] || 0) + 
+                    (parseInt(row.NOx_Removal_count) || 0) + 
+                    (parseInt(row.SO2_Oxidation_count) || 0) + 
+                    (parseInt(row.CO_Oxidation_count) || 0) + 
+                    (parseInt(row.VOC_Oxidation_count) || 0) +
+                    (parseInt(row.Hg_Oxidation_count) || 0) +
+                    (parseInt(row.CH2O_Oxidation_count) || 0);
+            });
+            
+            const labels = Object.keys(requestCounts);
+            const values = Object.values(requestCounts);
+            
+            if (charts.requestTypes) charts.requestTypes.destroy();
+            
+            const ctx = document.getElementById('requestTypesChart').getContext('2d');
+            charts.requestTypes = new Chart(ctx, {
+                type: 'doughnut',
+                data: { 
+                    labels, 
+                    datasets: [{ 
+                        data: values, 
+                        backgroundColor: chartColors.slice(0, labels.length),
+                        borderWidth: 1,
+                        borderColor: '#242424'
+                    }] 
+                },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false, 
+                    plugins: { 
+                        datalabels: {
+                            color: '#fff',
+                            font: {
+                                weight: 'bold'
+                            },
+                            formatter: Math.round
+                        },
+                        legend: { 
+                            position: 'right',
+                            labels: {
+                                boxWidth: 15,
+                                padding: 15,
+                                color: 'rgba(255, 255, 255, 0.8)'
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Distribution by Request Type',
+                            color: 'rgba(255, 255, 255, 0.9)'
+                        }
+                    }
+                }
+            });
+        }
+
+        // Test conditions pie chart
+        function updateTestConditionsChart(data) {
+            const conditions = {
+                'NOx Removal': data.reduce((sum, row) => sum + (parseInt(row.NOx_Removal_count) || 0), 0),
+                'SO₂ Oxidation': data.reduce((sum, row) => sum + (parseInt(row.SO2_Oxidation_count) || 0), 0),
+                'CO Oxidation': data.reduce((sum, row) => sum + (parseInt(row.CO_Oxidation_count) || 0), 0),
+                'VOC Oxidation': data.reduce((sum, row) => sum + (parseInt(row.VOC_Oxidation_count) || 0), 0),
+                'Hg Oxidation': data.reduce((sum, row) => sum + (parseInt(row.Hg_Oxidation_count) || 0), 0),
+                'CH₂O Oxidation': data.reduce((sum, row) => sum + (parseInt(row.CH2O_Oxidation_count) || 0), 0)
+            };
+            
+            // Filter out zero values
+            Object.keys(conditions).forEach(key => {
+                if (conditions[key] === 0) delete conditions[key];
+            });
+            
+            const labels = Object.keys(conditions);
+            const values = Object.values(conditions);
+            
+            if (charts.testConditions) charts.testConditions.destroy();
+            
+            const ctx = document.getElementById('testConditionsChart').getContext('2d');
+            charts.testConditions = new Chart(ctx, {
+                type: 'pie',
+                data: { 
+                    labels, 
+                    datasets: [{ 
+                        data: values, 
+                        backgroundColor: chartColors.slice(0, labels.length),
+                        borderWidth: 1,
+                        borderColor: '#242424'
+                    }] 
+                },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false, 
+                    plugins: { 
+                        datalabels: {
+                            color: '#fff',
+                            font: {
+                                weight: 'bold'
+                            },
+                            formatter: Math.round
+                        },
+                        legend: { 
+                            position: 'right',
+                            labels: {
+                                boxWidth: 15,
+                                padding: 10,
+                                color: 'rgba(255, 255, 255, 0.8)'
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Distribution by Test Condition',
+                            color: 'rgba(255, 255, 255, 0.9)'
+                        }
+                    }
+                }
+            });
+        }
+
+        // Load status chart
+        function updateLoadStatusChart(data) {
+            const statusCounts = {};
+            
+            data.forEach(row => {
+                const status = row.load_status || 'Unknown';
+                statusCounts[status] = (statusCounts[status] || 0) + 1;
+            });
+            
+            const labels = Object.keys(statusCounts);
+            const values = Object.values(statusCounts);
+            
+            if (charts.loadStatus) charts.loadStatus.destroy();
+            
+            const ctx = document.getElementById('loadStatusChart').getContext('2d');
+            charts.loadStatus = new Chart(ctx, {
+                type: 'bar',
+                data: { 
+                    labels, 
+                    datasets: [{ 
+                        label: 'Number of Loads',
+                        data: values, 
+                        backgroundColor: chartColors.slice(0, labels.length),
+                        borderWidth: 1,
+                        borderColor: 'rgba(0, 0, 0, 0.3)'
+                    }] 
+                },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false, 
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Count',
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Load Status',
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        datalabels: {
+                            anchor: 'end',
+                            align: 'top',
+                            formatter: Math.round,
+                            font: {
+                                weight: 'bold'
+                            },
+                            color: 'rgba(255, 255, 255, 0.9)'
+                        },
+                        legend: { 
+                            display: false
+                        },
+                        title: {
+                            display: true,
+                            text: 'Load Status Distribution',
+                            color: 'rgba(255, 255, 255, 0.9)'
+                        }
+                    }
+                }
+            });
+        }
+
+        // Helper functions for date processing
+        function getWeekNumber(d) {
+            const date = new Date(d);
+            if (isNaN(date)) return null;
+            
+            date.setHours(0, 0, 0, 0);
+            // Thursday in current week decides the year
+            date.setDate(date.getDate() + 3 - (date.getDay() + 6) % 7);
+            // January 4 is always in week 1
+            const week1 = new Date(date.getFullYear(), 0, 4);
+            // Adjust to Thursday in week 1 and count number of weeks from date to week1
+            return 1 + Math.round(((date.getTime() - week1.getTime()) / 86400000 - 3 + 
+                                 (week1.getDay() + 6) % 7) / 7);
+        }
+        
+        function getQuarter(d) {
+            const date = new Date(d);
+            if (isNaN(date)) return null;
+            
+            const month = date.getMonth();
+            return Math.floor(month / 3) + 1;
+        }
+        
+        // Process data by time period (week, month, quarter, year)
+        function processDataByTimePeriod(data, timePeriod) {
+            const timeData = {};
+            
+            data.forEach(row => {
+                if (!row.load_start) return;
+                
+                const date = new Date(row.load_start);
+                if (isNaN(date)) return;
+                
+                let key;
+                const year = date.getFullYear();
+                
+                switch(timePeriod) {
+                    case 'week':
+                        const weekNum = getWeekNumber(date);
+                        if (weekNum) key = `${year}-W${weekNum}`;
+                        break;
+                    case 'month':
+                        const month = date.getMonth() + 1; // 0-indexed to 1-indexed
+                        key = `${year}-${month.toString().padStart(2, '0')}`;
+                        break;
+                    case 'quarter':
+                        const quarter = getQuarter(date);
+                        if (quarter) key = `${year}-Q${quarter}`;
+                        break;
+                    case 'year':
+                        key = year.toString();
+                        break;
+                    default:
+                        return;
+                }
+                
+                if (!key) return;
+                
+                // Count all test types
+                const testCount = (parseInt(row.NOx_Removal_count) || 0) + 
+                                 (parseInt(row.SO2_Oxidation_count) || 0) + 
+                                 (parseInt(row.CO_Oxidation_count) || 0) + 
+                                 (parseInt(row.VOC_Oxidation_count) || 0) +
+                                 (parseInt(row.Hg_Oxidation_count) || 0) +
+                                 (parseInt(row.CH2O_Oxidation_count) || 0);
+                
+                timeData[key] = (timeData[key] || 0) + testCount;
+            });
+            
+            // Sort keys chronologically and prepare for chart
+            const sortedKeys = sortChronologically(Object.keys(timeData));
+            return {
+                labels: sortedKeys,
+                data: sortedKeys.map(key => timeData[key])
+            };
+        }
+        
+        // Process data by request type and month
+        function processRequestTypeByMonth(data) {
+            const requestTypeMonthData = {};
+            
+            data.forEach(row => {
+                if (!row.load_start || !row.request_type) return;
+                
+                const date = new Date(row.load_start);
+                if (isNaN(date)) return;
+                
+                const year = date.getFullYear();
+                const month = date.getMonth() + 1; // 0-indexed to 1-indexed
+                const monthKey = `${year}-${month.toString().padStart(2, '0')}`;
+                
+                const requestType = row.request_type;
+                
+                // Count all test types
+                const testCount = (parseInt(row.NOx_Removal_count) || 0) + 
+                                 (parseInt(row.SO2_Oxidation_count) || 0) + 
+                                 (parseInt(row.CO_Oxidation_count) || 0) + 
+                                 (parseInt(row.VOC_Oxidation_count) || 0) +
+                                 (parseInt(row.Hg_Oxidation_count) || 0) +
+                                 (parseInt(row.CH2O_Oxidation_count) || 0);
+                
+                if (!requestTypeMonthData[requestType]) {
+                    requestTypeMonthData[requestType] = {};
+                }
+                
+                requestTypeMonthData[requestType][monthKey] = 
+                    (requestTypeMonthData[requestType][monthKey] || 0) + testCount;
+            });
+            
+            return requestTypeMonthData;
+        }
+        
+        // Process test conditions by time period
+        function processTestConditionsByTimePeriod(data, timePeriod) {
+            const result = {
+                'NOx Removal': {},
+                'SO₂ Oxidation': {},
+                'CO Oxidation': {},
+                'VOC Oxidation': {},
+                'Hg Oxidation': {},
+                'CH₂O Oxidation': {}
+            };
+            
+            data.forEach(row => {
+                if (!row.load_start) return;
+                
+                const date = new Date(row.load_start);
+                if (isNaN(date)) return;
+                
+                let key;
+                const year = date.getFullYear();
+                
+                switch(timePeriod) {
+                    case 'week':
+                        const weekNum = getWeekNumber(date);
+                        if (weekNum) key = `${year}-W${weekNum}`;
+                        break;
+                    case 'month':
+                        const month = date.getMonth() + 1; // 0-indexed to 1-indexed
+                        key = `${year}-${month.toString().padStart(2, '0')}`;
+                        break;
+                    case 'quarter':
+                        const quarter = getQuarter(date);
+                        if (quarter) key = `${year}-Q${quarter}`;
+                        break;
+                    case 'year':
+                        key = year.toString();
+                        break;
+                    default:
+                        return;
+                }
+                
+                if (!key) return;
+                
+                // Add each test condition count to its respective category
+                result['NOx Removal'][key] = (result['NOx Removal'][key] || 0) + 
+                    (parseInt(row.NOx_Removal_count) || 0);
+                    
+                result['SO₂ Oxidation'][key] = (result['SO₂ Oxidation'][key] || 0) + 
+                    (parseInt(row.SO2_Oxidation_count) || 0);
+                    
+                result['CO Oxidation'][key] = (result['CO Oxidation'][key] || 0) + 
+                    (parseInt(row.CO_Oxidation_count) || 0);
+                    
+                result['VOC Oxidation'][key] = (result['VOC Oxidation'][key] || 0) + 
+                    (parseInt(row.VOC_Oxidation_count) || 0);
+                    
+                result['Hg Oxidation'][key] = (result['Hg Oxidation'][key] || 0) + 
+                    (parseInt(row.Hg_Oxidation_count) || 0);
+                    
+                result['CH₂O Oxidation'][key] = (result['CH₂O Oxidation'][key] || 0) + 
+                    (parseInt(row.CH2O_Oxidation_count) || 0);
+            });
+            
+            return result;
+        }
+        
+        // Update time period charts
+        function updateTimePeriodChart(timePeriod) {
+            currentTimePeriod = timePeriod;
+            
+            // Filter data by bench type
+            const quarterBenchData = dateFilteredData.filter(row => row.testing_area === 'Quarter Bench');
+            const fullBenchData = dateFilteredData.filter(row => row.testing_area === 'Full Bench');
+            
+            // Process data by selected time period
+            const quarterBenchTimeData = processDataByTimePeriod(quarterBenchData, timePeriod);
+            const fullBenchTimeData = processDataByTimePeriod(fullBenchData, timePeriod);
+            
+            // Format the labels
+            const formattedQuarterLabels = quarterBenchTimeData.labels.map(label => formatLabel(label, timePeriod));
+            const formattedFullLabels = fullBenchTimeData.labels.map(label => formatLabel(label, timePeriod));
+            
+            // Dark mode chart options
+            const chartOptions = {
+                responsive: true, 
+                maintainAspectRatio: false,
+                scales: { 
+                    y: { 
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Number of Tests',
+                            color: 'rgba(255, 255, 255, 0.7)'
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: 'rgba(255, 255, 255, 0.7)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: 'rgba(255, 255, 255, 0.7)'
+                        }
+                    }
+                },
+                plugins: {
+                    datalabels: {
+                        anchor: 'end',
+                        align: 'top',
+                        formatter: Math.round,
+                        font: {
+                            weight: 'bold'
+                        },
+                        color: 'rgba(255, 255, 255, 0.9)'
+                    },
+                    title: {
+                        display: true,
+                        color: 'rgba(255, 255, 255, 0.9)'
+                    }
+                }
+            };
+            
+            // Update Quarter Bench chart
+            if (charts.quarterBenchTime) charts.quarterBenchTime.destroy();
+            const qbCtx = document.getElementById('quarterBenchTimeChart').getContext('2d');
+            charts.quarterBenchTime = new Chart(qbCtx, {
+                type: 'bar',
+                data: {
+                    labels: formattedQuarterLabels,
+                    datasets: [{ 
+                        label: 'Test Count', 
+                        data: quarterBenchTimeData.data,
+                        backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    ...chartOptions,
+                    plugins: {
+                        ...chartOptions.plugins,
+                        title: {
+                            ...chartOptions.plugins.title,
+                            text: `Quarter Bench Tests by ${timePeriod.charAt(0).toUpperCase() + timePeriod.slice(1)}`
+                        }
+                    }
+                }
+            });
+            
+            // Update Full Bench chart
+            if (charts.fullBenchTime) charts.fullBenchTime.destroy();
+            const fbCtx = document.getElementById('fullBenchTimeChart').getContext('2d');
+            charts.fullBenchTime = new Chart(fbCtx, {
+                type: 'bar',
+                data: {
+                    labels: formattedFullLabels,
+                    datasets: [{ 
+                        label: 'Test Count', 
+                        data: fullBenchTimeData.data,
+                        backgroundColor: 'rgba(255, 99, 132, 0.7)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    ...chartOptions,
+                    plugins: {
+                        ...chartOptions.plugins,
+                        title: {
+                            ...chartOptions.plugins.title,
+                            text: `Full Bench Tests by ${timePeriod.charAt(0).toUpperCase() + timePeriod.slice(1)}`
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Update request type by month charts
+        function updateRequestTypeMonthCharts() {
+            // Filter data by bench type
+            const quarterBenchData = dateFilteredData.filter(row => row.testing_area === 'Quarter Bench');
+            const fullBenchData = dateFilteredData.filter(row => row.testing_area === 'Full Bench');
+            
+            // Process data by request type and month
+            const quarterBenchRequestTypeData = processRequestTypeByMonth(quarterBenchData);
+            const fullBenchRequestTypeData = processRequestTypeByMonth(fullBenchData);
+            
+            // Get all unique months across all request types
+            let allMonths = new Set();
+            
+            for (const requestType in quarterBenchRequestTypeData) {
+                Object.keys(quarterBenchRequestTypeData[requestType]).forEach(month => allMonths.add(month));
+            }
+            
+            for (const requestType in fullBenchRequestTypeData) {
+                Object.keys(fullBenchRequestTypeData[requestType]).forEach(month => allMonths.add(month));
+            }
+            
+            // Convert to array and sort chronologically
+            allMonths = sortChronologically(Array.from(allMonths));
+            
+            // Format month labels for display
+            const formattedMonths = allMonths.map(month => formatLabel(month, 'month'));
+            
+            // Prepare datasets for Quarter Bench
+            const quarterBenchDatasets = [];
+            let colorIndex = 0;
+            
+            for (const requestType in quarterBenchRequestTypeData) {
+                const data = allMonths.map(month => quarterBenchRequestTypeData[requestType][month] || 0);
+                
+                quarterBenchDatasets.push({
+                    label: requestType,
+                    data: data,
+                    backgroundColor: chartColors[colorIndex % chartColors.length],
+                    borderColor: chartColors[colorIndex % chartColors.length],
+                    borderWidth: 1
+                });
+                
+                colorIndex++;
+            }
+            
+            // Prepare datasets for Full Bench
+            const fullBenchDatasets = [];
+            colorIndex = 0;
+            
+            for (const requestType in fullBenchRequestTypeData) {
+                const data = allMonths.map(month => fullBenchRequestTypeData[requestType][month] || 0);
+                
+                fullBenchDatasets.push({
+                    label: requestType,
+                    data: data,
+                    backgroundColor: chartColors[colorIndex % chartColors.length],
+                    borderColor: chartColors[colorIndex % chartColors.length],
+                    borderWidth: 1
+                });
+                
+                colorIndex++;
+            }
+            
+            // Chart options for dark mode
+            const chartOptions = {
+                responsive: true, 
+                maintainAspectRatio: false,
+                scales: { 
+                    x: {
+                        stacked: true,
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: 'rgba(255, 255, 255, 0.7)'
+                        }
+                    },
+                    y: { 
+                        stacked: true,
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Number of Tests',
+                            color: 'rgba(255, 255, 255, 0.7)'
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: 'rgba(255, 255, 255, 0.7)'
+                        }
+                    }
+                },
+                plugins: {
+                    datalabels: {
+                        anchor: 'center',
+                        align: 'center',
+                        color: '#fff',
+                        formatter: Math.round,
+                        font: {
+                            weight: 'bold'
+                        },
+                        display: function(context) {
+                            return context.dataset.data[context.dataIndex] > 0;
+                        }
+                    },
+                    title: {
+                        display: true,
+                        color: 'rgba(255, 255, 255, 0.9)'
+                    },
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            color: 'rgba(255, 255, 255, 0.8)'
+                        }
+                    }
+                }
+            };
+            
+            // Update Quarter Bench chart
+            if (charts.quarterBenchRequestTypeMonth) charts.quarterBenchRequestTypeMonth.destroy();
+            const qbCtx = document.getElementById('quarterBenchRequestTypeMonthChart').getContext('2d');
+            charts.quarterBenchRequestTypeMonth = new Chart(qbCtx, {
+                type: 'bar',
+                data: {
+                    labels: formattedMonths,
+                    datasets: quarterBenchDatasets
+                },
+                options: {
+                    ...chartOptions,
+                    plugins: {
+                        ...chartOptions.plugins,
+                        title: {
+                            ...chartOptions.plugins.title,
+                            text: 'Quarter Bench Tests by Request Type and Month'
+                        }
+                    }
+                }
+            });
+            
+            // Update Full Bench chart
+            if (charts.fullBenchRequestTypeMonth) charts.fullBenchRequestTypeMonth.destroy();
+            const fbCtx = document.getElementById('fullBenchRequestTypeMonthChart').getContext('2d');
+            charts.fullBenchRequestTypeMonth = new Chart(fbCtx, {
+                type: 'bar',
+                data: {
+                    labels: formattedMonths,
+                    datasets: fullBenchDatasets
+                },
+                options: {
+                    ...chartOptions,
+                    plugins: {
+                        ...chartOptions.plugins,
+                        title: {
+                            ...chartOptions.plugins.title,
+                            text: 'Full Bench Tests by Request Type and Month'
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Update test condition by time period charts
+        function updateTestConditionTimePeriodChart(timePeriod) {
+            currentTestConditionTimePeriod = timePeriod;
+            
+            // Filter data by bench type
+            const quarterBenchData = dateFilteredData.filter(row => row.testing_area === 'Quarter Bench');
+            const fullBenchData = dateFilteredData.filter(row => row.testing_area === 'Full Bench');
+            
+            // Process data by test condition and time period
+            const quarterBenchConditionData = processTestConditionsByTimePeriod(quarterBenchData, timePeriod);
+            const fullBenchConditionData = processTestConditionsByTimePeriod(fullBenchData, timePeriod);
+            
+            // Get all unique time periods across all test conditions
+            let allTimePeriods = new Set();
+            
+            for (const condition in quarterBenchConditionData) {
+                Object.keys(quarterBenchConditionData[condition]).forEach(period => allTimePeriods.add(period));
+            }
+            
+            for (const condition in fullBenchConditionData) {
+                Object.keys(fullBenchConditionData[condition]).forEach(period => allTimePeriods.add(period));
+            }
+            
+            // Convert to array and sort chronologically
+            allTimePeriods = sortChronologically(Array.from(allTimePeriods));
+            
+            // Format time period labels
+            const formattedTimePeriods = allTimePeriods.map(period => formatLabel(period, timePeriod));
+            
+            // Prepare datasets for Quarter Bench
+            const quarterBenchDatasets = [];
+            let colorIndex = 0;
+            
+            for (const condition in quarterBenchConditionData) {
+                // Skip if all values are 0
+                const hasNonZeroValue = allTimePeriods.some(period => 
+                    quarterBenchConditionData[condition][period] > 0);
+                
+                if (!hasNonZeroValue) continue;
+                
+                const data = allTimePeriods.map(period => quarterBenchConditionData[condition][period] || 0);
+                
+                quarterBenchDatasets.push({
+                    label: condition,
+                    data: data,
+                    backgroundColor: chartColors[colorIndex % chartColors.length],
+                    borderColor: chartColors[colorIndex % chartColors.length],
+                    borderWidth: 1
+                });
+                
+                colorIndex++;
+            }
+            
+            // Prepare datasets for Full Bench
+            const fullBenchDatasets = [];
+            colorIndex = 0;
+            
+            for (const condition in fullBenchConditionData) {
+                // Skip if all values are 0
+                const hasNonZeroValue = allTimePeriods.some(period => 
+                    fullBenchConditionData[condition][period] > 0);
+                
+                if (!hasNonZeroValue) continue;
+                
+                const data = allTimePeriods.map(period => fullBenchConditionData[condition][period] || 0);
+                
+                fullBenchDatasets.push({
+                    label: condition,
+                    data: data,
+                    backgroundColor: chartColors[colorIndex % chartColors.length],
+                    borderColor: chartColors[colorIndex % chartColors.length],
+                    borderWidth: 1
+                });
+                
+                colorIndex++;
+            }
+            
+            // Chart options for dark mode
+            const chartOptions = {
+                responsive: true, 
+                maintainAspectRatio: false,
+                scales: { 
+                    x: {
+                        stacked: true,
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: 'rgba(255, 255, 255, 0.7)'
+                        }
+                    },
+                    y: { 
+                        stacked: true,
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Number of Tests',
+                            color: 'rgba(255, 255, 255, 0.7)'
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: 'rgba(255, 255, 255, 0.7)'
+                        }
+                    }
+                },
+                plugins: {
+                    datalabels: {
+                        anchor: 'center',
+                        align: 'center',
+                        color: '#fff',
+                        formatter: Math.round,
+                        font: {
+                            weight: 'bold'
+                        },
+                        display: function(context) {
+                            return context.dataset.data[context.dataIndex] > 0;
+                        }
+                    },
+                    title: {
+                        display: true,
+                        color: 'rgba(255, 255, 255, 0.9)'
+                    },
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            color: 'rgba(255, 255, 255, 0.8)'
+                        }
+                    }
+                }
+            };
+            
+            // Update Quarter Bench chart
+            if (charts.quarterBenchTestCondition) charts.quarterBenchTestCondition.destroy();
+            const qbCtx = document.getElementById('quarterBenchTestConditionChart').getContext('2d');
+            charts.quarterBenchTestCondition = new Chart(qbCtx, {
+                type: 'bar',
+                data: {
+                    labels: formattedTimePeriods,
+                    datasets: quarterBenchDatasets
+                },
+                options: {
+                    ...chartOptions,
+                    plugins: {
+                        ...chartOptions.plugins,
+                        title: {
+                            ...chartOptions.plugins.title,
+                            text: `Quarter Bench Tests by Condition and ${timePeriod.charAt(0).toUpperCase() + timePeriod.slice(1)}`
+                        }
+                    }
+                }
+            });
+            
+            // Update Full Bench chart
+            if (charts.fullBenchTestCondition) charts.fullBenchTestCondition.destroy();
+            const fbCtx = document.getElementById('fullBenchTestConditionChart').getContext('2d');
+            charts.fullBenchTestCondition = new Chart(fbCtx, {
+                type: 'bar',
+                data: {
+                    labels: formattedTimePeriods,
+                    datasets: fullBenchDatasets
+                },
+                options: {
+                    ...chartOptions,
+                    plugins: {
+                        ...chartOptions.plugins,
+                        title: {
+                            ...chartOptions.plugins.title,
+                            text: `Full Bench Tests by Condition and ${timePeriod.charAt(0).toUpperCase() + timePeriod.slice(1)}`
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Update all visualizations
+        function updateDashboard(data, view) {
+            // Filter data based on the current view for KPI calculation
+            // This ensures KPIs only show data for the selected bench type
+            const benchData = filterData(allData, view);
+            
+            // Calculate and update KPIs using the filtered bench data
+            const globalKPIs = calculateGlobalKPIs(benchData);
+            updateGlobalKPICards(globalKPIs);
+            
+            // The rest of the dashboard updates using the date-filtered data
+            updateBarTotalTestsChart(data);
+            updateWeeklyAverageChart(data);
+            updateRequestTypesChart(data);
+            updateTestConditionsChart(data);
+            updateLoadStatusChart(data);
+            
+            // Update the new time-period based charts
+            updateTimePeriodChart(currentTimePeriod);
+            updateRequestTypeMonthCharts();
+            updateTestConditionTimePeriodChart(currentTestConditionTimePeriod);
+            
+            // Update title based on view
+            let title;
+            switch(view) {
+                case 'quarter':
+                    title = 'Quarter Bench Dashboard';
+                    break;
+                case 'full':
+                    title = 'Full Bench Dashboard';
+                    break;
+                case 'all':
+                default:
+                    title = 'All Tests Dashboard';
+            }
+            document.getElementById('dashboard-title').textContent = title;
+            
+            // Update timestamp
+            document.getElementById('update-time').textContent = new Date().toLocaleString();
+        }
+
+        // Change view function (called when tabs are clicked)
+        function changeView(view) {
+            currentView = view;
+            filteredData = filterData(allData, view);
+            dateFilteredData = [...filteredData]; // Reset date filtering
+            
+            // Show/hide bench-specific columns based on selected view
+            const qbTimeColumn = document.getElementById('quarter-bench-time-column');
+            const fbTimeColumn = document.getElementById('full-bench-time-column');
+            const qbRequestColumn = document.getElementById('quarter-bench-request-column');
+            const fbRequestColumn = document.getElementById('full-bench-request-column');
+            const qbConditionColumn = document.getElementById('quarter-bench-condition-column');
+            const fbConditionColumn = document.getElementById('full-bench-condition-column');
+            
+            if (view === 'all') {
+                // Show both columns for All Tests view
+                qbTimeColumn.style.display = 'block';
+                fbTimeColumn.style.display = 'block';
+                qbRequestColumn.style.display = 'block';
+                fbRequestColumn.style.display = 'block';
+                qbConditionColumn.style.display = 'block';
+                fbConditionColumn.style.display = 'block';
+            } else if (view === 'quarter') {
+                // Show only Quarter Bench columns
+                qbTimeColumn.style.display = 'block';
+                fbTimeColumn.style.display = 'none';
+                qbRequestColumn.style.display = 'block';
+                fbRequestColumn.style.display = 'none';
+                qbConditionColumn.style.display = 'block';
+                fbConditionColumn.style.display = 'none';
+                
+                // Adjust the column width to full width
+                qbTimeColumn.className = 'col-md-12';
+                qbRequestColumn.className = 'col-md-12';
+                qbConditionColumn.className = 'col-md-12';
+            } else if (view === 'full') {
+                // Show only Full Bench columns
+                qbTimeColumn.style.display = 'none';
+                fbTimeColumn.style.display = 'block';
+                qbRequestColumn.style.display = 'none';
+                fbRequestColumn.style.display = 'block';
+                qbConditionColumn.style.display = 'none';
+                fbConditionColumn.style.display = 'block';
+                
+                // Adjust the column width to full width
+                fbTimeColumn.className = 'col-md-12';
+                fbRequestColumn.className = 'col-md-12';
+                fbConditionColumn.className = 'col-md-12';
+            }
+            
+            // Reset column widths to half when going back to "All" view
+            if (view === 'all') {
+                qbTimeColumn.className = 'col-md-6';
+                fbTimeColumn.className = 'col-md-6';
+                qbRequestColumn.className = 'col-md-6';
+                fbRequestColumn.className = 'col-md-6';
+                qbConditionColumn.className = 'col-md-6';
+                fbConditionColumn.className = 'col-md-6';
+            }
+            
+            updateDashboard(dateFilteredData, view);
+        }
+
+        // Initialize UI
+        function initUI() {
+            // Hide loader initially
+            document.getElementById('loader').style.display = 'none';
+            
+            // File input event listener
+            const fileInput = document.getElementById('csvFileInput');
+            const loadBtn = document.getElementById('loadDataBtn');
+            const fileStatus = document.getElementById('fileStatus');
+            
+            fileInput.addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file && file.name.toLowerCase().endsWith('.csv')) {
+                    selectedFile = file;
+                    loadBtn.disabled = false;
+                    fileStatus.className = 'alert alert-success mt-2';
+                    fileStatus.textContent = `File selected: ${file.name} (${(file.size / 1024).toFixed(2)} KB)`;
+                } else {
+                    selectedFile = null;
+                    loadBtn.disabled = true;
+                    fileStatus.className = 'alert alert-warning mt-2';
+                    fileStatus.textContent = 'Please select a valid CSV file';
+                }
+            });
+            
+            // Load button event listener
+            loadBtn.addEventListener('click', loadDashboard);
+        }
+
+        // Load dashboard data
+        async function loadDashboard() {
+            // Show loader
+            document.getElementById('loader').style.display = 'flex';
+            
+            try {
+                allData = await loadData();
+                if (allData && allData.length > 0) {
+                    console.log(`Loaded ${allData.length} records from CSV`);
+                    
+                    // Populate year selector dropdown
+                    populateYearSelector(allData);
+                    
+                    filteredData = filterData(allData, currentView);
+                    dateFilteredData = [...filteredData]; // Initialize date filtered data
+                    updateDashboard(dateFilteredData, currentView);
+                    
+                    // Hide the file selection section after successful load
+                    document.querySelector('.card.mt-3.mb-3').style.display = 'none';
+                } else {
+                    console.error('No data loaded from CSV');
+                    document.getElementById('global-kpi-cards-row').innerHTML = `
+                        <div class="col-12">
+                            <div class="alert alert-warning">
+                                No data was loaded. The CSV file may be empty or incorrectly formatted.
+                            </div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error initializing dashboard:', error);
+                document.getElementById('global-kpi-cards-row').innerHTML = `
+                    <div class="col-12">
+                        <div class="alert alert-danger">
+                            Error loading dashboard: ${error.message}
+                        </div>
+                    </div>
+                `;
+            } finally {
+                document.getElementById('loader').style.display = 'none';
+            }
+        }
+
+        // Start initialization when DOM is ready
+        document.addEventListener('DOMContentLoaded', initUI);
+    </script>
+</body>
+</html>

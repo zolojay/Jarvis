@@ -1,0 +1,405 @@
+id,name,note,closed,person_id,sample_crate_id
+1,Clifty Creek,,False,,1
+5,Dominion Cove Point,,False,,5
+6,Dominion Cove Point,,False,,6
+8,Carlsbad Energy Center,,False,,8
+10,Georgia Power McDonough,,False,,10
+11,ProTec,,False,,11
+12,BASF Port Author,,False,,12
+13,Capital Power Goreway,,False,,13
+14,PBF Torrance,,False,,14
+15,ExxonMobil Beaumont,,False,,15
+16,Sisu Energy El Paso,,False,,16
+18,Curtis Bay,,False,,18
+20,Taiwan Power,,False,,20
+21,Southern Power Plant Harris,,False,,21
+22,Vigor Solution Sriracha Power,,False,,22
+23,Concord Colusa Unit 2,,False,,23
+25,Channelview Cogeneration,,False,,25
+26,Phillips 66,,False,,26
+27,Lawrence,,False,,27
+29,Siemens EIF Channelview 2,,False,,29
+30,BASF Port Arthur,,False,,30
+31,Pro Tec Coating,,False,,31
+32,Jamaica Bay,,False,,32
+33,SRP Satan 6,,False,,33
+34,Cove Point 7A and 7B,,False,,34
+35,Exxon Beaumont,,False,,35
+36,Calpine Los Esteros,,False,,36
+37,Ontelaunee Power,,False,,37
+38,UAMPS Nebo Power,,False,,38
+40,XCEL Cherokee,,False,,40
+41,Harbor Cogen,,False,,41
+42,UAMPS Nebo,,False,,42
+43,Shintech,,False,,43
+44,Calpine Hermiston,,False,,44
+45,Lakeside Syracuse,,False,,45
+46,EIF Channelview 4,,False,,46
+47,Lower Mt Bethel,,False,,47
+48,Southern Company Franklin,,False,,48
+49,Exxon Baytown Olefins,,False,,49
+50,Heartland CUB,,False,,50
+51,Beijing Energy,,False,,51
+52,Dominion williams,,False,,52
+53,NRG Cottonwood,,False,,53
+54,Vistra Fayette,,False,,54
+55,Independence Way,,False,,55
+56,Jackson Generation,,False,,56
+57,Biogen IDEC,,False,,57
+59,Mountain Creek,,False,,59
+60,Calpine York 6,,False,,60
+61,Garrison,,False,,61
+63,Lakeland,,False,,63
+64,Afton Generating,,False,,64
+65,Afton Generating,,False,,65
+66,New York Power Authority,,False,,66
+67,Columbus Coatings,,False,,67
+68,FCC Torrence,,False,,68
+70,Calpine Bosque,,False,,70
+71,Dominion Brunswick,,False,,71
+72,Exxon Gulf Coast,,False,,72
+73,Dupoint,,False,,73
+74,San Joaquin Henrietta,,False,,74
+75,Sabine River Works,,False,,75
+76,El Dorado,,False,,76
+77,Sentinel Energy,,False,,77
+78,El Dorado,,False,,78
+79,Calpine Wolfskill,,False,,79
+80,Calpine Feather River,,False,,80
+81,calpine Lambie,,False,,81
+82,calpine solano creed,,False,,82
+83,Three Rivers,,False,,83
+84,Tenaris,,False,,84
+85,Kendall Energy,,False,,85
+86,Linkou,,False,,86
+87,Calpine Bethlehem,,False,,87
+88,ProTec Coating,,False,,88
+89,Valero Corpus Christi,,False,,89
+90,Tiverton Power,,False,,90
+91,Mariposa,,False,,91
+92,Santee Cooper,,False,,92
+93,Sriracha Unit 2,,False,,93
+94,Redbud Units 1-3,,False,,94
+95,Gila River,,False,,95
+96,Treasure Coast,,False,,96
+97,Columbia Energy,,False,,97
+98,LAX CUP,,False,,98
+99,GenConn Devon - no PO,,False,,99
+100,Calpine Pastoria,,False,,100
+101,City of Burbank Magnolia,,False,,101
+102,Hopewell,,False,,102
+103,Mont Belvieu,,False,,103
+104,Almond Power,,False,,104
+105,Jamaica Bay,,False,,105
+106,Siemens Energy,,False,,106
+107,Duke Lincoln County,,False,,107
+108,Calpine Hermiston,,False,,108
+109,Luna Energy,,False,,109
+110,Cane Island,,False,,110
+111,Hamakua,,False,,111
+112,Phillips 66 GCF and BO,,False,,112
+113,Mariposa 700 & 900,,False,,113
+114,Calpine Bethpage,,False,,114
+115,Calpine Otay Mesa,,False,,115
+116,Winchester,,False,,116
+117,Calpine Morgen,,False,,117
+118,Calpine Jack Fusco,,False,,118
+119,Panda Temple Generation,,False,,119
+120,Calpine Bethlehem Unit 7,,False,,120
+121,Siemens Energy EIF Channelview Cogen,,False,,121
+122,Chevron El Segundo Train B,,False,,122
+123,Medicine Hat,,False,,123
+124,Duke Lincoln County,,False,,124
+125,Ennis Power,,False,,125
+126,TVA Gallatin,,False,,126
+127,Calpine Pastoria,,False,,127
+128,Ontelaunee Power Unit 2,,False,,128
+129,Plant Harris (Southern Power),,False,,129
+130,Plant Harris (Southern Power),,False,,130
+131,Plant Harris (Southern Power),,False,,131
+132,Plant Harris (Southern Power),,False,,132
+133,SAFI Energy,,False,,133
+134,SAFI Energy,,False,,134
+135,Calpine Bethpage,,False,,135
+136,Calpine Westbrook,,False,,136
+137,Santan,,False,,137
+138,Southern Power Rowan,,False,,138
+139,Westlake,,False,,139
+140,Westlake,,False,,140
+141,Pratt and Whitney,,False,,141
+142,Calpine Cumberland,,False,,142
+143,XCEL Riverside,,False,,143
+144,Calpine Bethpage,,False,,144
+145,Calpine Los Medanos,,False,,145
+146,Raytheon Collins Hamilton,,False,,146
+147,EIF Channelview,,False,,147
+148,St Joseph Energy Center,,False,,148
+149,Pratt and Whitney East Hartford,,False,,149
+150,Duke Energy Edwardsport,,False,,150
+151,Exxon Mobil Baytown Olefins,,False,,151
+152,Calpine Russell City,,False,,152
+153,Calpine Channel Energy Center,,False,,153
+154,Dominion Energy- Brunswick ST,,False,,154
+155,Dominion VA Power- Possum Point,,False,,155
+156,Dominion VA Power- Possum Point,,False,,156
+157,NV Energy- Tracy CC,,False,,157
+158,NV Energy- Tracy CC,,False,,158
+159,Veolia University of Minnesota,,False,,159
+160,Dominion Mt Storm,,False,,160
+161,Lagoon Creek Lane,,False,,161
+162,Lagoon Creek Lane,,False,,162
+163,Sisu/Teco,,False,,163
+164,Sisu/Teco,,False,,164
+165,Franklin,,False,,165
+166,Franklin,,False,,166
+167,Metcalf,,False,,167
+168,EFI Channelview,,False,,168
+169,EFI Channelview,,False,,169
+170,Luna,,False,,170
+171,Luna,,False,,171
+172,Channelview,,False,,172
+173,Doswell,,False,,173
+174,DTE Atlantic,,False,,174
+175,Carr Street Generating Station,,False,,175
+176,University of Minnesota,,False,,176
+177,McDonough,,False,,177
+178,McDonough,,False,,178
+179,MvcDonough,,False,,179
+180,McDonough,,False,,180
+181,Zeeland,,False,,181
+182,Channelview,,False,,182
+183,Cove Point,,False,,183
+184,Franklin,,False,,184
+185,York 3 and 5,,False,,185
+186,Lagoon Creek,,False,,186
+187,Possum Point,,False,,187
+188,Russell City,,False,,188
+189,Ocean State,,False,,189
+190,Ocean State,,False,,190
+191,Batesville,,False,,191
+192,Batesville,,False,,192
+193,Tung Hsiao,,False,,193
+194,Sriacha,,False,,194
+195,Sriacha,,False,,195
+196,Sriracha,,False,,196
+197,Beaumont,,False,,197
+199,Temple Generating,,False,,199
+200,Temple Generating,,False,,200
+201,York,,False,,201
+202,York,,False,,202
+203,Kendall Energy,,False,,203
+204,Eastman,,False,,204
+205,Protec Coating,,False,,205
+206,Roseville,,False,,206
+207,Roseville,,False,,207
+208,City of Roseville,,False,,208
+209,Barrick Goldstrike,,False,,209
+210,kendall,,False,,210
+211,Kendall Energy,,False,,211
+212,Eastman,,False,,212
+213,Kendall Energy,,False,,213
+214,Torrance,,False,,214
+215,BASF,,False,,215
+216,Cove Point,,False,,216
+217,Cove Point,,False,,217
+218,Sriracha,,False,,218
+219,Sweeny,,False,,219
+220,Johnsonville,,False,,220
+221,independence Station,,False,,221
+222,Three Rivers,,False,,222
+223,Three Rivers,,False,,223
+224,Lamont,,False,,224
+225,Protec Coating,,False,,225
+226,Salt River,,False,,226
+227,Shintech,,False,,227
+228,Shintech,,False,,228
+229,independence Station,,False,,229
+230,Three Rivers,,False,,230
+231,Three Rivers,,False,,231
+232,Lemont,,False,,232
+233,Lemont,,False,,233
+234,independence Station,,False,,234
+235,independence Station,,False,,235
+236,Independence,,False,,236
+237,independence Station,,False,,237
+238,independence Station,,False,,238
+239,independence Station,,False,,239
+240,Beaumont,,False,,240
+241,Cope,,False,,241
+242,Taiyanggong,,False,,242
+243,Taiyanggong,,False,,243
+244,Jackson Genertion,,False,,244
+245,Jackson Genertion,,False,,245
+246,BAE,,False,,246
+247,Cove Point,,False,,247
+248,Cove Point,,False,,248
+249,SGS,,False,,249
+250,Beaumont,,False,,250
+251,Beaumont,,False,,251
+252,Cove Point,,False,,252
+253,Baytown,,False,,253
+254,Chocolate Bayou,,False,,254
+255,Edwardsport,,False,,255
+256,Westmoreland,,False,,256
+257,Westmoreland,,False,,257
+258,Cherry Point,,False,,258
+259,Cherry Point,,False,,259
+260,Cherry Point,,False,,260
+261,Grand River,,False,,261
+262,Midtown,,False,,262
+263,Brunswick County,,False,,263
+264,Brunswick County,,False,,264
+265,bru,,False,,265
+266,Brunswick County,,False,,266
+267,Deer Creek,,False,,267
+268,Baytown Olefins,,False,,268
+269,Channel Energy,,False,,269
+270,Phillips 66,,False,,270
+271,Wood River,,False,,271
+272,Torrance,,False,,272
+273,Constellation,,False,,273
+274,Hyperion,,False,,274
+275,Hyperion,,False,,275
+276,Bellingham,,False,,276
+277,Bellingham,,False,,277
+278,Bellingham,,False,,278
+279,Waterford,,False,,279
+280,Waterford,,False,,280
+281,Waterford,,False,,281
+282,Waterford,,False,,282
+283,Casco Bay,,False,,283
+284,Casco Bay,,False,,284
+285,Cliffside,,False,,285
+286,Cliffside,,False,,286
+287,Cliffside,,False,,287
+288,Cliffside,,False,,288
+289,Franklin,,False,,289
+290,Long Beach,,False,,290
+291,Thums,,False,,291
+292,Ferguson,,False,,292
+293,Ferguson,,False,,293
+294,fer,,False,,294
+295,Ferguson,,False,,295
+296,Silicon Valley,,False,,296
+297,Silicon Valley,,False,,297
+298,Silicon Valley,,False,,298
+299,J L Stall,,False,,299
+300,J L Stall,,False,,300
+301,J L Stall,,False,,301
+302,Channelview,,False,,302
+303,Channelview,,False,,303
+304,Channelview,,False,,304
+305,Channelview,,False,,305
+306,Channelview,,False,,306
+308,Cleco,,False,,308
+310,Cleco,,False,,310
+311,Cleco,,False,,311
+312,Halifax,,False,,312
+313,Greenville,,False,,313
+314,Greenville,,False,,314
+315,Greenville,,False,,315
+316,Greenville,,False,,316
+317,Tenaska,,False,,317
+318,Virginia Generating Station,,False,,318
+319,DB Wilson,,False,,319
+320,Mountaineer,,False,,320
+321,Mountaineer,,False,,321
+322,Mountaineer,,False,,322
+323,Allen,,False,,323
+324,Allen,,False,,324
+325,Columbus Coating,,False,,325
+326,Fore River,,False,,326
+327,Port Comfort,,False,,327
+328,Port Comfort,,False,,328
+329,Redbud,,False,,329
+330,Redbud,,False,,330
+331,Redbud,,False,,331
+332,Redbud,,False,,332
+333,Redbud,,False,,333
+334,Redb,,False,,334
+335,Redbud,,False,,335
+336,Monroe,,False,,336
+337,Monroe,,False,,337
+338,Monroe,,False,,338
+339,Sutter,,False,,339
+340,Delta,,False,,340
+341,Delta,,False,,341
+342,Channel Energy,,False,,342
+343,Nebo,,False,,343
+344,Los Esteros,,False,,344
+345,Buck,,False,,345
+346,Cliffside U6,,False,,346
+350,Longview U1,,False,,350
+351,Oak Creek,,False,,351
+352,Oak Creek,,False,,352
+353,Gavin,,False,,353
+354,Plum Point U1,,False,,354
+355,Keystone U1,,False,,355
+356,Keystone U2,,False,,356
+357,Pittsfield,,False,,357
+358,imperial,,False,,358
+359,Strathcona,,False,,359
+360,imperial,,False,,360
+361,Pittsfield,,False,,361
+362,Beaumont,,False,,362
+363,Baytown,,False,,363
+364,Brunswick County,,False,,364
+365,City of Lakeland,,False,,365
+366,Gilroy,,False,,366
+367,York,,False,,367
+368,Great Lakes,,False,,368
+369,Great Lakes,,False,,369
+370,Great Lakes,,False,,370
+371,Great Lakes,,False,,371
+372,Weston,,False,,372
+373,Brandon Shores,,False,,373
+374,Port Arthur,,False,,374
+375,Ghent,,False,,375
+376,Cumberland,,False,,376
+377,Great Lakes,,False,,377
+378,Roseville,,False,,378
+379,Harding St,,False,,379
+380,Bear Garden,,False,,380
+381,Bear Garden,,False,,381
+382,Lansing,,False,,382
+383,Lansing,,False,,383
+384,Gilroy,,False,,384
+385,Jasper Station,,False,,385
+386,Jasper Station,,False,,386
+387,Jasper Station,,False,,387
+388,Trimble U2,,False,,388
+389,Greenville,,False,,389
+390,Rockport,,False,,390
+391,Ghent 4 K 24-00239,,False,,391
+392,Ghent 4 K 24-00239,,False,,392
+397,Napanee,,False,,397
+398,Napanee,,False,,398
+399,Napanee,,False,,399
+400,Bethpage 1.1 CO only catalyst,,False,,400
+401,Borger,,False,,401
+402,Warren County,,False,,402
+403,Warren County,,False,,403
+404,Warren County,,False,,404
+405,Hunterstown,,False,,405
+406,Hunterstown,,False,,406
+407,DTE Monroe,,False,,407
+408,Baytown,,False,,408
+409,Radford,,False,,409
+410,Radford,,False,,410
+411,Elm Road,,False,,411
+412,Elm Road U1,,False,,412
+415,New Indy,,False,,415
+416,Astoria,,False,,416
+417,Wilf Hills,,False,,417
+418,Wolf Hills,,False,,418
+419,Santan,,False,,419
+420,Santan,,False,,420
+421,Santan,,False,,421
+422,Saguaro,,False,,422
+423,Union Power,,False,,423
+424,Union Power,,False,,424
+425,Delta Ducon,,False,,425
+426,Henrietta,,False,,426
+427,Valero,,False,,427
+428,El Dorado,,False,,428
+429,Johnson Space Center,,False,,429

@@ -1,0 +1,4011 @@
+SELECT
+    LR.id                AS LRF_ID,
+    LR.[number]          AS LRFNumber,
+    LRS.id               AS LabRequestSampleID,
+    S.id                 AS SampleID,
+    S.[number]           AS SampleNumber,
+    LRSTT.id            AS LabRequestSampleTestTypeID,
+    TT.[id]             AS TestTypeID,
+    TT.[test_type]      AS TestTypeName
+
+FROM [dbo].[LabRequests] LR
+-- Link to LabRequestSample
+JOIN [dbo].[LabRequestSample] LRS
+   ON LRS.lab_request_id = LR.id
+
+-- Link to LabRequestSampleTestTypes
+JOIN [dbo].[LabRequestSampleTestTypes] LRSTT
+   ON LRSTT.lab_request_sample_id = LRS.id
+
+-- Link to TestTypes (like bench, regen, etc.)
+JOIN [dbo].[TestTypes] TT
+   ON TT.id = LRSTT.test_type_id
+
+-- Optionally link to the Samples table if you want sample info
+JOIN [dbo].[Samples] S
+   ON S.id = LRS.sample_id
+
+-- Optional filter: only look at a specific LRF or all 
+-- e.g. LRFNumber = 'LR-25-00005'
+WHERE LR.[number] = 'LR-25-00005'
+ORDER BY 
+    LR.id,
+    LRS.id,
+    LRSTT.id;
+
+
+LRF_ID	LRFNumber	LabRequestSampleID	SampleID	SampleNumber	LabRequestSampleTestTypeID	TestTypeID	TestTypeName
+334	LR-25-00005	525	454	GREE-1B-2-30-1024	495	2	Bench
+334	LR-25-00005	526	455	GREE-1C-3-30-1024	496	2	Bench
+334	LR-25-00005	527	453	GREE-1A-1-30-1024	497	2	Bench
+
+-----
+SELECT
+  tct.id                      AS TestConditionTypeID,
+  tct.test_condition_type     AS ConditionTypeName,
+  tct.obsolete
+FROM dbo.TestConditionTypes tct
+ORDER BY tct.id;
+
+1	SO2 Oxidation	0
+2	Hg Oxidation	0
+3	NOx Removal	0
+4	CO Oxidation	0
+5	VOC Oxidation	0
+6	CH2O Oxidation	0
+7	Pressure Drop	0
+
+-----
+
+SELECT
+  rtc.id                        AS ReactorTestConditionID,
+  rtc.description,
+  rtc.job,
+  rtc.pcn,
+  rtc.test_type_id              AS RTC_TestTypeTypeID,
+  tct.test_condition_type       AS ConditionTypeName
+FROM dbo.ReactorTestConditions rtc
+JOIN dbo.TestConditionTypes    tct ON rtc.test_type_id = tct.id
+ORDER BY rtc.id;
+
+
+ReactorTestConditionID	description	job	pcn	RTC_TestTypeTypeID	ConditionTypeName
+1	5 Layer test for both CO ox and deNOx	220473	NULL	3	NOx Removal
+2	2nd temperature, 5-layer CO ox + DeNOx	220473	NULL	3	NOx Removal
+3	Pro-Tec CGL1 F1&F2	NULL	NULL	3	NOx Removal
+4	Carlsbad	NULL	NULL	3	NOx Removal
+5	Goreway 11, 12, 13	220128	NULL	3	NOx Removal
+6	PCN 4288 Port Arthur H-1000 (BASF)	230317	4288	3	NOx Removal
+7	Torrance 2F4	NULL	4106	3	NOx Removal
+8	Montana 1	230336	2711	3	NOx Removal
+9	Beaumont 41 42 43	230168	4061	3	NOx Removal
+10	Curtus Bay 4319	230265	4319	3	NOx Removal
+11	Harris Plant 1A	NULL	2856	3	NOx Removal
+12	Harris Plant 1B	NULL	2856	3	NOx Removal
+13	Harris Plant 2A	NULL	2862	3	NOx Removal
+14	Harris Plant 2B	NULL	2862	3	NOx Removal
+15	Colusa Unit 2	NULL	2333	3	NOx Removal
+16	Tunghsaio	2749	NULL	3	NOx Removal
+17	Sriracha 1 and 2	230124	4285	3	NOx Removal
+18	Sriracha	230124	4285	3	NOx Removal
+19	Channelview 341	230299	341	3	NOx Removal
+20	Borger Unit 400K 2808	230313	2808	3	NOx Removal
+21	Lawrenceburg (Lightstone)	230411	NULL	3	NOx Removal
+22	Protest CGL1	230445	2076	3	NOx Removal
+23	Port Arthur B-7280	230354	4345	3	NOx Removal
+24	2706 Jamaica Bay NOx Removal	230446	2706	3	NOx Removal
+25	Santan 5A/B and 6	230462	2763	3	NOx Removal
+26	Los Esteros 2514 U 1 2 3	NULL	2514	3	NOx Removal
+27	Cove Point 7A&B 4842	230400	4842	3	NOx Removal
+28	Harbor CoGen Replacement	220113	4848	3	NOx Removal
+29	Ontolaunee Field PN324	230463	324	3	NOx Removal
+30	Cherokee U5	230025	2600	3	NOx Removal
+31	Calpine Hermiston K test	NULL	378	3	NOx Removal
+32	2-Layer  4884	220233	4884	3	NOx Removal
+33	Shintech 4900 1 Layer test	220233	4900	3	NOx Removal
+34	2618 Nebo Power Plant U1 NOx Removal	230119	2618	3	NOx Removal
+35	Franklin 2A	NULL	2855	3	NOx Removal
+36	Lower Mt Bethel SCR	230409	2581	3	NOx Removal
+37	Lower Mt Bethel CO Ramp	230409	2581	4	CO Oxidation
+38	Syracuse	230489	93	3	NOx Removal
+39	Baytown Olefins Plant Train 3	230231	Non-Cormetech	3	NOx Removal
+40	Taiyanggong K tests	230514	2181	3	NOx Removal
+41	Williams MR=1 Field	230328	680	3	NOx Removal
+42	Independence	230480	2203	3	NOx Removal
+43	Biodec Idec Meteor NOx + CO	230367	4631	3	NOx Removal
+44	Biodec Idec Meteor NOx + CO - Low Load	230367	4631	4	CO Oxidation
+45	672 Mountain Creek 8	230536	672	3	NOx Removal
+46	York 6 Repl	230028	4914	3	NOx Removal
+47	Columbus Coatings	230451	4666	3	NOx Removal
+48	Brentwood NYPA	230522	2379	3	NOx Removal
+49	Garrison	230370	2647	3	NOx Removal
+50	2177 Afton	230535	2177	3	NOx Removal
+51	808 Fayette	230418	808	3	NOx Removal
+52	4282 Heartland	230112	4282	3	NOx Removal
+53	4400 Jackson Generating Station	230443	4400	3	NOx Removal
+54	Henrietta LHT deNOx test	NULL	2805	3	NOx Removal
+55	2655 Brunswick County	180626	2655	3	NOx Removal
+56	2-Layer system deNOx Torrance FCC	230410	5505	3	NOx Removal
+57	Gulf Coast JV Act Test	230358	4399	3	NOx Removal
+58	4517 City of Lakeland McIntosh	230547	4517	3	NOx Removal
+59	4070 Three Rivers (Valero)	230224	4070	3	NOx Removal
+60	Sentinel Energy (Units 1-8)	230108	4558	3	NOx Removal
+61	Sabine River Works Ethylene Cracking Furnace BA 109	230468	2898	3	NOx Removal
+62	Kendall	230504	2624	3	NOx Removal
+63	Bosque 1 and 2 Meteor	230028	4676	3	NOx Removal
+64	Bosque CO Ox condition @ denox target= 77.8%	230028	4676	4	CO Oxidation
+65	Calpine Solano 1L Creed Lambie Goosehaven	230028	776	3	NOx Removal
+66	Calpine Solano 2L Riverview Wolfskill	230028	858	3	NOx Removal
+67	Bethlehem Corrugated	230028	Beth	3	NOx Removal
+68	2495 Mariposa	230553	2495	3	NOx Removal
+69	Tiverton Power	230552	223	3	NOx Removal
+70	Valero Corpus Christi	230573	2767	3	NOx Removal
+71	PRO-Tec Cal K test	2993	230556	3	NOx Removal
+72	Calpine Feather River	230028	853	3	NOx Removal
+73	Tenaris Bay City RHF	230570	2742	3	NOx Removal
+74	Gila River Unit 3	230530	511	3	NOx Removal
+75	Treasure Coast Replmt (4903)	230549	4903	3	NOx Removal
+76	4518 OGE Redbud 1	230373	4518	3	NOx Removal
+77	4518 OGE Redbud 1	230373	4518	4	CO Oxidation
+78	4712 OGE Redbud U2	230374	4712	3	NOx Removal
+79	4712 OGE Redbud U2	230374	4712	4	CO Oxidation
+80	579 Columbia	230399	579	3	NOx Removal
+81	Standard	230418	808	3	NOx Removal
+82	LAX Los Angeles World Airport CUP 101 and 201	230497	4734	3	NOx Removal
+83	Pastoria 4	NULL	578	3	NOx Removal
+84	Almond Power II Units 1 2 3	240038	2421	3	NOx Removal
+85	Magnolia	240018	2830	3	NOx Removal
+86	2778 Mont Belvieu PDH Aux Boilers	230472	2778	3	NOx Removal
+87	2132 Luna	230494	2132	3	NOx Removal
+88	4115 Lincoln County	240099	4115	3	NOx Removal
+89	4084 Cane Island 3	230548	4084	3	NOx Removal
+90	GCF Aux Package Boiler B)-302 K test	240016	2491	3	NOx Removal
+91	GCF WHBs PN4356 2 units	240016	4356	3	NOx Removal
+92	Hamakua Unit 1	240122	2718	3	NOx Removal
+93	TVA Caledonia	NULL	NULL	3	NOx Removal
+94	Otay Mesa	240043	2251	3	NOx Removal
+95	Morgan PCN 442	240043	442	3	NOx Removal
+96	Jack County	230028	2715	3	NOx Removal
+97	Winchester 2289	230386	2289	3	NOx Removal
+98	2 Layer Panda Temple	240081	Temple	3	NOx Removal
+99	Medicine Hat Unit 17	240070	4655	3	NOx Removal
+100	Duke Lincoln Cty DeNOx test w/ CO addition	240099	4115	3	NOx Removal
+101	NOx removal, 349C for Ennis	240085	2857	3	NOx Removal
+102	CO Ox condition, 315C for Ennis	240085	2857	4	CO Oxidation
+103	Bethpage PB3 Unit 3.1 NOx removal	240043	969	3	NOx Removal
+104	Westbrook PCN 2411	240043	2411	3	NOx Removal
+105	Westlake 7 All Layers	NULL	4745	3	NOx Removal
+106	Rowan 4	240104	608	3	NOx Removal
+107	Pratt and Whitney Middletown 7	240025	4556	3	NOx Removal
+108	PW East Hartford	240101	2117	3	NOx Removal
+109	P and W East Hartford	240101	2117	3	NOx Removal
+110	Hamilton Sunstrand	240010	2318	3	NOx Removal
+111	Los Medanos	240043	291	3	NOx Removal
+112	Edwardsport IGCC - OEM test conditions	2024DRF	NULL	3	NOx Removal
+113	Edwardsport IGCC - CM replacement test conditions	2024DRF	NULL	3	NOx Removal
+114	Bethpage GT4	240043	2781	3	NOx Removal
+115	Cumberland Connectiv	240043	2293	3	NOx Removal
+116	El Segundo Train B CO Catalyst	240171	NULL	4	CO Oxidation
+117	2456 Possum Point	200375	2456	3	NOx Removal
+118	BOP Train 2 (2551)	240209	2551	3	NOx Removal
+119	2295 XCEL Riverside	240192	2295	3	NOx Removal
+120	2784 Santan 5	240048	2784	3	NOx Removal
+121	2937 St. Joseph	240083	2937	3	NOx Removal
+122	2937 St. Joseph	240083	2937	4	CO Oxidation
+123	Tracy Full Load Testing w/ SO2 conv	240135	2241	3	NOx Removal
+124	TECO Thermal Energy	240223	4929	3	NOx Removal
+125	Tracy CO Ramp Testing	240135	NULL	4	CO Oxidation
+126	Russell City	240043	2466	3	NOx Removal
+127	Channel 1	240043	2395	3	NOx Removal
+128	U of Minn	240098	2694	3	NOx Removal
+129	Bethpage 1.2 CO Ramp Test	240043	Bethpage 1.2 CO	4	CO Oxidation
+130	Metcalf	240043	2105	3	NOx Removal
+131	Carr Street	240228	2148	3	NOx Removal
+132	Doswell	240102	NULL	3	NOx Removal
+133	2312 McDonough	230518	2312	3	NOx Removal
+134	DTE Marina Thermal Facility Cogen	240147	2440	3	NOx Removal
+135	Cove Point 214JA_JB SCR	240224	2149	3	NOx Removal
+136	Cove Point 214JA_JB CO Ramp	240224	NULL	4	CO Oxidation
+137	Batesville Units 1-3	240019	206	3	NOx Removal
+138	York 5 deNOx	240145	2863	3	NOx Removal
+139	Tung Hsiao PN4855	NULL	4855	3	NOx Removal
+140	Zeeland 2b	240259	2649	3	NOx Removal
+141	HayRoad DeNOx Test	240043	NULL	3	NOx Removal
+142	2021 Roseville	230350	2021	3	NOx Removal
+143	Protec CGL2-F2	240296	2084	3	NOx Removal
+144	Barrick Goldstrike	240074	4323	3	NOx Removal
+145	Eastman Boiler 15	240227	2480	3	NOx Removal
+146	Kendall Vicinity	240301	2602	3	NOx Removal
+147	4137 Sweeny 3	240185	4137	3	NOx Removal
+148	deNOx Test Johnsonville 20	NULL	2893	3	NOx Removal
+149	Hog Bayou Cross Flow Plate	240060	NULL	3	NOx Removal
+150	Lemont North Plant	NULL	4087	3	NOx Removal
+152	Lemont South Plant	NULL	4088	3	NOx Removal
+153	2550 Kyrene K7	230571	2550	3	NOx Removal
+154	Protec CGL3 DFF and RTF	NULL	4205	3	NOx Removal
+155	1- Layer 4884	NULL	4884	3	NOx Removal
+156	The catalyst-only dp target in the lab should be <= 1.67 in-H2O.	230498	6210	3	NOx Removal
+157	Lonesome Creek Basin Electric	230498	6210	3	NOx Removal
+158	6048 Three Rivers	240398	6048	3	NOx Removal
+159	Independence Station	240187	2431	3	NOx Removal
+160	Beaumont ERS Train A	240362	2757	3	NOx Removal
+161	Exxon Beaumont ERS Train A	240362	2757	3	NOx Removal
+162	ExxonMobil Beaumont ERS Train A CO Ramp 3 Layer	240362	2757	4	CO Oxidation
+163	ExxonMobil Beaumont ERS Train A CO Ramp 1 Layer	240362	2757	4	CO Oxidation
+164	Radford-CERAM	240451	NULL	3	NOx Removal
+165	Radford-CERAM-HiNO2	240451	NULL	3	NOx Removal
+166	Radford-CERAM	240451	NULL	3	NOx Removal
+167	Radford-CERAM-HiNO2-100ppm	240451	NULL	3	NOx Removal
+168	Cove Point 7A&B CO Catalyst	240300	NULL	4	CO Oxidation
+169	York 1, 2 and 3	NULL	4219	3	NOx Removal
+170	Baytown WHB 71	NULL	2848	3	NOx Removal
+171	Chocolate Bayou 4917	NULL	4917	3	NOx Removal
+172	Midtown Thermal DCO 2458	240387	2458	3	NOx Removal
+173	Cove Point Aux Boiler 5A&B921	240306	NULL	3	NOx Removal
+174	Westmoreland 2936	240453	2936	3	NOx Removal
+175	4126 Cherry Point	240245	4126	3	NOx Removal
+176	2782 GREC	240402	2782	3	NOx Removal
+177	Channel 3 2576 DeNOx	240043	2576	3	NOx Removal
+178	Deer Creek 2344	240478	2344	3	NOx Removal
+179	Wood River HP-2	240450	4458	3	NOx Removal
+180	Torrance 30F2	240499	4136	3	NOx Removal
+181	Encogen 4157	240369	4157	3	NOx Removal
+182	2827 Waterford	240495	2827	3	NOx Removal
+183	2827 Waterford NEW per customer	240495	2827	3	NOx Removal
+184	Prequal CO Oxidation	240348	6318	4	CO Oxidation
+185	Prequal VOC Oxidation	240348	6318	5	VOC Oxidation
+186	Casco Bay PN234	230395	234	3	NOx Removal
+187	Ferguson (LCRA)	240337	2557	3	NOx Removal
+188	Thums 4878	240507	4878	3	NOx Removal
+189	Hyperion	2330488	2825	3	NOx Removal
+190	BOP Train 5 (907)	240209	907	3	NOx Removal
+191	Cleco 6, 7-1, and 7-2 deNOx conditions	240424	220	3	NOx Removal
+192	Gibson 5.7	240198	NULL	3	NOx Removal
+193	Gibson 5.7	240198	NULL	1	SO2 Oxidation
+194	6335 TT2	240381	6335	3	NOx Removal
+195	4336 JL Stall (Arsenal Hill)	240464	4336	3	NOx Removal
+196	4941 Halifax County Biomass	240435	4941	3	NOx Removal
+197	2907 Greensville	210445-1	2907	3	NOx Removal
+198	Keystone 1 deNOx	230080	NULL	3	NOx Removal
+199	Keystone 1 SO23	230080	NULL	1	SO2 Oxidation
+200	Keystone 2 deNOx	230080	NULL	3	NOx Removal
+201	Keystone 1 SO23	230080	NULL	1	SO2 Oxidation
+202	Keystone 2 SO23	230080	NULL	1	SO2 Oxidation
+203	Winyah 1 & 2 MR1	240501	NULL	3	NOx Removal
+204	Winyah 1 & 2 System	240501	NULL	1	SO2 Oxidation
+205	Longview deNOx	240214	NULL	3	NOx Removal
+206	Longview SO23	240214	NULL	1	SO2 Oxidation
+207	T-350 VOC Oxidation	240421	MM Prequal	5	VOC Oxidation
+208	T-350 CO Oxidation	240421	MM Prequal	4	CO Oxidation
+209	LM2500 VOC Oxidation	240421	MM Prequal	5	VOC Oxidation
+210	LM 2500 CO Oxidation	240421	MM Prequal	4	CO Oxidation
+211	Plum Pt	240479	NULL	3	NOx Removal
+212	Plum Pt	240479	NULL	1	SO2 Oxidation
+213	Fore River	240043	537	3	NOx Removal
+214	Harrison U3	240298	NULL	3	NOx Removal
+215	Harrison U3	240298	NULL	1	SO2 Oxidation
+216	Monroe 2	240329	NULL	3	NOx Removal
+217	Monroe 2	240329	NULL	1	SO2 Oxidation
+218	Silicon Valley 5 Temp Ramp Test	240379	NULL	4	CO Oxidation
+219	Virginia Generating Station	240434	805	3	NOx Removal
+220	Delta Energy Center	240043	2819	3	NOx Removal
+221	Channel 2	240043	4049	3	NOx Removal
+222	BUCK CO ox 5 temps	2024DRF	NULL	4	CO Oxidation
+223	Miami Fort U7	240544	NULL	3	NOx Removal
+224	Miami Fort U7	240544	NULL	1	SO2 Oxidation
+225	Kincaid U2	240508	NULL	3	NOx Removal
+226	Kincaid U2	240508	NULL	1	SO2 Oxidation
+227	Sutter CO Ox 5 Pt Ramp	240043	NULL	4	CO Oxidation
+228	4794 OGE Redbud U3	240408	4794	3	NOx Removal
+229	4794 OGE Redbud U3	240408	4794	4	CO Oxidation
+230	DB Wilson Act.	240534	NULL	3	NOx Removal
+231	DB Wilson Conv.	240534	NULL	1	SO2 Oxidation
+232	Cliffside U5	2024DRF	NULL	3	NOx Removal
+233	Cliffside U5 SO2	2024DRF	NULL	1	SO2 Oxidation
+234	Pittsfield MHI-11	240350	MHI-11	3	NOx Removal
+235	Sutter U1	240043	2632	3	NOx Removal
+236	2618 Nebo U1	240287	2618	3	NOx Removal
+237	4995 OGE Redbud U4	240409	4995	3	NOx Removal
+238	4995 OGE Redbud U4	240409	4995	4	CO Oxidation
+239	Gavin U2 NOx Test	240249	NULL	3	NOx Removal
+240	Gavin U2 SO2 Test	240249	NULL	1	SO2 Oxidation
+241	Cliffside U6 NOx Test	2024DRF	NULL	3	NOx Removal
+242	Cliffside U6 SO2 Test	2024DRF	NULL	1	SO2 Oxidation
+243	Warrick U4	240461	NULL	3	NOx Removal
+244	Warrick U4	240461	NULL	1	SO2 Oxidation
+245	Cayuga U1	240454	NULL	3	NOx Removal
+246	Cayuga U2	240454	NULL	1	SO2 Oxidation
+247	Cayuga U2	240454	NULL	3	NOx Removal
+248	Baytown Unit 4	240043	2693	3	NOx Removal
+249	Winyah U1 NOx Removal	240394	NULL	3	NOx Removal
+250	Winyah U1 SO2 Oxidation	240394	NULL	1	SO2 Oxidation
+251	Cumberland 2 deNOx	TBD	NULL	3	NOx Removal
+252	Great Lakes Works CGL1	240477	2774	3	NOx Removal
+253	Port Arthur 6100	NULL	6255	3	NOx Removal
+254	Ghent 4 K	240393-1	NULL	3	NOx Removal
+255	Ghent 4 SO23	240393-1	NULL	1	SO2 Oxidation
+256	4114 Strathcona	240284	4114	3	NOx Removal
+257	Lansing 2 and 3	4258	180694	3	NOx Removal
+258	Jasper	677	230298	3	NOx Removal
+259	Calpine Cumberland CO	240043	NonCM	4	CO Oxidation
+260	Mountaineer Unit 1 NOx Test	240600	NULL	3	NOx Removal
+261	Mountaineer Unit 1 SO2 Test	240600	NULL	1	SO2 Oxidation
+262	2907 Greensville CO Ox	210445	2907	4	CO Oxidation
+
+-----
+
+SELECT
+  rt.id                AS ReactorTestID,
+  rt.load_id,
+  rt.test_condition_id,
+  rt.reactor_id,
+  rt.reactor_type_id,
+  rtc.description      AS ConditionDescription,
+  tct.test_condition_type
+FROM dbo.ReactorTests rt
+LEFT JOIN dbo.ReactorTestConditions rtc ON rt.test_condition_id = rtc.id
+LEFT JOIN dbo.TestConditionTypes tct ON rtc.test_type_id = tct.id
+ORDER BY rt.id;
+
+ReactorTestID	load_id	test_condition_id	reactor_id	reactor_type_id	ConditionDescription	test_condition_type
+1	2	1	1	2	5 Layer test for both CO ox and deNOx	NOx Removal
+2	2	2	1	2	2nd temperature, 5-layer CO ox + DeNOx	NOx Removal
+3	3	3	1	2	Pro-Tec CGL1 F1&F2	NOx Removal
+4	5	3	1	2	Pro-Tec CGL1 F1&F2	NOx Removal
+5	6	3	1	2	Pro-Tec CGL1 F1&F2	NOx Removal
+6	7	3	1	2	Pro-Tec CGL1 F1&F2	NOx Removal
+7	8	4	2	2	Carlsbad	NOx Removal
+8	9	4	2	2	Carlsbad	NOx Removal
+9	10	4	2	2	Carlsbad	NOx Removal
+10	11	4	2	2	Carlsbad	NOx Removal
+11	12	4	2	2	Carlsbad	NOx Removal
+12	13	5	2	2	Goreway 11, 12, 13	NOx Removal
+13	14	5	2	2	Goreway 11, 12, 13	NOx Removal
+14	15	5	2	2	Goreway 11, 12, 13	NOx Removal
+15	16	6	1	2	PCN 4288 Port Arthur H-1000 (BASF)	NOx Removal
+16	17	7	1	2	Torrance 2F4	NOx Removal
+17	18	8	1	2	Montana 1	NOx Removal
+18	19	9	1	2	Beaumont 41 42 43	NOx Removal
+19	20	10	1	2	Curtus Bay 4319	NOx Removal
+20	24	11	2	2	Harris Plant 1A	NOx Removal
+21	23	12	2	2	Harris Plant 1B	NOx Removal
+22	21	13	2	2	Harris Plant 2A	NOx Removal
+23	22	14	2	2	Harris Plant 2B	NOx Removal
+24	25	15	1	2	Colusa Unit 2	NOx Removal
+25	26	16	1	2	Tunghsaio	NOx Removal
+26	28	16	2	2	Tunghsaio	NOx Removal
+27	29	16	1	2	Tunghsaio	NOx Removal
+28	30	16	2	2	Tunghsaio	NOx Removal
+29	31	18	1	2	Sriracha	NOx Removal
+30	33	19	1	2	Channelview 341	NOx Removal
+31	34	20	4	2	Borger Unit 400K 2808	NOx Removal
+32	35	21	1	2	Lawrenceburg (Lightstone)	NOx Removal
+33	36	19	1	2	Channelview 341	NOx Removal
+34	37	22	1	2	Protest CGL1	NOx Removal
+35	38	22	1	2	Protest CGL1	NOx Removal
+36	39	23	1	2	Port Arthur B-7280	NOx Removal
+37	40	24	1	2	2706 Jamaica Bay NOx Removal	NOx Removal
+38	41	25	1	2	Santan 5A/B and 6	NOx Removal
+39	42	26	1	2	Los Esteros 2514 U 1 2 3	NOx Removal
+40	43	26	1	2	Los Esteros 2514 U 1 2 3	NOx Removal
+41	44	27	1	2	Cove Point 7A&B 4842	NOx Removal
+42	45	27	1	2	Cove Point 7A&B 4842	NOx Removal
+43	46	28	1	2	Harbor CoGen Replacement	NOx Removal
+44	47	29	1	2	Ontolaunee Field PN324	NOx Removal
+45	48	30	1	2	Cherokee U5	NOx Removal
+46	49	31	1	2	Calpine Hermiston K test	NOx Removal
+47	50	32	1	2	2-Layer  4884	NOx Removal
+48	51	33	1	2	Shintech 4900 1 Layer test	NOx Removal
+49	52	34	1	2	2618 Nebo Power Plant U1 NOx Removal	NOx Removal
+50	53	35	1	2	Franklin 2A	NOx Removal
+51	54	36	1	2	Lower Mt Bethel SCR	NOx Removal
+52	55	36	1	2	Lower Mt Bethel SCR	NOx Removal
+53	56	37	1	2	Lower Mt Bethel CO Ramp	CO Oxidation
+54	57	37	1	2	Lower Mt Bethel CO Ramp	CO Oxidation
+55	58	19	1	2	Channelview 341	NOx Removal
+56	59	38	4	2	Syracuse	NOx Removal
+57	60	39	1	2	Baytown Olefins Plant Train 3	NOx Removal
+58	61	40	1	2	Taiyanggong K tests	NOx Removal
+59	62	40	1	2	Taiyanggong K tests	NOx Removal
+60	63	41	2	2	Williams MR=1 Field	NOx Removal
+61	64	41	2	2	Williams MR=1 Field	NOx Removal
+62	65	42	1	2	Independence	NOx Removal
+63	66	42	1	2	Independence	NOx Removal
+64	67	42	1	2	Independence	NOx Removal
+65	68	42	1	2	Independence	NOx Removal
+66	69	42	1	2	Independence	NOx Removal
+67	70	42	1	2	Independence	NOx Removal
+68	71	42	1	2	Independence	NOx Removal
+69	73	43	1	2	Biodec Idec Meteor NOx + CO	NOx Removal
+70	73	44	1	2	Biodec Idec Meteor NOx + CO - Low Load	CO Oxidation
+71	74	45	1	2	672 Mountain Creek 8	NOx Removal
+72	75	46	1	2	York 6 Repl	NOx Removal
+73	76	47	4	2	Columbus Coatings	NOx Removal
+74	77	48	1	2	Brentwood NYPA	NOx Removal
+75	78	49	1	2	Garrison	NOx Removal
+76	79	50	1	2	2177 Afton	NOx Removal
+77	80	51	1	2	808 Fayette	NOx Removal
+78	81	51	1	2	808 Fayette	NOx Removal
+79	82	52	1	2	4282 Heartland	NOx Removal
+80	83	52	1	2	4282 Heartland	NOx Removal
+81	84	53	1	2	4400 Jackson Generating Station	NOx Removal
+82	85	53	1	2	4400 Jackson Generating Station	NOx Removal
+83	86	54	1	2	Henrietta LHT deNOx test	NOx Removal
+84	87	54	1	2	Henrietta LHT deNOx test	NOx Removal
+85	88	55	4	2	2655 Brunswick County	NOx Removal
+86	89	56	4	2	2-Layer system deNOx Torrance FCC	NOx Removal
+87	90	56	4	2	2-Layer system deNOx Torrance FCC	NOx Removal
+88	91	57	1	2	Gulf Coast JV Act Test	NOx Removal
+89	92	57	1	2	Gulf Coast JV Act Test	NOx Removal
+90	93	57	1	2	Gulf Coast JV Act Test	NOx Removal
+91	94	58	4	2	4517 City of Lakeland McIntosh	NOx Removal
+92	95	59	1	2	4070 Three Rivers (Valero)	NOx Removal
+93	96	60	4	2	Sentinel Energy (Units 1-8)	NOx Removal
+94	97	60	1	2	Sentinel Energy (Units 1-8)	NOx Removal
+95	98	60	4	2	Sentinel Energy (Units 1-8)	NOx Removal
+96	99	60	4	2	Sentinel Energy (Units 1-8)	NOx Removal
+97	100	61	5	2	Sabine River Works Ethylene Cracking Furnace BA 109	NOx Removal
+98	101	62	1	2	Kendall	NOx Removal
+99	102	60	4	2	Sentinel Energy (Units 1-8)	NOx Removal
+100	103	63	1	2	Bosque 1 and 2 Meteor	NOx Removal
+101	103	64	1	2	Bosque CO Ox condition @ denox target= 77.8%	CO Oxidation
+102	104	63	1	2	Bosque 1 and 2 Meteor	NOx Removal
+103	104	64	1	2	Bosque CO Ox condition @ denox target= 77.8%	CO Oxidation
+104	105	65	1	2	Calpine Solano 1L Creed Lambie Goosehaven	NOx Removal
+106	107	66	1	2	Calpine Solano 2L Riverview Wolfskill	NOx Removal
+107	108	67	1	2	Bethlehem Corrugated	NOx Removal
+108	109	67	NULL	2	Bethlehem Corrugated	NOx Removal
+109	110	67	1	2	Bethlehem Corrugated	NOx Removal
+110	111	68	1	2	2495 Mariposa	NOx Removal
+111	112	68	1	2	2495 Mariposa	NOx Removal
+112	113	69	4	2	Tiverton Power	NOx Removal
+113	114	70	1	2	Valero Corpus Christi	NOx Removal
+114	115	71	1	2	PRO-Tec Cal K test	NOx Removal
+115	116	72	1	2	Calpine Feather River	NOx Removal
+116	117	73	6	2	Tenaris Bay City RHF	NOx Removal
+117	118	74	1	2	Gila River Unit 3	NOx Removal
+118	119	74	1	2	Gila River Unit 3	NOx Removal
+119	120	75	1	2	Treasure Coast Replmt (4903)	NOx Removal
+120	121	17	1	2	Sriracha 1 and 2	NOx Removal
+121	122	76	1	2	4518 OGE Redbud 1	NOx Removal
+122	122	77	1	2	4518 OGE Redbud 1	CO Oxidation
+123	123	78	1	2	4712 OGE Redbud U2	NOx Removal
+124	123	79	1	2	4712 OGE Redbud U2	CO Oxidation
+125	124	80	3	2	579 Columbia	NOx Removal
+126	125	80	3	2	579 Columbia	NOx Removal
+127	126	51	1	2	808 Fayette	NOx Removal
+128	126	81	1	2	Standard	NOx Removal
+129	127	51	1	2	808 Fayette	NOx Removal
+130	127	81	1	2	Standard	NOx Removal
+131	130	51	1	2	808 Fayette	NOx Removal
+132	130	81	1	2	Standard	NOx Removal
+133	131	51	1	2	808 Fayette	NOx Removal
+134	131	81	1	2	Standard	NOx Removal
+135	132	82	4	2	LAX Los Angeles World Airport CUP 101 and 201	NOx Removal
+136	133	82	4	2	LAX Los Angeles World Airport CUP 101 and 201	NOx Removal
+137	134	83	1	2	Pastoria 4	NOx Removal
+138	135	84	1	2	Almond Power II Units 1 2 3	NOx Removal
+139	136	85	1	2	Magnolia	NOx Removal
+140	137	86	4	2	2778 Mont Belvieu PDH Aux Boilers	NOx Removal
+141	139	24	1	2	2706 Jamaica Bay NOx Removal	NOx Removal
+142	140	87	1	2	2132 Luna	NOx Removal
+143	141	31	1	2	Calpine Hermiston K test	NOx Removal
+144	143	88	1	2	4115 Lincoln County	NOx Removal
+145	144	89	1	2	4084 Cane Island 3	NOx Removal
+146	146	90	1	2	GCF Aux Package Boiler B)-302 K test	NOx Removal
+147	147	91	1	2	GCF WHBs PN4356 2 units	NOx Removal
+148	148	91	1	2	GCF WHBs PN4356 2 units	NOx Removal
+149	145	92	1	2	Hamakua Unit 1	NOx Removal
+150	149	93	1	2	TVA Caledonia	NOx Removal
+151	150	93	1	2	TVA Caledonia	NOx Removal
+152	151	94	1	2	Otay Mesa	NOx Removal
+153	152	68	1	2	2495 Mariposa	NOx Removal
+154	153	68	1	2	2495 Mariposa	NOx Removal
+155	154	95	1	2	Morgan PCN 442	NOx Removal
+156	156	96	1	2	Jack County	NOx Removal
+157	157	97	1	2	Winchester 2289	NOx Removal
+158	158	98	1	2	2 Layer Panda Temple	NOx Removal
+159	159	98	1	2	2 Layer Panda Temple	NOx Removal
+160	160	99	1	2	Medicine Hat Unit 17	NOx Removal
+161	161	67	1	2	Bethlehem Corrugated	NOx Removal
+162	164	101	1	2	NOx removal, 349C for Ennis	NOx Removal
+163	164	102	1	2	CO Ox condition, 315C for Ennis	CO Oxidation
+164	165	19	1	2	Channelview 341	NOx Removal
+165	166	100	1	2	Duke Lincoln Cty DeNOx test w/ CO addition	NOx Removal
+166	167	11	2	2	Harris Plant 1A	NOx Removal
+167	168	12	2	2	Harris Plant 1B	NOx Removal
+168	169	13	2	2	Harris Plant 2A	NOx Removal
+169	170	14	2	2	Harris Plant 2B	NOx Removal
+170	171	29	1	2	Ontolaunee Field PN324	NOx Removal
+171	173	104	1	2	Westbrook PCN 2411	NOx Removal
+172	175	83	1	2	Pastoria 4	NOx Removal
+173	176	105	2	2	Westlake 7 All Layers	NOx Removal
+174	177	105	2	2	Westlake 7 All Layers	NOx Removal
+175	178	105	2	2	Westlake 7 All Layers	NOx Removal
+176	179	106	1	2	Rowan 4	NOx Removal
+177	180	106	1	2	Rowan 4	NOx Removal
+178	183	107	1	2	Pratt and Whitney Middletown 7	NOx Removal
+179	184	109	1	2	P and W East Hartford	NOx Removal
+180	185	110	1	2	Hamilton Sunstrand	NOx Removal
+181	186	111	1	2	Los Medanos	NOx Removal
+182	187	19	1	2	Channelview 341	NOx Removal
+183	188	112	1	2	Edwardsport IGCC - OEM test conditions	NOx Removal
+184	188	113	1	2	Edwardsport IGCC - CM replacement test conditions	NOx Removal
+185	189	114	1	2	Bethpage GT4	NOx Removal
+186	190	115	1	2	Cumberland Connectiv	NOx Removal
+187	191	116	1	2	El Segundo Train B CO Catalyst	CO Oxidation
+188	192	55	1	2	2655 Brunswick County	NOx Removal
+189	193	117	1	2	2456 Possum Point	NOx Removal
+190	194	117	1	2	2456 Possum Point	NOx Removal
+191	195	118	1	2	BOP Train 2 (2551)	NOx Removal
+192	198	119	1	2	2295 XCEL Riverside	NOx Removal
+193	199	119	1	2	2295 XCEL Riverside	NOx Removal
+194	200	120	1	2	2784 Santan 5	NOx Removal
+195	201	120	1	2	2784 Santan 5	NOx Removal
+196	202	121	1	2	2937 St. Joseph	NOx Removal
+197	203	122	6	3	2937 St. Joseph	CO Oxidation
+198	204	123	4	2	Tracy Full Load Testing w/ SO2 conv	NOx Removal
+199	205	123	4	2	Tracy Full Load Testing w/ SO2 conv	NOx Removal
+200	206	123	4	2	Tracy Full Load Testing w/ SO2 conv	NOx Removal
+201	207	124	1	2	TECO Thermal Energy	NOx Removal
+202	208	125	1	2	Tracy CO Ramp Testing	CO Oxidation
+203	209	125	1	2	Tracy CO Ramp Testing	CO Oxidation
+204	210	126	1	2	Russell City	NOx Removal
+205	211	127	1	2	Channel 1	NOx Removal
+206	212	103	1	2	Bethpage PB3 Unit 3.1 NOx removal	NOx Removal
+207	214	128	1	2	U of Minn	NOx Removal
+208	215	129	1	2	Bethpage 1.2 CO Ramp Test	CO Oxidation
+209	216	87	1	2	2132 Luna	NOx Removal
+210	217	87	1	2	2132 Luna	NOx Removal
+211	218	19	1	2	Channelview 341	NOx Removal
+212	219	130	1	2	Metcalf	NOx Removal
+213	221	132	1	2	Doswell	NOx Removal
+214	224	133	1	2	2312 McDonough	NOx Removal
+215	225	133	1	2	2312 McDonough	NOx Removal
+216	226	134	1	2	DTE Marina Thermal Facility Cogen	NOx Removal
+217	227	35	1	2	Franklin 2A	NOx Removal
+218	229	136	1	2	Cove Point 214JA_JB CO Ramp	CO Oxidation
+219	230	137	1	2	Batesville Units 1-3	NOx Removal
+220	231	137	1	2	Batesville Units 1-3	NOx Removal
+221	232	137	1	2	Batesville Units 1-3	NOx Removal
+222	233	18	1	2	Sriracha	NOx Removal
+223	235	138	1	2	York 5 deNOx	NOx Removal
+224	236	139	1	2	Tung Hsiao PN4855	NOx Removal
+225	237	139	NULL	2	Tung Hsiao PN4855	NOx Removal
+226	238	139	NULL	2	Tung Hsiao PN4855	NOx Removal
+227	239	139	NULL	2	Tung Hsiao PN4855	NOx Removal
+228	240	139	NULL	2	Tung Hsiao PN4855	NOx Removal
+229	241	139	NULL	2	Tung Hsiao PN4855	NOx Removal
+230	242	98	1	2	2 Layer Panda Temple	NOx Removal
+231	243	98	1	2	2 Layer Panda Temple	NOx Removal
+232	244	140	1	2	Zeeland 2b	NOx Removal
+233	246	141	1	2	HayRoad DeNOx Test	NOx Removal
+234	245	142	1	2	2021 Roseville	NOx Removal
+235	247	143	1	2	Protec CGL2-F2	NOx Removal
+236	248	9	1	2	Beaumont 41 42 43	NOx Removal
+237	249	7	1	2	Torrance 2F4	NOx Removal
+238	220	131	1	2	Carr Street	NOx Removal
+239	250	144	1	2	Barrick Goldstrike	NOx Removal
+240	251	23	1	2	Port Arthur B-7280	NOx Removal
+241	252	145	1	2	Eastman Boiler 15	NOx Removal
+242	253	146	1	2	Kendall Vicinity	NOx Removal
+243	255	18	1	2	Sriracha	NOx Removal
+244	257	147	1	2	4137 Sweeny 3	NOx Removal
+245	258	148	1	2	deNOx Test Johnsonville 20	NOx Removal
+246	259	149	1	2	Hog Bayou Cross Flow Plate	NOx Removal
+247	228	135	1	2	Cove Point 214JA_JB SCR	NOx Removal
+248	260	150	1	2	Lemont North Plant	NOx Removal
+250	261	152	1	2	Lemont South Plant	NOx Removal
+251	262	139	1	2	Tung Hsiao PN4855	NOx Removal
+252	263	153	1	2	2550 Kyrene K7	NOx Removal
+253	264	139	1	2	Tung Hsiao PN4855	NOx Removal
+254	265	139	1	2	Tung Hsiao PN4855	NOx Removal
+255	266	154	1	2	Protec CGL3 DFF and RTF	NOx Removal
+256	267	154	1	2	Protec CGL3 DFF and RTF	NOx Removal
+257	268	32	5	2	2-Layer  4884	NOx Removal
+258	268	155	5	2	1- Layer 4884	NOx Removal
+259	269	33	5	2	Shintech 4900 1 Layer test	NOx Removal
+260	270	157	NULL	2	Lonesome Creek Basin Electric	NOx Removal
+261	271	158	1	2	6048 Three Rivers	NOx Removal
+262	272	42	1	2	Independence	NOx Removal
+263	273	42	1	2	Independence	NOx Removal
+264	274	159	1	2	Independence Station	NOx Removal
+265	275	159	1	2	Independence Station	NOx Removal
+266	276	40	1	2	Taiyanggong K tests	NOx Removal
+267	277	40	1	2	Taiyanggong K tests	NOx Removal
+268	278	161	5	2	Exxon Beaumont ERS Train A	NOx Removal
+269	279	162	1	2	ExxonMobil Beaumont ERS Train A CO Ramp 3 Layer	CO Oxidation
+270	280	163	1	2	ExxonMobil Beaumont ERS Train A CO Ramp 1 Layer	CO Oxidation
+271	281	53	1	2	4400 Jackson Generating Station	NOx Removal
+272	282	53	1	2	4400 Jackson Generating Station	NOx Removal
+273	283	1	1	2	5 Layer test for both CO ox and deNOx	NOx Removal
+274	283	2	1	2	2nd temperature, 5-layer CO ox + DeNOx	NOx Removal
+276	284	166	1	2	Radford-CERAM	NOx Removal
+277	284	167	1	2	Radford-CERAM-HiNO2-100ppm	NOx Removal
+278	285	168	1	2	Cove Point 7A&B CO Catalyst	CO Oxidation
+279	286	9	1	2	Beaumont 41 42 43	NOx Removal
+280	287	27	1	2	Cove Point 7A&B 4842	NOx Removal
+281	288	27	1	2	Cove Point 7A&B 4842	NOx Removal
+282	289	169	1	2	York 1, 2 and 3	NOx Removal
+283	290	168	1	2	Cove Point 7A&B CO Catalyst	CO Oxidation
+284	291	112	1	2	Edwardsport IGCC - OEM test conditions	NOx Removal
+285	291	113	1	2	Edwardsport IGCC - CM replacement test conditions	NOx Removal
+286	292	170	1	2	Baytown WHB 71	NOx Removal
+287	293	171	1	2	Chocolate Bayou 4917	NOx Removal
+288	294	172	1	2	Midtown Thermal DCO 2458	NOx Removal
+289	295	173	1	2	Cove Point Aux Boiler 5A&B921	NOx Removal
+290	296	174	1	2	Westmoreland 2936	NOx Removal
+291	297	174	1	2	Westmoreland 2936	NOx Removal
+292	298	175	1	2	4126 Cherry Point	NOx Removal
+293	299	175	1	2	4126 Cherry Point	NOx Removal
+294	300	176	1	2	2782 GREC	NOx Removal
+295	301	177	1	2	Channel 3 2576 DeNOx	NOx Removal
+296	302	178	1	2	Deer Creek 2344	NOx Removal
+297	303	179	1	2	Wood River HP-2	NOx Removal
+298	304	180	1	2	Torrance 30F2	NOx Removal
+302	316	182	1	2	2827 Waterford	NOx Removal
+303	316	183	1	2	2827 Waterford NEW per customer	NOx Removal
+304	313	183	1	2	2827 Waterford NEW per customer	NOx Removal
+305	314	183	1	2	2827 Waterford NEW per customer	NOx Removal
+306	317	184	1	2	Prequal CO Oxidation	CO Oxidation
+307	317	185	1	2	Prequal VOC Oxidation	VOC Oxidation
+308	318	186	1	2	Casco Bay PN234	NOx Removal
+309	319	186	1	2	Casco Bay PN234	NOx Removal
+310	320	187	1	2	Ferguson (LCRA)	NOx Removal
+311	321	187	1	2	Ferguson (LCRA)	NOx Removal
+312	322	181	1	2	Encogen 4157	NOx Removal
+313	323	188	1	2	Thums 4878	NOx Removal
+314	324	35	1	2	Franklin 2A	NOx Removal
+315	325	189	5	2	Hyperion	NOx Removal
+316	326	189	5	2	Hyperion	NOx Removal
+317	327	190	1	2	BOP Train 5 (907)	NOx Removal
+318	328	191	2	2	Cleco 6, 7-1, and 7-2 deNOx conditions	NOx Removal
+319	329	192	3	2	Gibson 5.7	NOx Removal
+320	329	193	3	2	Gibson 5.7	SO2 Oxidation
+321	330	191	1	2	Cleco 6, 7-1, and 7-2 deNOx conditions	NOx Removal
+322	331	191	1	2	Cleco 6, 7-1, and 7-2 deNOx conditions	NOx Removal
+323	332	19	1	2	Channelview 341	NOx Removal
+324	333	194	1	2	6335 TT2	NOx Removal
+325	334	195	1	2	4336 JL Stall (Arsenal Hill)	NOx Removal
+326	335	195	1	2	4336 JL Stall (Arsenal Hill)	NOx Removal
+327	336	196	5	2	4941 Halifax County Biomass	NOx Removal
+328	337	197	1	2	2907 Greensville	NOx Removal
+329	339	198	3	2	Keystone 1 deNOx	NOx Removal
+330	339	199	3	2	Keystone 1 SO23	SO2 Oxidation
+331	340	198	3	2	Keystone 1 deNOx	NOx Removal
+332	340	199	3	2	Keystone 1 SO23	SO2 Oxidation
+333	341	198	3	2	Keystone 1 deNOx	NOx Removal
+334	341	199	3	2	Keystone 1 SO23	SO2 Oxidation
+335	342	198	3	2	Keystone 1 deNOx	NOx Removal
+336	342	199	3	2	Keystone 1 SO23	SO2 Oxidation
+337	343	200	3	2	Keystone 2 deNOx	NOx Removal
+338	343	202	3	2	Keystone 2 SO23	SO2 Oxidation
+339	344	200	3	2	Keystone 2 deNOx	NOx Removal
+340	344	202	3	2	Keystone 2 SO23	SO2 Oxidation
+341	345	200	3	2	Keystone 2 deNOx	NOx Removal
+342	345	202	3	2	Keystone 2 SO23	SO2 Oxidation
+343	346	200	3	2	Keystone 2 deNOx	NOx Removal
+344	346	202	3	2	Keystone 2 SO23	SO2 Oxidation
+345	347	203	4	2	Winyah 1 & 2 MR1	NOx Removal
+346	348	203	4	2	Winyah 1 & 2 MR1	NOx Removal
+347	349	203	4	2	Winyah 1 & 2 MR1	NOx Removal
+348	350	204	4	2	Winyah 1 & 2 System	SO2 Oxidation
+349	351	205	3	2	Longview deNOx	NOx Removal
+350	351	206	3	2	Longview SO23	SO2 Oxidation
+351	352	205	3	2	Longview deNOx	NOx Removal
+352	352	206	3	2	Longview SO23	SO2 Oxidation
+353	353	205	6	3	Longview deNOx	NOx Removal
+354	353	206	7	3	Longview SO23	SO2 Oxidation
+355	354	205	6	3	Longview deNOx	NOx Removal
+356	354	206	6	3	Longview SO23	SO2 Oxidation
+357	355	209	1	2	LM2500 VOC Oxidation	VOC Oxidation
+358	355	210	1	2	LM 2500 CO Oxidation	CO Oxidation
+359	356	207	1	2	T-350 VOC Oxidation	VOC Oxidation
+360	356	208	1	2	T-350 CO Oxidation	CO Oxidation
+361	357	211	5	2	Plum Pt	NOx Removal
+362	358	211	5	2	Plum Pt	NOx Removal
+363	359	211	5	2	Plum Pt	NOx Removal
+364	360	211	5	2	Plum Pt	NOx Removal
+365	361	213	1	2	Fore River	NOx Removal
+366	362	47	4	2	Columbus Coatings	NOx Removal
+367	363	214	5	2	Harrison U3	NOx Removal
+368	363	215	5	2	Harrison U3	SO2 Oxidation
+369	364	216	3	2	Monroe 2	NOx Removal
+370	364	217	3	2	Monroe 2	SO2 Oxidation
+371	365	216	3	2	Monroe 2	NOx Removal
+372	365	217	3	2	Monroe 2	SO2 Oxidation
+373	366	216	3	2	Monroe 2	NOx Removal
+374	366	217	3	2	Monroe 2	SO2 Oxidation
+375	367	216	3	2	Monroe 2	NOx Removal
+376	367	217	3	2	Monroe 2	SO2 Oxidation
+377	368	218	1	2	Silicon Valley 5 Temp Ramp Test	CO Oxidation
+378	369	218	1	2	Silicon Valley 5 Temp Ramp Test	CO Oxidation
+379	370	219	1	2	Virginia Generating Station	NOx Removal
+380	371	220	1	2	Delta Energy Center	NOx Removal
+381	372	221	1	2	Channel 2	NOx Removal
+382	374	222	1	2	BUCK CO ox 5 temps	CO Oxidation
+383	375	223	3	2	Miami Fort U7	NOx Removal
+384	375	224	3	2	Miami Fort U7	SO2 Oxidation
+385	376	225	3	2	Kincaid U2	NOx Removal
+386	376	226	3	2	Kincaid U2	SO2 Oxidation
+387	377	227	1	2	Sutter CO Ox 5 Pt Ramp	CO Oxidation
+388	378	76	1	2	4518 OGE Redbud 1	NOx Removal
+389	378	77	1	2	4518 OGE Redbud 1	CO Oxidation
+390	379	78	1	2	4712 OGE Redbud U2	NOx Removal
+391	379	79	1	2	4712 OGE Redbud U2	CO Oxidation
+392	380	228	1	2	4794 OGE Redbud U3	NOx Removal
+393	380	229	1	2	4794 OGE Redbud U3	CO Oxidation
+394	381	230	5	2	DB Wilson Act.	NOx Removal
+395	381	231	5	2	DB Wilson Conv.	SO2 Oxidation
+396	382	230	5	2	DB Wilson Act.	NOx Removal
+397	382	231	5	2	DB Wilson Conv.	SO2 Oxidation
+398	383	230	5	2	DB Wilson Act.	NOx Removal
+399	383	231	5	2	DB Wilson Conv.	SO2 Oxidation
+400	384	230	5	2	DB Wilson Act.	NOx Removal
+401	384	231	5	2	DB Wilson Conv.	SO2 Oxidation
+402	385	232	4	2	Cliffside U5	NOx Removal
+403	385	233	4	2	Cliffside U5 SO2	SO2 Oxidation
+404	386	232	4	2	Cliffside U5	NOx Removal
+405	386	233	4	2	Cliffside U5 SO2	SO2 Oxidation
+406	387	232	4	2	Cliffside U5	NOx Removal
+407	387	233	4	2	Cliffside U5 SO2	SO2 Oxidation
+408	388	232	4	2	Cliffside U5	NOx Removal
+409	388	233	4	2	Cliffside U5 SO2	SO2 Oxidation
+410	373	26	1	2	Los Esteros 2514 U 1 2 3	NOx Removal
+414	392	234	1	2	Pittsfield MHI-11	NOx Removal
+415	393	234	1	2	Pittsfield MHI-11	NOx Removal
+416	394	234	1	2	Pittsfield MHI-11	NOx Removal
+417	395	235	NULL	2	Sutter U1	NOx Removal
+418	396	236	1	2	2618 Nebo U1	NOx Removal
+419	398	239	3	2	Gavin U2 NOx Test	NOx Removal
+420	398	240	3	2	Gavin U2 SO2 Test	SO2 Oxidation
+421	399	239	3	2	Gavin U2 NOx Test	NOx Removal
+422	399	240	3	2	Gavin U2 SO2 Test	SO2 Oxidation
+423	397	237	1	2	4995 OGE Redbud U4	NOx Removal
+424	397	238	1	2	4995 OGE Redbud U4	CO Oxidation
+425	400	239	3	2	Gavin U2 NOx Test	NOx Removal
+426	400	240	3	2	Gavin U2 SO2 Test	SO2 Oxidation
+427	401	239	3	2	Gavin U2 NOx Test	NOx Removal
+428	401	240	3	2	Gavin U2 SO2 Test	SO2 Oxidation
+429	402	239	3	2	Gavin U2 NOx Test	NOx Removal
+430	402	240	3	2	Gavin U2 SO2 Test	SO2 Oxidation
+431	403	241	4	2	Cliffside U6 NOx Test	NOx Removal
+432	403	242	4	2	Cliffside U6 SO2 Test	SO2 Oxidation
+433	404	241	4	2	Cliffside U6 NOx Test	NOx Removal
+434	404	242	4	2	Cliffside U6 SO2 Test	SO2 Oxidation
+435	405	241	4	2	Cliffside U6 NOx Test	NOx Removal
+436	405	242	4	2	Cliffside U6 SO2 Test	SO2 Oxidation
+437	406	241	4	2	Cliffside U6 NOx Test	NOx Removal
+438	406	242	4	2	Cliffside U6 SO2 Test	SO2 Oxidation
+439	407	241	4	2	Cliffside U6 NOx Test	NOx Removal
+440	407	242	4	2	Cliffside U6 SO2 Test	SO2 Oxidation
+441	408	243	3	2	Warrick U4	NOx Removal
+442	408	244	3	2	Warrick U4	SO2 Oxidation
+443	409	246	4	2	Cayuga U2	SO2 Oxidation
+444	409	247	4	2	Cayuga U2	NOx Removal
+445	410	248	5	2	Baytown Unit 4	NOx Removal
+446	411	214	3	2	Harrison U3	NOx Removal
+447	411	215	3	2	Harrison U3	SO2 Oxidation
+448	413	249	4	2	Winyah U1 NOx Removal	NOx Removal
+449	413	250	4	2	Winyah U1 SO2 Oxidation	SO2 Oxidation
+450	414	251	5	2	Cumberland 2 deNOx	NOx Removal
+451	415	251	5	2	Cumberland 2 deNOx	NOx Removal
+452	416	251	5	2	Cumberland 2 deNOx	NOx Removal
+453	417	251	5	2	Cumberland 2 deNOx	NOx Removal
+454	418	169	1	2	York 1, 2 and 3	NOx Removal
+455	419	252	1	2	Great Lakes Works CGL1	NOx Removal
+456	420	9	1	2	Beaumont 41 42 43	NOx Removal
+457	421	253	1	2	Port Arthur 6100	NOx Removal
+458	422	254	3	2	Ghent 4 K	NOx Removal
+459	422	255	3	2	Ghent 4 SO23	SO2 Oxidation
+460	423	254	3	2	Ghent 4 K	NOx Removal
+461	423	255	3	2	Ghent 4 SO23	SO2 Oxidation
+462	424	254	3	2	Ghent 4 K	NOx Removal
+463	424	255	3	2	Ghent 4 SO23	SO2 Oxidation
+464	425	254	3	2	Ghent 4 K	NOx Removal
+465	425	255	3	2	Ghent 4 SO23	SO2 Oxidation
+466	426	142	1	2	2021 Roseville	NOx Removal
+467	427	55	1	2	2655 Brunswick County	NOx Removal
+468	428	256	1	2	4114 Strathcona	NOx Removal
+469	429	58	1	2	4517 City of Lakeland McIntosh	NOx Removal
+470	430	257	NULL	2	Lansing 2 and 3	NOx Removal
+471	431	257	NULL	2	Lansing 2 and 3	NOx Removal
+472	432	258	NULL	2	Jasper	NOx Removal
+473	433	258	NULL	2	Jasper	NOx Removal
+474	434	258	NULL	2	Jasper	NOx Removal
+475	435	259	NULL	2	Calpine Cumberland CO	CO Oxidation
+476	436	260	NULL	2	Mountaineer Unit 1 NOx Test	NOx Removal
+477	436	261	NULL	2	Mountaineer Unit 1 SO2 Test	SO2 Oxidation
+478	437	260	NULL	2	Mountaineer Unit 1 NOx Test	NOx Removal
+479	437	261	NULL	2	Mountaineer Unit 1 SO2 Test	SO2 Oxidation
+480	438	260	NULL	2	Mountaineer Unit 1 NOx Test	NOx Removal
+481	438	261	NULL	2	Mountaineer Unit 1 SO2 Test	SO2 Oxidation
+482	439	260	NULL	2	Mountaineer Unit 1 NOx Test	NOx Removal
+483	439	261	NULL	2	Mountaineer Unit 1 SO2 Test	SO2 Oxidation
+486	441	262	NULL	2	2907 Greensville CO Ox	CO Oxidation
+487	442	262	NULL	2	2907 Greensville CO Ox	CO Oxidation
+488	443	262	NULL	2	2907 Greensville CO Ox	CO Oxidation
+
+-----
+SELECT
+  LR.id                AS LRF_ID,
+  LR.number            AS LRFNumber,
+  LRS.id               AS LabRequestSampleID,
+  S.id                 AS SampleID,
+  S.number             AS SampleNumber,
+  LRS_TT.id            AS LabRequestSampleTestTypeID,
+  LRS_TT.test_type_id  AS TestTypeID,
+  TT.test_type         AS TestTypeName,
+
+  -- Potentially ReactorLoads or ReactorTests if they're linked by test_type_id
+  RL.id                AS ReactorLoadID,
+  RL.test_type_id      AS RL_TestTypeID, 
+  RT.id                AS ReactorTestID,
+  RT.test_condition_id,
+  RTC.description,
+  TCT.test_condition_type
+
+FROM LabRequests LR
+JOIN LabRequestSample LRS
+   ON LRS.lab_request_id = LR.id
+JOIN Samples S
+   ON LRS.sample_id = S.id
+JOIN LabRequestSampleTestTypes LRS_TT
+   ON LRS_TT.lab_request_sample_id = LRS.id
+JOIN TestTypes TT
+   ON TT.id = LRS_TT.test_type_id
+
+LEFT JOIN ReactorLoads RL
+   ON RL.lab_request_id = LR.id
+   AND RL.test_type_id = LRS_TT.test_type_id
+LEFT JOIN ReactorTests RT
+   ON RT.load_id = RL.id
+LEFT JOIN ReactorTestConditions RTC
+   ON RTC.id = RT.test_condition_id
+LEFT JOIN TestConditionTypes TCT
+   ON TCT.id = RTC.test_type_id
+
+WHERE LR.id = 334  -- Just to filter to LRF 334 (LR-25-00005)
+ORDER BY LR.id, LRS_TT.id;
+
+LRF_ID	LRFNumber	LabRequestSampleID	SampleID	SampleNumber	LabRequestSampleTestTypeID	TestTypeID	TestTypeName	ReactorLoadID	RL_TestTypeID	ReactorTestID	test_condition_id	description	test_condition_type
+334	LR-25-00005	525	454	GREE-1B-2-30-1024	495	2	Bench	441	2	486	262	2907 Greensville CO Ox	CO Oxidation
+334	LR-25-00005	525	454	GREE-1B-2-30-1024	495	2	Bench	442	2	487	262	2907 Greensville CO Ox	CO Oxidation
+334	LR-25-00005	525	454	GREE-1B-2-30-1024	495	2	Bench	443	2	488	262	2907 Greensville CO Ox	CO Oxidation
+334	LR-25-00005	526	455	GREE-1C-3-30-1024	496	2	Bench	441	2	486	262	2907 Greensville CO Ox	CO Oxidation
+334	LR-25-00005	526	455	GREE-1C-3-30-1024	496	2	Bench	442	2	487	262	2907 Greensville CO Ox	CO Oxidation
+334	LR-25-00005	526	455	GREE-1C-3-30-1024	496	2	Bench	443	2	488	262	2907 Greensville CO Ox	CO Oxidation
+334	LR-25-00005	527	453	GREE-1A-1-30-1024	497	2	Bench	441	2	486	262	2907 Greensville CO Ox	CO Oxidation
+334	LR-25-00005	527	453	GREE-1A-1-30-1024	497	2	Bench	442	2	487	262	2907 Greensville CO Ox	CO Oxidation
+334	LR-25-00005	527	453	GREE-1A-1-30-1024	497	2	Bench	443	2	488	262	2907 Greensville CO Ox	CO Oxidation
+
+-----
+
+TableName	IndexName	IndexType	ColumnName
+auth_group	auth_group_name_a6ea08ec_uniq	NONCLUSTERED	name
+auth_group	PK__auth_gro__3213E83F4FA12A7D	CLUSTERED	id
+auth_group_permissions	auth_group_permissions_group_id_b120cbf9	NONCLUSTERED	group_id
+auth_group_permissions	auth_group_permissions_group_id_permission_id_0cd325b0_uniq	NONCLUSTERED	group_id
+auth_group_permissions	auth_group_permissions_group_id_permission_id_0cd325b0_uniq	NONCLUSTERED	permission_id
+auth_group_permissions	auth_group_permissions_permission_id_84c5c92e	NONCLUSTERED	permission_id
+auth_group_permissions	PK__auth_gro__3213E83FE8D02002	CLUSTERED	id
+auth_permission	auth_permission_content_type_id_2f476e4b	NONCLUSTERED	content_type_id
+auth_permission	auth_permission_content_type_id_codename_01ab375a_uniq	NONCLUSTERED	content_type_id
+auth_permission	auth_permission_content_type_id_codename_01ab375a_uniq	NONCLUSTERED	codename
+auth_permission	PK__auth_per__3213E83FA2F469DF	CLUSTERED	id
+auth_user	auth_user_username_6821ab7c_uniq	NONCLUSTERED	username
+auth_user	PK__auth_use__3213E83F3CED189A	CLUSTERED	id
+auth_user_groups	auth_user_groups_group_id_97559544	NONCLUSTERED	group_id
+auth_user_groups	auth_user_groups_user_id_6a12ed8b	NONCLUSTERED	user_id
+auth_user_groups	auth_user_groups_user_id_group_id_94350c0c_uniq	NONCLUSTERED	user_id
+auth_user_groups	auth_user_groups_user_id_group_id_94350c0c_uniq	NONCLUSTERED	group_id
+auth_user_groups	PK__auth_use__3213E83F71EBB362	CLUSTERED	id
+auth_user_user_permissions	auth_user_user_permissions_permission_id_1fbb5f2c	NONCLUSTERED	permission_id
+auth_user_user_permissions	auth_user_user_permissions_user_id_a95ead1b	NONCLUSTERED	user_id
+auth_user_user_permissions	auth_user_user_permissions_user_id_permission_id_14a6b632_uniq	NONCLUSTERED	user_id
+auth_user_user_permissions	auth_user_user_permissions_user_id_permission_id_14a6b632_uniq	NONCLUSTERED	permission_id
+auth_user_user_permissions	PK__auth_use__3213E83FCBC58CD6	CLUSTERED	id
+ChemistryResults	ChemistryResults_test_id_c9690a44	NONCLUSTERED	test_id
+ChemistryResults	PK__Chemistr__3213E83FD1A85F22	CLUSTERED	id
+django_admin_log	django_admin_log_content_type_id_c4bce8eb	NONCLUSTERED	content_type_id
+django_admin_log	django_admin_log_user_id_c564eba6	NONCLUSTERED	user_id
+django_admin_log	PK__django_a__3213E83F655D66C9	CLUSTERED	id
+django_content_type	django_content_type_app_label_model_76bd3d3b_uniq	NONCLUSTERED	app_label
+django_content_type	django_content_type_app_label_model_76bd3d3b_uniq	NONCLUSTERED	model
+django_content_type	PK__django_c__3213E83F584D9F4A	CLUSTERED	id
+django_migrations	PK__django_m__3213E83F797F0817	CLUSTERED	id
+django_session	django_session_expire_date_a5c62663	NONCLUSTERED	expire_date
+django_session	PK__django_s__B3BA0F1F8735FD24	CLUSTERED	session_key
+django_site	django_site_domain_a2e37b91_uniq	NONCLUSTERED	domain
+django_site	PK__django_s__3213E83F72783D9B	CLUSTERED	id
+FieldSampleTracking	FieldSampleTracking_person_id_c768ffaf	NONCLUSTERED	person_id
+FieldSampleTracking	FieldSampleTracking_sample_crate_id_2afd9a74	NONCLUSTERED	sample_crate_id
+FieldSampleTracking	PK__FieldSam__3213E83F2D833D43	CLUSTERED	id
+HoneycombSample	PK__Honeycom__3213E83FBE47FB0A	CLUSTERED	id
+HoneycombSample	UQ__Honeycom__84ACF7BB73D155F8	NONCLUSTERED	sample_id
+Laboratories	PK__Laborato__3213E83F31224C93	CLUSTERED	id
+Laboratories	UQ__Laborato__DE101A0204B3A289	NONCLUSTERED	lab
+LabRequestNotes	LabRequestNotes_created_by_id_d4797a0f	NONCLUSTERED	created_by_id
+LabRequestNotes	LabRequestNotes_lab_request_id_6a1bc3bc	NONCLUSTERED	lab_request_id
+LabRequestNotes	PK__LabReque__3213E83FED0814FD	CLUSTERED	id
+LabRequests	LabRequests_created_by_id_e768645c	NONCLUSTERED	created_by_id
+LabRequests	LabRequests_job_number_a9bb792c	NONCLUSTERED	job_number
+LabRequests	LabRequests_number_80702312	NONCLUSTERED	number
+LabRequests	LabRequests_pcn_becf8dca	NONCLUSTERED	pcn
+LabRequests	LabRequests_request_type_id_70755a2e	NONCLUSTERED	request_type_id
+LabRequests	LabRequests_requested_lab_id_ecb87d91	NONCLUSTERED	requested_lab_id
+LabRequests	PK__LabReque__3213E83F502D34A8	CLUSTERED	id
+LabRequestSample	LabRequestSample_lab_request_id_5945ef0c	NONCLUSTERED	lab_request_id
+LabRequestSample	LabRequestSample_sample_id_7d85b2b7	NONCLUSTERED	sample_id
+LabRequestSample	LabRequestSample_sample_id_lab_request_id_c53d7699_uniq	NONCLUSTERED	sample_id
+LabRequestSample	LabRequestSample_sample_id_lab_request_id_c53d7699_uniq	NONCLUSTERED	lab_request_id
+LabRequestSample	PK__LabReque__3213E83F3DBD6952	CLUSTERED	id
+LabRequestSampleTestTypes	LabRequestSampleTestTypes_lab_request_sample_id_e12c6ea4	NONCLUSTERED	lab_request_sample_id
+LabRequestSampleTestTypes	LabRequestSampleTestTypes_lab_request_sample_id_test_type_id_6f5bfbf6_uniq	NONCLUSTERED	lab_request_sample_id
+LabRequestSampleTestTypes	LabRequestSampleTestTypes_lab_request_sample_id_test_type_id_6f5bfbf6_uniq	NONCLUSTERED	test_type_id
+LabRequestSampleTestTypes	LabRequestSampleTestTypes_test_type_id_2a2a9a56	NONCLUSTERED	test_type_id
+LabRequestSampleTestTypes	PK__LabReque__3213E83F15A00880	CLUSTERED	id
+LocationTests	LocationTests_lab_request_sample_id_c88bb194	NONCLUSTERED	lab_request_sample_id
+LocationTests	LocationTests_lab_request_sample_id_test_type_id_location_id_d7f03764_uniq	NONCLUSTERED	lab_request_sample_id
+LocationTests	LocationTests_lab_request_sample_id_test_type_id_location_id_d7f03764_uniq	NONCLUSTERED	test_type_id
+LocationTests	LocationTests_lab_request_sample_id_test_type_id_location_id_d7f03764_uniq	NONCLUSTERED	location_id
+LocationTests	LocationTests_location_id_d8277c24	NONCLUSTERED	location_id
+LocationTests	LocationTests_test_type_id_a1cd933f	NONCLUSTERED	test_type_id
+LocationTests	PK__Location__3213E83F67D63E4F	CLUSTERED	id
+ReactorLoads	PK__ReactorL__3213E83F4F8CE5EF	CLUSTERED	id
+ReactorLoads	ReactorLoads_lab_request_id_1a7885ac	NONCLUSTERED	lab_request_id
+ReactorLoads	ReactorLoads_test_type_id_2778ed1f	NONCLUSTERED	test_type_id
+ReactorLoadSamples	PK__ReactorL__3213E83F5404198D	CLUSTERED	id
+ReactorLoadSamples	ReactorLoadSamples_lab_request_sample_id_b73cde30	NONCLUSTERED	lab_request_sample_id
+ReactorLoadSamples	ReactorLoadSamples_load_id_a18853c2	NONCLUSTERED	load_id
+ReactorLoadSamples	ReactorLoadSamples_load_id_position_9a3c41b0_uniq	NONCLUSTERED	load_id
+ReactorLoadSamples	ReactorLoadSamples_load_id_position_9a3c41b0_uniq	NONCLUSTERED	position
+ReactorLocations	PK__ReactorL__3213E83F6C4CE7A2	CLUSTERED	id
+ReactorLocations	ReactorLoca_locatio_ffcd52_idx	NONCLUSTERED	location
+ReactorParameters	PK__ReactorP__3213E83F303A8599	CLUSTERED	id
+ReactorParameters	UQ__ReactorP__F9C069AB19163945	NONCLUSTERED	reactor_parameter
+Reactors	PK__Reactors__3213E83F943D2B89	CLUSTERED	id
+Reactors	Reactors_lab_id_84ab20ab	NONCLUSTERED	lab_id
+Reactors	Reactors_reactor_type_id_a14e3b2b	NONCLUSTERED	reactor_type_id
+ReactorTestConditionParameters	PK__ReactorT__3213E83F259FF8F1	CLUSTERED	id
+ReactorTestConditionParameters	ReactorTestConditionParameters_condition_id_79b1228d	NONCLUSTERED	condition_id
+ReactorTestConditionParameters	ReactorTestConditionParameters_parameter_id_e1201d92	NONCLUSTERED	reactor_parameter_id
+ReactorTestConditions	PK__ReactorT__3213E83FE5CBB22C	CLUSTERED	id
+ReactorTestConditions	ReactorTestConditions_test_type_id_e14b6904	NONCLUSTERED	test_type_id
+ReactorTestMeasurmentParameters	PK__ReactorT__3213E83FF9A556A2	CLUSTERED	id
+ReactorTestMeasurmentParameters	UQ__ReactorT__F9C069AB812ABAD1	NONCLUSTERED	parameter
+ReactorTestParameters	PK__ReactorT__3213E83F35EC89FA	CLUSTERED	id
+ReactorTestParameters	ReactorTestParameters_location_id_9be1dd36	NONCLUSTERED	location_id
+ReactorTestParameters	ReactorTestParameters_parameter_id_d5a1199e	NONCLUSTERED	parameter_id
+ReactorTestParameters	ReactorTestParameters_run_id_93381a7b	NONCLUSTERED	run_id
+ReactorTestRuns	PK__ReactorT__3213E83F897F6EC2	CLUSTERED	id
+ReactorTestRuns	ReactorTest_number_83e00e_idx	NONCLUSTERED	number
+ReactorTestRuns	ReactorTestRuns_reactor_test_id_9797d4e5	NONCLUSTERED	reactor_test_id
+ReactorTestRuns	ReactorTestRuns_reactor_test_id_number_ce7d7281_uniq	NONCLUSTERED	reactor_test_id
+ReactorTestRuns	ReactorTestRuns_reactor_test_id_number_ce7d7281_uniq	NONCLUSTERED	number
+ReactorTestRuns	ReactorTestRuns_test_worksheet_id_06aa5a71	NONCLUSTERED	test_worksheet_id
+ReactorTests	PK__ReactorT__3213E83F5CBE5D07	CLUSTERED	id
+ReactorTests	ReactorTests_load_id_ccad8c05	NONCLUSTERED	load_id
+ReactorTests	ReactorTests_reactor_id_e5712fd0	NONCLUSTERED	reactor_id
+ReactorTests	ReactorTests_reactor_type_id_cc5ef4b0	NONCLUSTERED	reactor_type_id
+ReactorTests	ReactorTests_test_condition_id_a7be440d	NONCLUSTERED	test_condition_id
+RequestTypes	PK__RequestT__3213E83FCB31ABB7	CLUSTERED	id
+RequestTypes	UQ__RequestT__DFCC32D8AF09F6BE	NONCLUSTERED	request_type
+SampleCratePhotos	PK__samples___3213E83FDA9C43CE	CLUSTERED	id
+SampleCratePhotos	samples_samplecratephoto_sample_crate_id_b8916d3b	NONCLUSTERED	sample_crate_id
+SampleCrates	PK__SampleCr__3213E83FB8E2B0DD	CLUSTERED	id
+SampleInspectionPhotos	PK__SampleIn__3213E83F429CBF2F	CLUSTERED	id
+SampleInspectionPhotos	SampleInspectionPhotos_sample_id_cc7b5027	NONCLUSTERED	sample_id
+SampleInspections	SampleInspections_crate_id_4316914a	NONCLUSTERED	crate_id
+SampleInspections	SampleInspections_sample_id_0609bb94_pk	CLUSTERED	sample_id
+SampleInspections	SampleInspections_sample_id_0609bb94_uniq	NONCLUSTERED	sample_id
+SampleLocations	PK__SampleLo__3213E83F69F078AC	CLUSTERED	id
+SampleLocations	UQ__SampleLo__412AE05C6536BA55	NONCLUSTERED	location
+SampleNumber	PK__SampleNu__3213E83F32BD2E3D	CLUSTERED	id
+Samples	PK__Samples__3213E83F884391B9	CLUSTERED	id
+Samples	Samples_sample_type_id_0bf49573	NONCLUSTERED	sample_type_id
+Samples	UQ__Samples__FD291E41ED9F58E9	NONCLUSTERED	number
+SampleTypeLocations	PK__SampleTy__3213E83F07C8BCFA	CLUSTERED	id
+SampleTypeLocations	SampleTypeLocations_location_id_5b17a2de	NONCLUSTERED	location_id
+SampleTypeLocations	SampleTypeLocations_sample_type_id_9ff8240c	NONCLUSTERED	sample_type_id
+SampleTypes	PK__SampleTy__3213E83F71D5AD7E	CLUSTERED	id
+SampleTypes	UQ__SampleTy__3F48595CAC5D7865	NONCLUSTERED	sample_type
+TestConditionMeasurmentParameters	PK__TestCond__3213E83F4A851C7E	CLUSTERED	id
+TestConditionMeasurmentParameters	TestConditionMeasurmentParameters_condition_id_aaec65ff	NONCLUSTERED	condition_id
+TestConditionMeasurmentParameters	TestConditionMeasurmentParameters_measurment_parameter_id_3beec419	NONCLUSTERED	measurment_parameter_id
+TestConditionTypes	PK__TestCond__3213E83F9A6EF915	CLUSTERED	id
+TestConditionTypes	UQ__TestCond__EAB56F490EFA2DD8	NONCLUSTERED	test_condition_type
+TestSampleTypes	PK__TestSamp__3213E83F8D1928E6	CLUSTERED	id
+TestSampleTypes	TestSampleTypes_sample_type_id_a89fc192	NONCLUSTERED	sample_type_id
+TestSampleTypes	TestSampleTypes_sample_type_id_test_type_id_8f8dd75b_uniq	NONCLUSTERED	sample_type_id
+TestSampleTypes	TestSampleTypes_sample_type_id_test_type_id_8f8dd75b_uniq	NONCLUSTERED	test_type_id
+TestSampleTypes	TestSampleTypes_test_type_id_b778a5fb	NONCLUSTERED	test_type_id
+TestTypes	PK__TestType__3213E83F706B366F	CLUSTERED	id
+TestTypes	UQ__TestType__3761F28E92B86A8C	NONCLUSTERED	test_type
+TestWorkbooks	PK__TestWork__3213E83F1486F27F	CLUSTERED	id
+TestWorkbooks	TestWorkbooks_lab_request_id_063c6630	NONCLUSTERED	lab_request_id
+TestWorksheets	PK__TestWork__3213E83FB2D0989D	CLUSTERED	id
+TestWorksheets	TestWorksheets_workbook_id_d39af99c	NONCLUSTERED	workbook_id
+
+
+TableName	ConstraintName	ConstraintType
+auth_group	auth_group_name_a6ea08ec_uniq	UNIQUE
+auth_group	PK__auth_gro__3213E83F4FA12A7D	PRIMARY KEY
+auth_group_permissions	auth_group_permissions_group_id_b120cbf9_fk_auth_group_id	FOREIGN KEY
+auth_group_permissions	auth_group_permissions_permission_id_84c5c92e_fk_auth_permission_id	FOREIGN KEY
+auth_group_permissions	PK__auth_gro__3213E83FE8D02002	PRIMARY KEY
+auth_permission	auth_permission_content_type_id_2f476e4b_fk_django_content_type_id	FOREIGN KEY
+auth_permission	PK__auth_per__3213E83FA2F469DF	PRIMARY KEY
+auth_user	auth_user_username_6821ab7c_uniq	UNIQUE
+auth_user	PK__auth_use__3213E83F3CED189A	PRIMARY KEY
+auth_user_groups	auth_user_groups_group_id_97559544_fk_auth_group_id	FOREIGN KEY
+auth_user_groups	auth_user_groups_user_id_6a12ed8b_fk_auth_user_id	FOREIGN KEY
+auth_user_groups	PK__auth_use__3213E83F71EBB362	PRIMARY KEY
+auth_user_user_permissions	auth_user_user_permissions_permission_id_1fbb5f2c_fk_auth_permission_id	FOREIGN KEY
+auth_user_user_permissions	auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id	FOREIGN KEY
+auth_user_user_permissions	PK__auth_use__3213E83FCBC58CD6	PRIMARY KEY
+ChemistryResults	ChemistryResults_test_id_c9690a44_fk_LocationTests_id	FOREIGN KEY
+ChemistryResults	PK__Chemistr__3213E83FD1A85F22	PRIMARY KEY
+django_admin_log	django_admin_log_action_flag_a8637d59_check	CHECK
+django_admin_log	django_admin_log_content_type_id_c4bce8eb_fk_django_content_type_id	FOREIGN KEY
+django_admin_log	django_admin_log_user_id_c564eba6_fk_auth_user_id	FOREIGN KEY
+django_admin_log	PK__django_a__3213E83F655D66C9	PRIMARY KEY
+django_content_type	PK__django_c__3213E83F584D9F4A	PRIMARY KEY
+django_migrations	PK__django_m__3213E83F797F0817	PRIMARY KEY
+django_session	PK__django_s__B3BA0F1F8735FD24	PRIMARY KEY
+django_site	django_site_domain_a2e37b91_uniq	UNIQUE
+django_site	PK__django_s__3213E83F72783D9B	PRIMARY KEY
+FieldSampleTracking	FieldSampleTracking_person_id_c768ffaf_fk_auth_user_id	FOREIGN KEY
+FieldSampleTracking	FieldSampleTracking_sample_crate_id_2afd9a74_fk_SampleCrates_id	FOREIGN KEY
+FieldSampleTracking	PK__FieldSam__3213E83F2D833D43	PRIMARY KEY
+HoneycombSample	HoneycombSample_sample_id_954f9a59_fk_Samples_id	FOREIGN KEY
+HoneycombSample	PK__Honeycom__3213E83FBE47FB0A	PRIMARY KEY
+HoneycombSample	UQ__Honeycom__84ACF7BB73D155F8	UNIQUE
+Laboratories	PK__Laborato__3213E83F31224C93	PRIMARY KEY
+Laboratories	UQ__Laborato__DE101A0204B3A289	UNIQUE
+LabRequestNotes	LabRequestNotes_created_by_id_d4797a0f_fk_auth_user_id	FOREIGN KEY
+LabRequestNotes	LabRequestNotes_lab_request_id_6a1bc3bc_fk_LabRequests_id	FOREIGN KEY
+LabRequestNotes	PK__LabReque__3213E83FED0814FD	PRIMARY KEY
+LabRequests	LabRequests_created_by_id_e768645c_fk_auth_user_id	FOREIGN KEY
+LabRequests	LabRequests_request_type_id_70755a2e_fk_RequestTypes_id	FOREIGN KEY
+LabRequests	LabRequests_requested_lab_id_ecb87d91_fk_Laboratories_id	FOREIGN KEY
+LabRequests	PK__LabReque__3213E83F502D34A8	PRIMARY KEY
+LabRequestSample	LabRequestSample_lab_request_id_5945ef0c_fk_LabRequests_id	FOREIGN KEY
+LabRequestSample	LabRequestSample_sample_id_7d85b2b7_fk_Samples_id	FOREIGN KEY
+LabRequestSample	PK__LabReque__3213E83F3DBD6952	PRIMARY KEY
+LabRequestSampleTestTypes	LabRequestSampleTestTypes_lab_request_sample_id_e12c6ea4_fk_LabRequestSample_id	FOREIGN KEY
+LabRequestSampleTestTypes	LabRequestSampleTestTypes_test_type_id_2a2a9a56_fk_TestTypes_id	FOREIGN KEY
+LabRequestSampleTestTypes	PK__LabReque__3213E83F15A00880	PRIMARY KEY
+LocationTests	LocationTests_lab_request_sample_id_c88bb194_fk_LabRequestSample_id	FOREIGN KEY
+LocationTests	LocationTests_location_id_d8277c24_fk_SampleLocations_id	FOREIGN KEY
+LocationTests	LocationTests_test_type_id_a1cd933f_fk_TestTypes_id	FOREIGN KEY
+LocationTests	PK__Location__3213E83F67D63E4F	PRIMARY KEY
+ReactorLoads	PK__ReactorL__3213E83F4F8CE5EF	PRIMARY KEY
+ReactorLoads	ReactorLoads_lab_request_id_1a7885ac_fk_LabRequests_id	FOREIGN KEY
+ReactorLoads	ReactorLoads_test_type_id_2778ed1f_fk_TestTypes_id	FOREIGN KEY
+ReactorLoadSamples	PK__ReactorL__3213E83F5404198D	PRIMARY KEY
+ReactorLoadSamples	ReactorLoadSamples_lab_request_sample_id_b73cde30_fk_LabRequestSample_id	FOREIGN KEY
+ReactorLoadSamples	ReactorLoadSamples_load_id_a18853c2_fk_ReactorLoads_id	FOREIGN KEY
+ReactorLocations	PK__ReactorL__3213E83F6C4CE7A2	PRIMARY KEY
+ReactorParameters	PK__ReactorP__3213E83F303A8599	PRIMARY KEY
+ReactorParameters	UQ__ReactorP__F9C069AB19163945	UNIQUE
+Reactors	PK__Reactors__3213E83F943D2B89	PRIMARY KEY
+Reactors	Reactors_lab_id_84ab20ab_fk_Laboratories_id	FOREIGN KEY
+Reactors	Reactors_reactor_type_id_a14e3b2b_fk_TestTypes_id	FOREIGN KEY
+ReactorTestConditionParameters	PK__ReactorT__3213E83F259FF8F1	PRIMARY KEY
+ReactorTestConditionParameters	ReactorTestConditionParameters_condition_id_79b1228d_fk_ReactorTestConditions_id	FOREIGN KEY
+ReactorTestConditionParameters	ReactorTestConditionParameters_reactor_parameter_id_fb0f072c_fk_ReactorParameters_id	FOREIGN KEY
+ReactorTestConditions	PK__ReactorT__3213E83FE5CBB22C	PRIMARY KEY
+ReactorTestConditions	ReactorTestConditions_test_type_id_e14b6904_fk_TestConditionTypes_id	FOREIGN KEY
+ReactorTestMeasurmentParameters	PK__ReactorT__3213E83FF9A556A2	PRIMARY KEY
+ReactorTestMeasurmentParameters	UQ__ReactorT__F9C069AB812ABAD1	UNIQUE
+ReactorTestParameters	PK__ReactorT__3213E83F35EC89FA	PRIMARY KEY
+ReactorTestParameters	ReactorTestParameters_location_id_9be1dd36_fk_ReactorLocations_id	FOREIGN KEY
+ReactorTestParameters	ReactorTestParameters_parameter_id_d5a1199e_fk_ReactorParameters_id	FOREIGN KEY
+ReactorTestParameters	ReactorTestParameters_run_id_93381a7b_fk_ReactorTestRuns_id	FOREIGN KEY
+ReactorTestRuns	PK__ReactorT__3213E83F897F6EC2	PRIMARY KEY
+ReactorTestRuns	ReactorTestRuns_reactor_test_id_9797d4e5_fk_ReactorTests_id	FOREIGN KEY
+ReactorTestRuns	ReactorTestRuns_test_worksheet_id_06aa5a71_fk_TestWorksheets_id	FOREIGN KEY
+ReactorTests	PK__ReactorT__3213E83F5CBE5D07	PRIMARY KEY
+ReactorTests	ReactorTests_load_id_ccad8c05_fk_ReactorLoads_id	FOREIGN KEY
+ReactorTests	ReactorTests_reactor_id_e5712fd0_fk_Reactors_id	FOREIGN KEY
+ReactorTests	ReactorTests_reactor_type_id_cc5ef4b0_fk_TestTypes_id	FOREIGN KEY
+ReactorTests	ReactorTests_test_condition_id_a7be440d_fk_ReactorTestConditions_id	FOREIGN KEY
+RequestTypes	PK__RequestT__3213E83FCB31ABB7	PRIMARY KEY
+RequestTypes	UQ__RequestT__DFCC32D8AF09F6BE	UNIQUE
+SampleCratePhotos	PK__samples___3213E83FDA9C43CE	PRIMARY KEY
+SampleCratePhotos	samples_samplecratephoto_sample_crate_id_b8916d3b_fk_SampleCrates_id	FOREIGN KEY
+SampleCrates	PK__SampleCr__3213E83FB8E2B0DD	PRIMARY KEY
+SampleInspectionPhotos	PK__SampleIn__3213E83F429CBF2F	PRIMARY KEY
+SampleInspectionPhotos	SampleInspectionPhotos_sample_id_cc7b5027_fk_Samples_id	FOREIGN KEY
+SampleInspections	SampleInspections_crate_id_4316914a_fk_SampleCrates_id	FOREIGN KEY
+SampleInspections	SampleInspections_sample_id_0609bb94_fk_Samples_id	FOREIGN KEY
+SampleInspections	SampleInspections_sample_id_0609bb94_pk	PRIMARY KEY
+SampleInspections	SampleInspections_sample_id_0609bb94_uniq	UNIQUE
+SampleLocations	PK__SampleLo__3213E83F69F078AC	PRIMARY KEY
+SampleLocations	UQ__SampleLo__412AE05C6536BA55	UNIQUE
+SampleNumber	PK__SampleNu__3213E83F32BD2E3D	PRIMARY KEY
+Samples	PK__Samples__3213E83F884391B9	PRIMARY KEY
+Samples	Samples_sample_type_id_0bf49573_fk_SampleTypes_id	FOREIGN KEY
+Samples	UQ__Samples__FD291E41ED9F58E9	UNIQUE
+SampleTypeLocations	PK__SampleTy__3213E83F07C8BCFA	PRIMARY KEY
+SampleTypeLocations	SampleTypeLocations_location_id_5b17a2de_fk_SampleLocations_id	FOREIGN KEY
+SampleTypeLocations	SampleTypeLocations_sample_type_id_9ff8240c_fk_SampleTypes_id	FOREIGN KEY
+SampleTypes	PK__SampleTy__3213E83F71D5AD7E	PRIMARY KEY
+SampleTypes	UQ__SampleTy__3F48595CAC5D7865	UNIQUE
+TestConditionMeasurmentParameters	PK__TestCond__3213E83F4A851C7E	PRIMARY KEY
+TestConditionMeasurmentParameters	TestConditionMeasurmentParameters_condition_id_aaec65ff_fk_ReactorTestConditions_id	FOREIGN KEY
+TestConditionMeasurmentParameters	TestConditionMeasurmentParameters_measurment_parameter_id_3beec419_fk_ReactorTestMeasurmentParameters_id	FOREIGN KEY
+TestConditionTypes	PK__TestCond__3213E83F9A6EF915	PRIMARY KEY
+TestConditionTypes	UQ__TestCond__EAB56F490EFA2DD8	UNIQUE
+TestSampleTypes	PK__TestSamp__3213E83F8D1928E6	PRIMARY KEY
+TestSampleTypes	TestSampleTypes_sample_type_id_a89fc192_fk_SampleTypes_id	FOREIGN KEY
+TestSampleTypes	TestSampleTypes_test_type_id_b778a5fb_fk_TestTypes_id	FOREIGN KEY
+TestTypes	PK__TestType__3213E83F706B366F	PRIMARY KEY
+TestTypes	UQ__TestType__3761F28E92B86A8C	UNIQUE
+TestWorkbooks	PK__TestWork__3213E83F1486F27F	PRIMARY KEY
+TestWorkbooks	TestWorkbooks_lab_request_id_063c6630_fk_LabRequests_id	FOREIGN KEY
+TestWorksheets	PK__TestWork__3213E83FB2D0989D	PRIMARY KEY
+TestWorksheets	TestWorksheets_workbook_id_d39af99c_fk_TestWorkbooks_id	FOREIGN KEY
+
+ForeignKeyName	ParentTable	ParentColumn	ReferencedTable	ReferencedColumn
+auth_group_permissions_group_id_b120cbf9_fk_auth_group_id	auth_group_permissions	group_id	auth_group	id
+auth_group_permissions_permission_id_84c5c92e_fk_auth_permission_id	auth_group_permissions	permission_id	auth_permission	id
+auth_permission_content_type_id_2f476e4b_fk_django_content_type_id	auth_permission	content_type_id	django_content_type	id
+auth_user_groups_group_id_97559544_fk_auth_group_id	auth_user_groups	group_id	auth_group	id
+auth_user_groups_user_id_6a12ed8b_fk_auth_user_id	auth_user_groups	user_id	auth_user	id
+auth_user_user_permissions_permission_id_1fbb5f2c_fk_auth_permission_id	auth_user_user_permissions	permission_id	auth_permission	id
+auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id	auth_user_user_permissions	user_id	auth_user	id
+ChemistryResults_test_id_c9690a44_fk_LocationTests_id	ChemistryResults	test_id	LocationTests	id
+django_admin_log_content_type_id_c4bce8eb_fk_django_content_type_id	django_admin_log	content_type_id	django_content_type	id
+django_admin_log_user_id_c564eba6_fk_auth_user_id	django_admin_log	user_id	auth_user	id
+FieldSampleTracking_person_id_c768ffaf_fk_auth_user_id	FieldSampleTracking	person_id	auth_user	id
+FieldSampleTracking_sample_crate_id_2afd9a74_fk_SampleCrates_id	FieldSampleTracking	sample_crate_id	SampleCrates	id
+HoneycombSample_sample_id_954f9a59_fk_Samples_id	HoneycombSample	sample_id	Samples	id
+LabRequestNotes_created_by_id_d4797a0f_fk_auth_user_id	LabRequestNotes	created_by_id	auth_user	id
+LabRequestNotes_lab_request_id_6a1bc3bc_fk_LabRequests_id	LabRequestNotes	lab_request_id	LabRequests	id
+LabRequests_created_by_id_e768645c_fk_auth_user_id	LabRequests	created_by_id	auth_user	id
+LabRequests_request_type_id_70755a2e_fk_RequestTypes_id	LabRequests	request_type_id	RequestTypes	id
+LabRequests_requested_lab_id_ecb87d91_fk_Laboratories_id	LabRequests	requested_lab_id	Laboratories	id
+LabRequestSample_lab_request_id_5945ef0c_fk_LabRequests_id	LabRequestSample	lab_request_id	LabRequests	id
+LabRequestSample_sample_id_7d85b2b7_fk_Samples_id	LabRequestSample	sample_id	Samples	id
+LabRequestSampleTestTypes_lab_request_sample_id_e12c6ea4_fk_LabRequestSample_id	LabRequestSampleTestTypes	lab_request_sample_id	LabRequestSample	id
+LabRequestSampleTestTypes_test_type_id_2a2a9a56_fk_TestTypes_id	LabRequestSampleTestTypes	test_type_id	TestTypes	id
+LocationTests_lab_request_sample_id_c88bb194_fk_LabRequestSample_id	LocationTests	lab_request_sample_id	LabRequestSample	id
+LocationTests_location_id_d8277c24_fk_SampleLocations_id	LocationTests	location_id	SampleLocations	id
+LocationTests_test_type_id_a1cd933f_fk_TestTypes_id	LocationTests	test_type_id	TestTypes	id
+ReactorLoads_lab_request_id_1a7885ac_fk_LabRequests_id	ReactorLoads	lab_request_id	LabRequests	id
+ReactorLoads_test_type_id_2778ed1f_fk_TestTypes_id	ReactorLoads	test_type_id	TestTypes	id
+ReactorLoadSamples_lab_request_sample_id_b73cde30_fk_LabRequestSample_id	ReactorLoadSamples	lab_request_sample_id	LabRequestSample	id
+ReactorLoadSamples_load_id_a18853c2_fk_ReactorLoads_id	ReactorLoadSamples	load_id	ReactorLoads	id
+Reactors_lab_id_84ab20ab_fk_Laboratories_id	Reactors	lab_id	Laboratories	id
+Reactors_reactor_type_id_a14e3b2b_fk_TestTypes_id	Reactors	reactor_type_id	TestTypes	id
+ReactorTestConditionParameters_condition_id_79b1228d_fk_ReactorTestConditions_id	ReactorTestConditionParameters	condition_id	ReactorTestConditions	id
+ReactorTestConditionParameters_reactor_parameter_id_fb0f072c_fk_ReactorParameters_id	ReactorTestConditionParameters	reactor_parameter_id	ReactorParameters	id
+ReactorTestConditions_test_type_id_e14b6904_fk_TestConditionTypes_id	ReactorTestConditions	test_type_id	TestConditionTypes	id
+ReactorTestParameters_location_id_9be1dd36_fk_ReactorLocations_id	ReactorTestParameters	location_id	ReactorLocations	id
+ReactorTestParameters_parameter_id_d5a1199e_fk_ReactorParameters_id	ReactorTestParameters	parameter_id	ReactorParameters	id
+ReactorTestParameters_run_id_93381a7b_fk_ReactorTestRuns_id	ReactorTestParameters	run_id	ReactorTestRuns	id
+ReactorTestRuns_reactor_test_id_9797d4e5_fk_ReactorTests_id	ReactorTestRuns	reactor_test_id	ReactorTests	id
+ReactorTestRuns_test_worksheet_id_06aa5a71_fk_TestWorksheets_id	ReactorTestRuns	test_worksheet_id	TestWorksheets	id
+ReactorTests_load_id_ccad8c05_fk_ReactorLoads_id	ReactorTests	load_id	ReactorLoads	id
+ReactorTests_reactor_id_e5712fd0_fk_Reactors_id	ReactorTests	reactor_id	Reactors	id
+ReactorTests_reactor_type_id_cc5ef4b0_fk_TestTypes_id	ReactorTests	reactor_type_id	TestTypes	id
+ReactorTests_test_condition_id_a7be440d_fk_ReactorTestConditions_id	ReactorTests	test_condition_id	ReactorTestConditions	id
+samples_samplecratephoto_sample_crate_id_b8916d3b_fk_SampleCrates_id	SampleCratePhotos	sample_crate_id	SampleCrates	id
+SampleInspectionPhotos_sample_id_cc7b5027_fk_Samples_id	SampleInspectionPhotos	sample_id	Samples	id
+SampleInspections_crate_id_4316914a_fk_SampleCrates_id	SampleInspections	crate_id	SampleCrates	id
+SampleInspections_sample_id_0609bb94_fk_Samples_id	SampleInspections	sample_id	Samples	id
+Samples_sample_type_id_0bf49573_fk_SampleTypes_id	Samples	sample_type_id	SampleTypes	id
+SampleTypeLocations_location_id_5b17a2de_fk_SampleLocations_id	SampleTypeLocations	location_id	SampleLocations	id
+SampleTypeLocations_sample_type_id_9ff8240c_fk_SampleTypes_id	SampleTypeLocations	sample_type_id	SampleTypes	id
+TestConditionMeasurmentParameters_condition_id_aaec65ff_fk_ReactorTestConditions_id	TestConditionMeasurmentParameters	condition_id	ReactorTestConditions	id
+TestConditionMeasurmentParameters_measurment_parameter_id_3beec419_fk_ReactorTestMeasurmentParameters_id	TestConditionMeasurmentParameters	measurment_parameter_id	ReactorTestMeasurmentParameters	id
+TestSampleTypes_sample_type_id_a89fc192_fk_SampleTypes_id	TestSampleTypes	sample_type_id	SampleTypes	id
+TestSampleTypes_test_type_id_b778a5fb_fk_TestTypes_id	TestSampleTypes	test_type_id	TestTypes	id
+TestWorkbooks_lab_request_id_063c6630_fk_LabRequests_id	TestWorkbooks	lab_request_id	LabRequests	id
+TestWorksheets_workbook_id_d39af99c_fk_TestWorkbooks_id	TestWorksheets	workbook_id	TestWorkbooks	id
+
+SchemaName	TableName	ColumnName	DataType	MaxLength	IsNullable
+dbo	auth_group	id	int	4	NO
+dbo	auth_group	name	nvarchar	300	NO
+dbo	auth_group_permissions	id	bigint	8	NO
+dbo	auth_group_permissions	group_id	int	4	NO
+dbo	auth_group_permissions	permission_id	int	4	NO
+dbo	auth_permission	id	int	4	NO
+dbo	auth_permission	name	nvarchar	510	NO
+dbo	auth_permission	content_type_id	int	4	NO
+dbo	auth_permission	codename	nvarchar	200	NO
+dbo	auth_user	id	int	4	NO
+dbo	auth_user	password	nvarchar	256	NO
+dbo	auth_user	last_login	datetime2	8	YES
+dbo	auth_user	is_superuser	bit	1	NO
+dbo	auth_user	username	nvarchar	300	NO
+dbo	auth_user	first_name	nvarchar	300	NO
+dbo	auth_user	last_name	nvarchar	300	NO
+dbo	auth_user	email	nvarchar	508	NO
+dbo	auth_user	is_staff	bit	1	NO
+dbo	auth_user	is_active	bit	1	NO
+dbo	auth_user	date_joined	datetime2	8	NO
+dbo	auth_user_groups	id	bigint	8	NO
+dbo	auth_user_groups	user_id	int	4	NO
+dbo	auth_user_groups	group_id	int	4	NO
+dbo	auth_user_user_permissions	id	bigint	8	NO
+dbo	auth_user_user_permissions	user_id	int	4	NO
+dbo	auth_user_user_permissions	permission_id	int	4	NO
+dbo	ChemistryResults	id	int	4	NO
+dbo	ChemistryResults	compound	nvarchar	50	NO
+dbo	ChemistryResults	value	float	8	NO
+dbo	ChemistryResults	test_id	int	4	NO
+dbo	django_admin_log	id	int	4	NO
+dbo	django_admin_log	action_time	datetime2	8	NO
+dbo	django_admin_log	object_id	nvarchar	-1	YES
+dbo	django_admin_log	object_repr	nvarchar	400	NO
+dbo	django_admin_log	action_flag	smallint	2	NO
+dbo	django_admin_log	change_message	nvarchar	-1	NO
+dbo	django_admin_log	content_type_id	int	4	YES
+dbo	django_admin_log	user_id	int	4	NO
+dbo	django_content_type	id	int	4	NO
+dbo	django_content_type	app_label	nvarchar	200	NO
+dbo	django_content_type	model	nvarchar	200	NO
+dbo	django_migrations	id	bigint	8	NO
+dbo	django_migrations	app	nvarchar	510	NO
+dbo	django_migrations	name	nvarchar	510	NO
+dbo	django_migrations	applied	datetime2	8	NO
+dbo	django_session	session_key	nvarchar	80	NO
+dbo	django_session	session_data	nvarchar	-1	NO
+dbo	django_session	expire_date	datetime2	8	NO
+dbo	django_site	id	int	4	NO
+dbo	django_site	domain	nvarchar	200	NO
+dbo	django_site	name	nvarchar	100	NO
+dbo	FieldSampleTracking	id	int	4	NO
+dbo	FieldSampleTracking	name	nvarchar	280	NO
+dbo	FieldSampleTracking	note	nvarchar	560	YES
+dbo	FieldSampleTracking	closed	bit	1	NO
+dbo	FieldSampleTracking	person_id	int	4	YES
+dbo	FieldSampleTracking	sample_crate_id	int	4	YES
+dbo	HoneycombSample	id	bigint	8	NO
+dbo	HoneycombSample	date	date	3	NO
+dbo	HoneycombSample	cells_high	int	4	YES
+dbo	HoneycombSample	cells_wide	int	4	YES
+dbo	HoneycombSample	sample_height	float	8	YES
+dbo	HoneycombSample	sample_width	float	8	YES
+dbo	HoneycombSample	sample_length	int	4	NO
+dbo	HoneycombSample	sample_id	int	4	NO
+dbo	Laboratories	id	int	4	NO
+dbo	Laboratories	lab	nvarchar	140	NO
+dbo	LabRequestNotes	id	int	4	NO
+dbo	LabRequestNotes	created_time	datetime2	8	NO
+dbo	LabRequestNotes	note	nvarchar	500	NO
+dbo	LabRequestNotes	created_by_id	int	4	NO
+dbo	LabRequestNotes	lab_request_id	int	4	NO
+dbo	LabRequests	id	int	4	NO
+dbo	LabRequests	job_number	nvarchar	280	YES
+dbo	LabRequests	pcn	nvarchar	30	YES
+dbo	LabRequests	time_created	datetime2	8	NO
+dbo	LabRequests	sequence	int	4	NO
+dbo	LabRequests	time_submitted	datetime2	8	YES
+dbo	LabRequests	created_by_id	int	4	NO
+dbo	LabRequests	requested_lab_id	int	4	YES
+dbo	LabRequests	number	nvarchar	100	NO
+dbo	LabRequests	request_type_id	int	4	NO
+dbo	LabRequestSample	id	int	4	NO
+dbo	LabRequestSample	lab_request_id	int	4	NO
+dbo	LabRequestSample	sample_id	int	4	NO
+dbo	LabRequestSample	reactor_test	bit	1	NO
+dbo	LabRequestSampleTestTypes	id	int	4	NO
+dbo	LabRequestSampleTestTypes	lab_request_sample_id	int	4	NO
+dbo	LabRequestSampleTestTypes	test_type_id	int	4	NO
+dbo	LocationTests	id	int	4	NO
+dbo	LocationTests	test_time	datetime2	8	YES
+dbo	LocationTests	location_id	int	4	NO
+dbo	LocationTests	test_type_id	int	4	NO
+dbo	LocationTests	lab_request_sample_id	int	4	YES
+dbo	ReactorLoads	id	int	4	NO
+dbo	ReactorLoads	lab_request_id	int	4	NO
+dbo	ReactorLoads	test_type_id	int	4	NO
+dbo	ReactorLoadSamples	id	int	4	NO
+dbo	ReactorLoadSamples	position	int	4	NO
+dbo	ReactorLoadSamples	available_cells	int	4	YES
+dbo	ReactorLoadSamples	load_id	int	4	NO
+dbo	ReactorLoadSamples	lab_request_sample_id	int	4	NO
+dbo	ReactorLocations	id	int	4	NO
+dbo	ReactorLocations	location	nvarchar	150	NO
+dbo	ReactorParameters	id	int	4	NO
+dbo	ReactorParameters	reactor_parameter	nvarchar	280	NO
+dbo	ReactorParameters	obsolete	bit	1	NO
+dbo	ReactorParameters	units	nvarchar	100	NO
+dbo	Reactors	id	int	4	NO
+dbo	Reactors	name	nvarchar	280	NO
+dbo	Reactors	lab_id	int	4	NO
+dbo	Reactors	reactor_type_id	int	4	NO
+dbo	ReactorTestConditionParameters	id	int	4	NO
+dbo	ReactorTestConditionParameters	value	float	8	NO
+dbo	ReactorTestConditionParameters	condition_id	int	4	NO
+dbo	ReactorTestConditionParameters	reactor_parameter_id	int	4	NO
+dbo	ReactorTestConditions	id	int	4	NO
+dbo	ReactorTestConditions	job	nvarchar	140	YES
+dbo	ReactorTestConditions	pcn	nvarchar	140	YES
+dbo	ReactorTestConditions	description	nvarchar	280	NO
+dbo	ReactorTestConditions	Av	float	8	YES
+dbo	ReactorTestConditions	Ugs	float	8	YES
+dbo	ReactorTestConditions	temperature	float	8	NO
+dbo	ReactorTestConditions	dry_O2	float	8	NO
+dbo	ReactorTestConditions	test_type_id	int	4	YES
+dbo	ReactorTestConditions	water	float	8	NO
+dbo	ReactorTestMeasurmentParameters	id	int	4	NO
+dbo	ReactorTestMeasurmentParameters	parameter	nvarchar	100	NO
+dbo	ReactorTestMeasurmentParameters	obsolete	bit	1	NO
+dbo	ReactorTestParameters	id	int	4	NO
+dbo	ReactorTestParameters	value	float	8	NO
+dbo	ReactorTestParameters	parameter_id	int	4	NO
+dbo	ReactorTestParameters	location_id	int	4	NO
+dbo	ReactorTestParameters	run_id	int	4	NO
+dbo	ReactorTestRuns	id	int	4	NO
+dbo	ReactorTestRuns	test_sheet	nvarchar	150	YES
+dbo	ReactorTestRuns	number	int	4	NO
+dbo	ReactorTestRuns	reactor_test_id	int	4	YES
+dbo	ReactorTestRuns	test_worksheet_id	int	4	NO
+dbo	ReactorTests	id	int	4	NO
+dbo	ReactorTests	flow_rate_nm3_per_hr	float	8	YES
+dbo	ReactorTests	inlet_temperature	float	8	YES
+dbo	ReactorTests	dry_O2	float	8	YES
+dbo	ReactorTests	load_id	int	4	YES
+dbo	ReactorTests	test_condition_id	int	4	YES
+dbo	ReactorTests	reactor_id	int	4	YES
+dbo	ReactorTests	reactor_type_id	int	4	NO
+dbo	ReactorTests	stabilization_time	float	8	YES
+dbo	ReactorTests	start_time	datetime2	8	YES
+dbo	ReactorTests	stop_time	datetime2	8	YES
+dbo	ReactorTests	water	float	8	YES
+dbo	ReactorTests	test_order	int	4	YES
+dbo	RequestTypes	id	int	4	NO
+dbo	RequestTypes	request_type	nvarchar	140	NO
+dbo	SampleCratePhotos	id	int	4	NO
+dbo	SampleCratePhotos	photo	nvarchar	200	NO
+dbo	SampleCratePhotos	title	nvarchar	280	NO
+dbo	SampleCratePhotos	sample_crate_id	int	4	NO
+dbo	SampleCrates	id	int	4	NO
+dbo	SampleCrates	quantity	int	4	NO
+dbo	SampleCrates	project_number	nvarchar	90	YES
+dbo	SampleCrates	date_arrived	date	3	NO
+dbo	SampleCrates	facility_id	bigint	8	YES
+dbo	SampleCrates	unit_id	bigint	8	YES
+dbo	SampleInspectionPhotos	id	int	4	NO
+dbo	SampleInspectionPhotos	title	nvarchar	280	NO
+dbo	SampleInspectionPhotos	photo	nvarchar	200	NO
+dbo	SampleInspectionPhotos	sample_id	int	4	NO
+dbo	SampleInspections	entry_date	date	3	NO
+dbo	SampleInspections	box_sleeve_marking	nvarchar	280	NO
+dbo	SampleInspections	other_marking	nvarchar	280	NO
+dbo	SampleInspections	flow_direction_marked	bit	1	NO
+dbo	SampleInspections	cells_high	int	4	NO
+dbo	SampleInspections	cells_wide	int	4	NO
+dbo	SampleInspections	plugged_cells	int	4	NO
+dbo	SampleInspections	sample_height	float	8	NO
+dbo	SampleInspections	sample_width	float	8	NO
+dbo	SampleInspections	sample_length	float	8	NO
+dbo	SampleInspections	crate_id	int	4	NO
+dbo	SampleInspections	sample_id	int	4	NO
+dbo	SampleLocations	id	int	4	NO
+dbo	SampleLocations	location	nvarchar	280	NO
+dbo	SampleNumber	id	int	4	NO
+dbo	SampleNumber	time_created	datetime2	8	NO
+dbo	SampleNumber	sequence	int	4	NO
+dbo	Samples	id	int	4	NO
+dbo	Samples	number	nvarchar	280	NO
+dbo	Samples	job_number	nvarchar	280	YES
+dbo	Samples	pcn	nvarchar	30	YES
+dbo	Samples	date_entered	date	3	NO
+dbo	Samples	sample_type_id	int	4	NO
+dbo	Samples	facility_id	bigint	8	YES
+dbo	Samples	unit_id	bigint	8	YES
+dbo	SampleTypeLocations	id	int	4	NO
+dbo	SampleTypeLocations	obsolete	bit	1	NO
+dbo	SampleTypeLocations	location_id	int	4	NO
+dbo	SampleTypeLocations	sample_type_id	int	4	NO
+dbo	SampleTypes	id	int	4	NO
+dbo	SampleTypes	sample_type	nvarchar	280	NO
+dbo	TestConditionMeasurmentParameters	id	int	4	NO
+dbo	TestConditionMeasurmentParameters	condition_id	int	4	NO
+dbo	TestConditionMeasurmentParameters	measurment_parameter_id	int	4	NO
+dbo	TestConditionTypes	id	int	4	NO
+dbo	TestConditionTypes	test_condition_type	nvarchar	140	NO
+dbo	TestConditionTypes	obsolete	bit	1	NO
+dbo	TestSampleTypes	id	int	4	NO
+dbo	TestSampleTypes	sample_type_id	int	4	NO
+dbo	TestSampleTypes	test_type_id	int	4	NO
+dbo	TestTypes	id	int	4	NO
+dbo	TestTypes	test_type	nvarchar	280	NO
+dbo	TestTypes	obsolete	bit	1	NO
+dbo	TestTypes	chemistry_test	bit	1	NO
+dbo	TestTypes	location_test	bit	1	NO
+dbo	TestTypes	physical_test	bit	1	NO
+dbo	TestTypes	reactor_test	bit	1	NO
+dbo	TestWorkbooks	id	int	4	NO
+dbo	TestWorkbooks	name	nvarchar	510	NO
+dbo	TestWorkbooks	lab_request_id	int	4	NO
+dbo	TestWorksheets	id	int	4	NO
+dbo	TestWorksheets	name	nvarchar	280	NO
+dbo	TestWorksheets	flow_rate_nm3_per_hr	float	8	NO
+dbo	TestWorksheets	inlet_temperature	float	8	NO
+dbo	TestWorksheets	dry_O2	float	8	NO
+dbo	TestWorksheets	water	float	8	NO
+dbo	TestWorksheets	start_time	datetime2	8	YES
+dbo	TestWorksheets	stop_time	datetime2	8	NO
+dbo	TestWorksheets	workbook_id	int	4	YES
+
+
+
+{
+  "auth_group": [
+    {
+      "id": 2,
+      "name": "Account Manager"
+    },
+    {
+      "id": 4,
+      "name": "Field Samples"
+    },
+    {
+      "id": 1,
+      "name": "Lab Managers"
+    },
+    {
+      "id": 3,
+      "name": "Project Manager"
+    }
+  ],
+  "auth_group_permissions": [],
+  "auth_permission": [
+    {
+      "id": 1,
+      "name": "Can add permission",
+      "content_type_id": 1,
+      "codename": "add_permission"
+    },
+    {
+      "id": 2,
+      "name": "Can change permission",
+      "content_type_id": 1,
+      "codename": "change_permission"
+    },
+    {
+      "id": 3,
+      "name": "Can delete permission",
+      "content_type_id": 1,
+      "codename": "delete_permission"
+    },
+    {
+      "id": 4,
+      "name": "Can view permission",
+      "content_type_id": 1,
+      "codename": "view_permission"
+    },
+    {
+      "id": 5,
+      "name": "Can add group",
+      "content_type_id": 2,
+      "codename": "add_group"
+    },
+    {
+      "id": 6,
+      "name": "Can change group",
+      "content_type_id": 2,
+      "codename": "change_group"
+    },
+    {
+      "id": 7,
+      "name": "Can delete group",
+      "content_type_id": 2,
+      "codename": "delete_group"
+    },
+    {
+      "id": 8,
+      "name": "Can view group",
+      "content_type_id": 2,
+      "codename": "view_group"
+    },
+    {
+      "id": 9,
+      "name": "Can add user",
+      "content_type_id": 3,
+      "codename": "add_user"
+    },
+    {
+      "id": 10,
+      "name": "Can change user",
+      "content_type_id": 3,
+      "codename": "change_user"
+    },
+    {
+      "id": 11,
+      "name": "Can delete user",
+      "content_type_id": 3,
+      "codename": "delete_user"
+    },
+    {
+      "id": 12,
+      "name": "Can view user",
+      "content_type_id": 3,
+      "codename": "view_user"
+    },
+    {
+      "id": 13,
+      "name": "Can add content type",
+      "content_type_id": 4,
+      "codename": "add_contenttype"
+    },
+    {
+      "id": 14,
+      "name": "Can change content type",
+      "content_type_id": 4,
+      "codename": "change_contenttype"
+    },
+    {
+      "id": 15,
+      "name": "Can delete content type",
+      "content_type_id": 4,
+      "codename": "delete_contenttype"
+    },
+    {
+      "id": 16,
+      "name": "Can view content type",
+      "content_type_id": 4,
+      "codename": "view_contenttype"
+    },
+    {
+      "id": 17,
+      "name": "Can add log entry",
+      "content_type_id": 5,
+      "codename": "add_logentry"
+    },
+    {
+      "id": 18,
+      "name": "Can change log entry",
+      "content_type_id": 5,
+      "codename": "change_logentry"
+    },
+    {
+      "id": 19,
+      "name": "Can delete log entry",
+      "content_type_id": 5,
+      "codename": "delete_logentry"
+    },
+    {
+      "id": 20,
+      "name": "Can view log entry",
+      "content_type_id": 5,
+      "codename": "view_logentry"
+    },
+    {
+      "id": 21,
+      "name": "Can add laboratory",
+      "content_type_id": 6,
+      "codename": "add_laboratory"
+    },
+    {
+      "id": 22,
+      "name": "Can change laboratory",
+      "content_type_id": 6,
+      "codename": "change_laboratory"
+    },
+    {
+      "id": 23,
+      "name": "Can delete laboratory",
+      "content_type_id": 6,
+      "codename": "delete_laboratory"
+    },
+    {
+      "id": 24,
+      "name": "Can view laboratory",
+      "content_type_id": 6,
+      "codename": "view_laboratory"
+    },
+    {
+      "id": 25,
+      "name": "Can add lab request",
+      "content_type_id": 7,
+      "codename": "add_labrequest"
+    },
+    {
+      "id": 26,
+      "name": "Can change lab request",
+      "content_type_id": 7,
+      "codename": "change_labrequest"
+    },
+    {
+      "id": 27,
+      "name": "Can delete lab request",
+      "content_type_id": 7,
+      "codename": "delete_labrequest"
+    },
+    {
+      "id": 28,
+      "name": "Can view lab request",
+      "content_type_id": 7,
+      "codename": "view_labrequest"
+    },
+    {
+      "id": 29,
+      "name": "Can add lab request sample",
+      "content_type_id": 8,
+      "codename": "add_labrequestsample"
+    },
+    {
+      "id": 30,
+      "name": "Can change lab request sample",
+      "content_type_id": 8,
+      "codename": "change_labrequestsample"
+    },
+    {
+      "id": 31,
+      "name": "Can delete lab request sample",
+      "content_type_id": 8,
+      "codename": "delete_labrequestsample"
+    },
+    {
+      "id": 32,
+      "name": "Can view lab request sample",
+      "content_type_id": 8,
+      "codename": "view_labrequestsample"
+    },
+    {
+      "id": 33,
+      "name": "Can add reactor",
+      "content_type_id": 9,
+      "codename": "add_reactor"
+    },
+    {
+      "id": 34,
+      "name": "Can change reactor",
+      "content_type_id": 9,
+      "codename": "change_reactor"
+    },
+    {
+      "id": 35,
+      "name": "Can delete reactor",
+      "content_type_id": 9,
+      "codename": "delete_reactor"
+    },
+    {
+      "id": 36,
+      "name": "Can view reactor",
+      "content_type_id": 9,
+      "codename": "view_reactor"
+    },
+    {
+      "id": 37,
+      "name": "Can add reactor load",
+      "content_type_id": 10,
+      "codename": "add_reactorload"
+    },
+    {
+      "id": 38,
+      "name": "Can change reactor load",
+      "content_type_id": 10,
+      "codename": "change_reactorload"
+    },
+    {
+      "id": 39,
+      "name": "Can delete reactor load",
+      "content_type_id": 10,
+      "codename": "delete_reactorload"
+    },
+    {
+      "id": 40,
+      "name": "Can view reactor load",
+      "content_type_id": 10,
+      "codename": "view_reactorload"
+    },
+    {
+      "id": 41,
+      "name": "Can add reactor load samples",
+      "content_type_id": 11,
+      "codename": "add_reactorloadsamples"
+    },
+    {
+      "id": 42,
+      "name": "Can change reactor load samples",
+      "content_type_id": 11,
+      "codename": "change_reactorloadsamples"
+    },
+    {
+      "id": 43,
+      "name": "Can delete reactor load samples",
+      "content_type_id": 11,
+      "codename": "delete_reactorloadsamples"
+    },
+    {
+      "id": 44,
+      "name": "Can view reactor load samples",
+      "content_type_id": 11,
+      "codename": "view_reactorloadsamples"
+    },
+    {
+      "id": 45,
+      "name": "Can add reactor parameter",
+      "content_type_id": 12,
+      "codename": "add_reactorparameter"
+    },
+    {
+      "id": 46,
+      "name": "Can change reactor parameter",
+      "content_type_id": 12,
+      "codename": "change_reactorparameter"
+    },
+    {
+      "id": 47,
+      "name": "Can delete reactor parameter",
+      "content_type_id": 12,
+      "codename": "delete_reactorparameter"
+    },
+    {
+      "id": 48,
+      "name": "Can view reactor parameter",
+      "content_type_id": 12,
+      "codename": "view_reactorparameter"
+    },
+    {
+      "id": 49,
+      "name": "Can add reactor test",
+      "content_type_id": 13,
+      "codename": "add_reactortest"
+    },
+    {
+      "id": 50,
+      "name": "Can change reactor test",
+      "content_type_id": 13,
+      "codename": "change_reactortest"
+    },
+    {
+      "id": 51,
+      "name": "Can delete reactor test",
+      "content_type_id": 13,
+      "codename": "delete_reactortest"
+    },
+    {
+      "id": 52,
+      "name": "Can view reactor test",
+      "content_type_id": 13,
+      "codename": "view_reactortest"
+    },
+    {
+      "id": 53,
+      "name": "Can add reactor test condition",
+      "content_type_id": 14,
+      "codename": "add_reactortestcondition"
+    },
+    {
+      "id": 54,
+      "name": "Can change reactor test condition",
+      "content_type_id": 14,
+      "codename": "change_reactortestcondition"
+    },
+    {
+      "id": 55,
+      "name": "Can delete reactor test condition",
+      "content_type_id": 14,
+      "codename": "delete_reactortestcondition"
+    },
+    {
+      "id": 56,
+      "name": "Can view reactor test condition",
+      "content_type_id": 14,
+      "codename": "view_reactortestcondition"
+    },
+    {
+      "id": 57,
+      "name": "Can add reactor test condition parameter",
+      "content_type_id": 15,
+      "codename": "add_reactortestconditionparameter"
+    },
+    {
+      "id": 58,
+      "name": "Can change reactor test condition parameter",
+      "content_type_id": 15,
+      "codename": "change_reactortestconditionparameter"
+    },
+    {
+      "id": 59,
+      "name": "Can delete reactor test condition parameter",
+      "content_type_id": 15,
+      "codename": "delete_reactortestconditionparameter"
+    },
+    {
+      "id": 60,
+      "name": "Can view reactor test condition parameter",
+      "content_type_id": 15,
+      "codename": "view_reactortestconditionparameter"
+    },
+    {
+      "id": 61,
+      "name": "Can add reactor test parameter",
+      "content_type_id": 16,
+      "codename": "add_reactortestparameter"
+    },
+    {
+      "id": 62,
+      "name": "Can change reactor test parameter",
+      "content_type_id": 16,
+      "codename": "change_reactortestparameter"
+    },
+    {
+      "id": 63,
+      "name": "Can delete reactor test parameter",
+      "content_type_id": 16,
+      "codename": "delete_reactortestparameter"
+    },
+    {
+      "id": 64,
+      "name": "Can view reactor test parameter",
+      "content_type_id": 16,
+      "codename": "view_reactortestparameter"
+    },
+    {
+      "id": 65,
+      "name": "Can add test sample type",
+      "content_type_id": 17,
+      "codename": "add_testsampletype"
+    },
+    {
+      "id": 66,
+      "name": "Can change test sample type",
+      "content_type_id": 17,
+      "codename": "change_testsampletype"
+    },
+    {
+      "id": 67,
+      "name": "Can delete test sample type",
+      "content_type_id": 17,
+      "codename": "delete_testsampletype"
+    },
+    {
+      "id": 68,
+      "name": "Can view test sample type",
+      "content_type_id": 17,
+      "codename": "view_testsampletype"
+    },
+    {
+      "id": 69,
+      "name": "Can add test type",
+      "content_type_id": 18,
+      "codename": "add_testtype"
+    },
+    {
+      "id": 70,
+      "name": "Can change test type",
+      "content_type_id": 18,
+      "codename": "change_testtype"
+    },
+    {
+      "id": 71,
+      "name": "Can delete test type",
+      "content_type_id": 18,
+      "codename": "delete_testtype"
+    },
+    {
+      "id": 72,
+      "name": "Can view test type",
+      "content_type_id": 18,
+      "codename": "view_testtype"
+    },
+    {
+      "id": 73,
+      "name": "Can add sampling location",
+      "content_type_id": 19,
+      "codename": "add_samplinglocation"
+    },
+    {
+      "id": 74,
+      "name": "Can change sampling location",
+      "content_type_id": 19,
+      "codename": "change_samplinglocation"
+    },
+    {
+      "id": 75,
+      "name": "Can delete sampling location",
+      "content_type_id": 19,
+      "codename": "delete_samplinglocation"
+    },
+    {
+      "id": 76,
+      "name": "Can view sampling location",
+      "content_type_id": 19,
+      "codename": "view_samplinglocation"
+    },
+    {
+      "id": 77,
+      "name": "Can add lab request note",
+      "content_type_id": 20,
+      "codename": "add_labrequestnote"
+    },
+    {
+      "id": 78,
+      "name": "Can change lab request note",
+      "content_type_id": 20,
+      "codename": "change_labrequestnote"
+    },
+    {
+      "id": 79,
+      "name": "Can delete lab request note",
+      "content_type_id": 20,
+      "codename": "delete_labrequestnote"
+    },
+    {
+      "id": 80,
+      "name": "Can view lab request note",
+      "content_type_id": 20,
+      "codename": "view_labrequestnote"
+    },
+    {
+      "id": 81,
+      "name": "Can add lab request sample test type",
+      "content_type_id": 21,
+      "codename": "add_labrequestsampletesttype"
+    },
+    {
+      "id": 82,
+      "name": "Can change lab request sample test type",
+      "content_type_id": 21,
+      "codename": "change_labrequestsampletesttype"
+    },
+    {
+      "id": 83,
+      "name": "Can delete lab request sample test type",
+      "content_type_id": 21,
+      "codename": "delete_labrequestsampletesttype"
+    },
+    {
+      "id": 84,
+      "name": "Can view lab request sample test type",
+      "content_type_id": 21,
+      "codename": "view_labrequestsampletesttype"
+    },
+    {
+      "id": 85,
+      "name": "Can add reactor test measurment parameter",
+      "content_type_id": 22,
+      "codename": "add_reactortestmeasurmentparameter"
+    },
+    {
+      "id": 86,
+      "name": "Can change reactor test measurment parameter",
+      "content_type_id": 22,
+      "codename": "change_reactortestmeasurmentparameter"
+    },
+    {
+      "id": 87,
+      "name": "Can delete reactor test measurment parameter",
+      "content_type_id": 22,
+      "codename": "delete_reactortestmeasurmentparameter"
+    },
+    {
+      "id": 88,
+      "name": "Can view reactor test measurment parameter",
+      "content_type_id": 22,
+      "codename": "view_reactortestmeasurmentparameter"
+    },
+    {
+      "id": 89,
+      "name": "Can add test condition measurment parameter",
+      "content_type_id": 23,
+      "codename": "add_testconditionmeasurmentparameter"
+    },
+    {
+      "id": 90,
+      "name": "Can change test condition measurment parameter",
+      "content_type_id": 23,
+      "codename": "change_testconditionmeasurmentparameter"
+    },
+    {
+      "id": 91,
+      "name": "Can delete test condition measurment parameter",
+      "content_type_id": 23,
+      "codename": "delete_testconditionmeasurmentparameter"
+    },
+    {
+      "id": 92,
+      "name": "Can view test condition measurment parameter",
+      "content_type_id": 23,
+      "codename": "view_testconditionmeasurmentparameter"
+    },
+    {
+      "id": 93,
+      "name": "Can add chemistry results",
+      "content_type_id": 24,
+      "codename": "add_chemistryresults"
+    },
+    {
+      "id": 94,
+      "name": "Can change chemistry results",
+      "content_type_id": 24,
+      "codename": "change_chemistryresults"
+    },
+    {
+      "id": 95,
+      "name": "Can delete chemistry results",
+      "content_type_id": 24,
+      "codename": "delete_chemistryresults"
+    },
+    {
+      "id": 96,
+      "name": "Can view chemistry results",
+      "content_type_id": 24,
+      "codename": "view_chemistryresults"
+    },
+    {
+      "id": 97,
+      "name": "Can add location test",
+      "content_type_id": 25,
+      "codename": "add_locationtest"
+    },
+    {
+      "id": 98,
+      "name": "Can change location test",
+      "content_type_id": 25,
+      "codename": "change_locationtest"
+    },
+    {
+      "id": 99,
+      "name": "Can delete location test",
+      "content_type_id": 25,
+      "codename": "delete_locationtest"
+    },
+    {
+      "id": 100,
+      "name": "Can view location test",
+      "content_type_id": 25,
+      "codename": "view_locationtest"
+    },
+    {
+      "id": 101,
+      "name": "Can add test condition type",
+      "content_type_id": 26,
+      "codename": "add_testconditiontype"
+    },
+    {
+      "id": 102,
+      "name": "Can change test condition type",
+      "content_type_id": 26,
+      "codename": "change_testconditiontype"
+    },
+    {
+      "id": 103,
+      "name": "Can delete test condition type",
+      "content_type_id": 26,
+      "codename": "delete_testconditiontype"
+    },
+    {
+      "id": 104,
+      "name": "Can view test condition type",
+      "content_type_id": 26,
+      "codename": "view_testconditiontype"
+    },
+    {
+      "id": 105,
+      "name": "Can add field sample tracking",
+      "content_type_id": 27,
+      "codename": "add_fieldsampletracking"
+    },
+    {
+      "id": 106,
+      "name": "Can change field sample tracking",
+      "content_type_id": 27,
+      "codename": "change_fieldsampletracking"
+    },
+    {
+      "id": 107,
+      "name": "Can delete field sample tracking",
+      "content_type_id": 27,
+      "codename": "delete_fieldsampletracking"
+    },
+    {
+      "id": 108,
+      "name": "Can view field sample tracking",
+      "content_type_id": 27,
+      "codename": "view_fieldsampletracking"
+    },
+    {
+      "id": 109,
+      "name": "Can add sample",
+      "content_type_id": 28,
+      "codename": "add_sample"
+    },
+    {
+      "id": 110,
+      "name": "Can change sample",
+      "content_type_id": 28,
+      "codename": "change_sample"
+    },
+    {
+      "id": 111,
+      "name": "Can delete sample",
+      "content_type_id": 28,
+      "codename": "delete_sample"
+    },
+    {
+      "id": 112,
+      "name": "Can view sample",
+      "content_type_id": 28,
+      "codename": "view_sample"
+    },
+    {
+      "id": 113,
+      "name": "Can add sample location",
+      "content_type_id": 29,
+      "codename": "add_samplelocation"
+    },
+    {
+      "id": 114,
+      "name": "Can change sample location",
+      "content_type_id": 29,
+      "codename": "change_samplelocation"
+    },
+    {
+      "id": 115,
+      "name": "Can delete sample location",
+      "content_type_id": 29,
+      "codename": "delete_samplelocation"
+    },
+    {
+      "id": 116,
+      "name": "Can view sample location",
+      "content_type_id": 29,
+      "codename": "view_samplelocation"
+    },
+    {
+      "id": 117,
+      "name": "Can add sample number",
+      "content_type_id": 30,
+      "codename": "add_samplenumber"
+    },
+    {
+      "id": 118,
+      "name": "Can change sample number",
+      "content_type_id": 30,
+      "codename": "change_samplenumber"
+    },
+    {
+      "id": 119,
+      "name": "Can delete sample number",
+      "content_type_id": 30,
+      "codename": "delete_samplenumber"
+    },
+    {
+      "id": 120,
+      "name": "Can view sample number",
+      "content_type_id": 30,
+      "codename": "view_samplenumber"
+    },
+    {
+      "id": 121,
+      "name": "Can add sample type",
+      "content_type_id": 31,
+      "codename": "add_sampletype"
+    },
+    {
+      "id": 122,
+      "name": "Can change sample type",
+      "content_type_id": 31,
+      "codename": "change_sampletype"
+    },
+    {
+      "id": 123,
+      "name": "Can delete sample type",
+      "content_type_id": 31,
+      "codename": "delete_sampletype"
+    },
+    {
+      "id": 124,
+      "name": "Can view sample type",
+      "content_type_id": 31,
+      "codename": "view_sampletype"
+    },
+    {
+      "id": 125,
+      "name": "Can add sample type location",
+      "content_type_id": 32,
+      "codename": "add_sampletypelocation"
+    },
+    {
+      "id": 126,
+      "name": "Can change sample type location",
+      "content_type_id": 32,
+      "codename": "change_sampletypelocation"
+    },
+    {
+      "id": 127,
+      "name": "Can delete sample type location",
+      "content_type_id": 32,
+      "codename": "delete_sampletypelocation"
+    },
+    {
+      "id": 128,
+      "name": "Can view sample type location",
+      "content_type_id": 32,
+      "codename": "view_sampletypelocation"
+    },
+    {
+      "id": 129,
+      "name": "Can add sample crate",
+      "content_type_id": 33,
+      "codename": "add_samplecrate"
+    },
+    {
+      "id": 130,
+      "name": "Can change sample crate",
+      "content_type_id": 33,
+      "codename": "change_samplecrate"
+    },
+    {
+      "id": 131,
+      "name": "Can delete sample crate",
+      "content_type_id": 33,
+      "codename": "delete_samplecrate"
+    },
+    {
+      "id": 132,
+      "name": "Can view sample crate",
+      "content_type_id": 33,
+      "codename": "view_samplecrate"
+    },
+    {
+      "id": 133,
+      "name": "Can add sample inspection photo",
+      "content_type_id": 34,
+      "codename": "add_sampleinspectionphoto"
+    },
+    {
+      "id": 134,
+      "name": "Can change sample inspection photo",
+      "content_type_id": 34,
+      "codename": "change_sampleinspectionphoto"
+    },
+    {
+      "id": 135,
+      "name": "Can delete sample inspection photo",
+      "content_type_id": 34,
+      "codename": "delete_sampleinspectionphoto"
+    },
+    {
+      "id": 136,
+      "name": "Can view sample inspection photo",
+      "content_type_id": 34,
+      "codename": "view_sampleinspectionphoto"
+    },
+    {
+      "id": 137,
+      "name": "Can add sample inspection",
+      "content_type_id": 35,
+      "codename": "add_sampleinspection"
+    },
+    {
+      "id": 138,
+      "name": "Can change sample inspection",
+      "content_type_id": 35,
+      "codename": "change_sampleinspection"
+    },
+    {
+      "id": 139,
+      "name": "Can delete sample inspection",
+      "content_type_id": 35,
+      "codename": "delete_sampleinspection"
+    },
+    {
+      "id": 140,
+      "name": "Can view sample inspection",
+      "content_type_id": 35,
+      "codename": "view_sampleinspection"
+    },
+    {
+      "id": 141,
+      "name": "Can add sample geometry",
+      "content_type_id": 36,
+      "codename": "add_samplegeometry"
+    },
+    {
+      "id": 142,
+      "name": "Can change sample geometry",
+      "content_type_id": 36,
+      "codename": "change_samplegeometry"
+    },
+    {
+      "id": 143,
+      "name": "Can delete sample geometry",
+      "content_type_id": 36,
+      "codename": "delete_samplegeometry"
+    },
+    {
+      "id": 144,
+      "name": "Can view sample geometry",
+      "content_type_id": 36,
+      "codename": "view_samplegeometry"
+    },
+    {
+      "id": 145,
+      "name": "Can add sample crate photo",
+      "content_type_id": 37,
+      "codename": "add_samplecratephoto"
+    },
+    {
+      "id": 146,
+      "name": "Can change sample crate photo",
+      "content_type_id": 37,
+      "codename": "change_samplecratephoto"
+    },
+    {
+      "id": 147,
+      "name": "Can delete sample crate photo",
+      "content_type_id": 37,
+      "codename": "delete_samplecratephoto"
+    },
+    {
+      "id": 148,
+      "name": "Can view sample crate photo",
+      "content_type_id": 37,
+      "codename": "view_samplecratephoto"
+    },
+    {
+      "id": 149,
+      "name": "Can add addresses",
+      "content_type_id": 38,
+      "codename": "add_addresses"
+    },
+    {
+      "id": 150,
+      "name": "Can change addresses",
+      "content_type_id": 38,
+      "codename": "change_addresses"
+    },
+    {
+      "id": 151,
+      "name": "Can delete addresses",
+      "content_type_id": 38,
+      "codename": "delete_addresses"
+    },
+    {
+      "id": 152,
+      "name": "Can view addresses",
+      "content_type_id": 38,
+      "codename": "view_addresses"
+    },
+    {
+      "id": 153,
+      "name": "Can add address types",
+      "content_type_id": 39,
+      "codename": "add_addresstypes"
+    },
+    {
+      "id": 154,
+      "name": "Can change address types",
+      "content_type_id": 39,
+      "codename": "change_addresstypes"
+    },
+    {
+      "id": 155,
+      "name": "Can delete address types",
+      "content_type_id": 39,
+      "codename": "delete_addresstypes"
+    },
+    {
+      "id": 156,
+      "name": "Can view address types",
+      "content_type_id": 39,
+      "codename": "view_addresstypes"
+    },
+    {
+      "id": 157,
+      "name": "Can add cleaning device types",
+      "content_type_id": 40,
+      "codename": "add_cleaningdevicetypes"
+    },
+    {
+      "id": 158,
+      "name": "Can change cleaning device types",
+      "content_type_id": 40,
+      "codename": "change_cleaningdevicetypes"
+    },
+    {
+      "id": 159,
+      "name": "Can delete cleaning device types",
+      "content_type_id": 40,
+      "codename": "delete_cleaningdevicetypes"
+    },
+    {
+      "id": 160,
+      "name": "Can view cleaning device types",
+      "content_type_id": 40,
+      "codename": "view_cleaningdevicetypes"
+    },
+    {
+      "id": 161,
+      "name": "Can add countries",
+      "content_type_id": 41,
+      "codename": "add_countries"
+    },
+    {
+      "id": 162,
+      "name": "Can change countries",
+      "content_type_id": 41,
+      "codename": "change_countries"
+    },
+    {
+      "id": 163,
+      "name": "Can delete countries",
+      "content_type_id": 41,
+      "codename": "delete_countries"
+    },
+    {
+      "id": 164,
+      "name": "Can view countries",
+      "content_type_id": 41,
+      "codename": "view_countries"
+    },
+    {
+      "id": 165,
+      "name": "Can add equipment types",
+      "content_type_id": 42,
+      "codename": "add_equipmenttypes"
+    },
+    {
+      "id": 166,
+      "name": "Can change equipment types",
+      "content_type_id": 42,
+      "codename": "change_equipmenttypes"
+    },
+    {
+      "id": 167,
+      "name": "Can delete equipment types",
+      "content_type_id": 42,
+      "codename": "delete_equipmenttypes"
+    },
+    {
+      "id": 168,
+      "name": "Can view equipment types",
+      "content_type_id": 42,
+      "codename": "view_equipmenttypes"
+    },
+    {
+      "id": 169,
+      "name": "Can add facilities",
+      "content_type_id": 43,
+      "codename": "add_facilities"
+    },
+    {
+      "id": 170,
+      "name": "Can change facilities",
+      "content_type_id": 43,
+      "codename": "change_facilities"
+    },
+    {
+      "id": 171,
+      "name": "Can delete facilities",
+      "content_type_id": 43,
+      "codename": "delete_facilities"
+    },
+    {
+      "id": 172,
+      "name": "Can view facilities",
+      "content_type_id": 43,
+      "codename": "view_facilities"
+    },
+    {
+      "id": 173,
+      "name": "Can add facility notes",
+      "content_type_id": 44,
+      "codename": "add_facilitynotes"
+    },
+    {
+      "id": 174,
+      "name": "Can change facility notes",
+      "content_type_id": 44,
+      "codename": "change_facilitynotes"
+    },
+    {
+      "id": 175,
+      "name": "Can delete facility notes",
+      "content_type_id": 44,
+      "codename": "delete_facilitynotes"
+    },
+    {
+      "id": 176,
+      "name": "Can view facility notes",
+      "content_type_id": 44,
+      "codename": "view_facilitynotes"
+    },
+    {
+      "id": 177,
+      "name": "Can add facility types",
+      "content_type_id": 45,
+      "codename": "add_facilitytypes"
+    },
+    {
+      "id": 178,
+      "name": "Can change facility types",
+      "content_type_id": 45,
+      "codename": "change_facilitytypes"
+    },
+    {
+      "id": 179,
+      "name": "Can delete facility types",
+      "content_type_id": 45,
+      "codename": "delete_facilitytypes"
+    },
+    {
+      "id": 180,
+      "name": "Can view facility types",
+      "content_type_id": 45,
+      "codename": "view_facilitytypes"
+    },
+    {
+      "id": 181,
+      "name": "Can add fuel types",
+      "content_type_id": 46,
+      "codename": "add_fueltypes"
+    },
+    {
+      "id": 182,
+      "name": "Can change fuel types",
+      "content_type_id": 46,
+      "codename": "change_fueltypes"
+    },
+    {
+      "id": 183,
+      "name": "Can delete fuel types",
+      "content_type_id": 46,
+      "codename": "delete_fueltypes"
+    },
+    {
+      "id": 184,
+      "name": "Can view fuel types",
+      "content_type_id": 46,
+      "codename": "view_fueltypes"
+    },
+    {
+      "id": 185,
+      "name": "Can add global regions",
+      "content_type_id": 47,
+      "codename": "add_globalregions"
+    },
+    {
+      "id": 186,
+      "name": "Can change global regions",
+      "content_type_id": 47,
+      "codename": "change_globalregions"
+    },
+    {
+      "id": 187,
+      "name": "Can delete global regions",
+      "content_type_id": 47,
+      "codename": "delete_globalregions"
+    },
+    {
+      "id": 188,
+      "name": "Can view global regions",
+      "content_type_id": 47,
+      "codename": "view_globalregions"
+    },
+    {
+      "id": 189,
+      "name": "Can add obsolete facility names",
+      "content_type_id": 48,
+      "codename": "add_obsoletefacilitynames"
+    },
+    {
+      "id": 190,
+      "name": "Can change obsolete facility names",
+      "content_type_id": 48,
+      "codename": "change_obsoletefacilitynames"
+    },
+    {
+      "id": 191,
+      "name": "Can delete obsolete facility names",
+      "content_type_id": 48,
+      "codename": "delete_obsoletefacilitynames"
+    },
+    {
+      "id": 192,
+      "name": "Can view obsolete facility names",
+      "content_type_id": 48,
+      "codename": "view_obsoletefacilitynames"
+    },
+    {
+      "id": 193,
+      "name": "Can add obsolete unit names",
+      "content_type_id": 49,
+      "codename": "add_obsoleteunitnames"
+    },
+    {
+      "id": 194,
+      "name": "Can change obsolete unit names",
+      "content_type_id": 49,
+      "codename": "change_obsoleteunitnames"
+    },
+    {
+      "id": 195,
+      "name": "Can delete obsolete unit names",
+      "content_type_id": 49,
+      "codename": "delete_obsoleteunitnames"
+    },
+    {
+      "id": 196,
+      "name": "Can view obsolete unit names",
+      "content_type_id": 49,
+      "codename": "view_obsoleteunitnames"
+    },
+    {
+      "id": 197,
+      "name": "Can add people",
+      "content_type_id": 50,
+      "codename": "add_people"
+    },
+    {
+      "id": 198,
+      "name": "Can change people",
+      "content_type_id": 50,
+      "codename": "change_people"
+    },
+    {
+      "id": 199,
+      "name": "Can delete people",
+      "content_type_id": 50,
+      "codename": "delete_people"
+    },
+    {
+      "id": 200,
+      "name": "Can view people",
+      "content_type_id": 50,
+      "codename": "view_people"
+    },
+    {
+      "id": 201,
+      "name": "Can add people facilities",
+      "content_type_id": 51,
+      "codename": "add_peoplefacilities"
+    },
+    {
+      "id": 202,
+      "name": "Can change people facilities",
+      "content_type_id": 51,
+      "codename": "change_peoplefacilities"
+    },
+    {
+      "id": 203,
+      "name": "Can delete people facilities",
+      "content_type_id": 51,
+      "codename": "delete_peoplefacilities"
+    },
+    {
+      "id": 204,
+      "name": "Can view people facilities",
+      "content_type_id": 51,
+      "codename": "view_peoplefacilities"
+    },
+    {
+      "id": 205,
+      "name": "Can add person roles",
+      "content_type_id": 52,
+      "codename": "add_personroles"
+    },
+    {
+      "id": 206,
+      "name": "Can change person roles",
+      "content_type_id": 52,
+      "codename": "change_personroles"
+    },
+    {
+      "id": 207,
+      "name": "Can delete person roles",
+      "content_type_id": 52,
+      "codename": "delete_personroles"
+    },
+    {
+      "id": 208,
+      "name": "Can view person roles",
+      "content_type_id": 52,
+      "codename": "view_personroles"
+    },
+    {
+      "id": 209,
+      "name": "Can add scr layers",
+      "content_type_id": 53,
+      "codename": "add_scrlayers"
+    },
+    {
+      "id": 210,
+      "name": "Can change scr layers",
+      "content_type_id": 53,
+      "codename": "change_scrlayers"
+    },
+    {
+      "id": 211,
+      "name": "Can delete scr layers",
+      "content_type_id": 53,
+      "codename": "delete_scrlayers"
+    },
+    {
+      "id": 212,
+      "name": "Can view scr layers",
+      "content_type_id": 53,
+      "codename": "view_scrlayers"
+    },
+    {
+      "id": 213,
+      "name": "Can add sc rs",
+      "content_type_id": 54,
+      "codename": "add_scrs"
+    },
+    {
+      "id": 214,
+      "name": "Can change sc rs",
+      "content_type_id": 54,
+      "codename": "change_scrs"
+    },
+    {
+      "id": 215,
+      "name": "Can delete sc rs",
+      "content_type_id": 54,
+      "codename": "delete_scrs"
+    },
+    {
+      "id": 216,
+      "name": "Can view sc rs",
+      "content_type_id": 54,
+      "codename": "view_scrs"
+    },
+    {
+      "id": 217,
+      "name": "Can add states",
+      "content_type_id": 55,
+      "codename": "add_states"
+    },
+    {
+      "id": 218,
+      "name": "Can change states",
+      "content_type_id": 55,
+      "codename": "change_states"
+    },
+    {
+      "id": 219,
+      "name": "Can delete states",
+      "content_type_id": 55,
+      "codename": "delete_states"
+    },
+    {
+      "id": 220,
+      "name": "Can view states",
+      "content_type_id": 55,
+      "codename": "view_states"
+    },
+    {
+      "id": 221,
+      "name": "Can add unit class",
+      "content_type_id": 56,
+      "codename": "add_unitclass"
+    },
+    {
+      "id": 222,
+      "name": "Can change unit class",
+      "content_type_id": 56,
+      "codename": "change_unitclass"
+    },
+    {
+      "id": 223,
+      "name": "Can delete unit class",
+      "content_type_id": 56,
+      "codename": "delete_unitclass"
+    },
+    {
+      "id": 224,
+      "name": "Can view unit class",
+      "content_type_id": 56,
+      "codename": "view_unitclass"
+    },
+    {
+      "id": 225,
+      "name": "Can add unit equipment",
+      "content_type_id": 57,
+      "codename": "add_unitequipment"
+    },
+    {
+      "id": 226,
+      "name": "Can change unit equipment",
+      "content_type_id": 57,
+      "codename": "change_unitequipment"
+    },
+    {
+      "id": 227,
+      "name": "Can delete unit equipment",
+      "content_type_id": 57,
+      "codename": "delete_unitequipment"
+    },
+    {
+      "id": 228,
+      "name": "Can view unit equipment",
+      "content_type_id": 57,
+      "codename": "view_unitequipment"
+    },
+    {
+      "id": 229,
+      "name": "Can add unit fuel types",
+      "content_type_id": 58,
+      "codename": "add_unitfueltypes"
+    },
+    {
+      "id": 230,
+      "name": "Can change unit fuel types",
+      "content_type_id": 58,
+      "codename": "change_unitfueltypes"
+    },
+    {
+      "id": 231,
+      "name": "Can delete unit fuel types",
+      "content_type_id": 58,
+      "codename": "delete_unitfueltypes"
+    },
+    {
+      "id": 232,
+      "name": "Can view unit fuel types",
+      "content_type_id": 58,
+      "codename": "view_unitfueltypes"
+    },
+    {
+      "id": 233,
+      "name": "Can add unit notes",
+      "content_type_id": 59,
+      "codename": "add_unitnotes"
+    },
+    {
+      "id": 234,
+      "name": "Can change unit notes",
+      "content_type_id": 59,
+      "codename": "change_unitnotes"
+    },
+    {
+      "id": 235,
+      "name": "Can delete unit notes",
+      "content_type_id": 59,
+      "codename": "delete_unitnotes"
+    },
+    {
+      "id": 236,
+      "name": "Can view unit notes",
+      "content_type_id": 59,
+      "codename": "view_unitnotes"
+    },
+    {
+      "id": 237,
+      "name": "Can add unit operators",
+      "content_type_id": 60,
+      "codename": "add_unitoperators"
+    },
+    {
+      "id": 238,
+      "name": "Can change unit operators",
+      "content_type_id": 60,
+      "codename": "change_unitoperators"
+    },
+    {
+      "id": 239,
+      "name": "Can delete unit operators",
+      "content_type_id": 60,
+      "codename": "delete_unitoperators"
+    },
+    {
+      "id": 240,
+      "name": "Can view unit operators",
+      "content_type_id": 60,
+      "codename": "view_unitoperators"
+    },
+    {
+      "id": 241,
+      "name": "Can add units",
+      "content_type_id": 61,
+      "codename": "add_units"
+    },
+    {
+      "id": 242,
+      "name": "Can change units",
+      "content_type_id": 61,
+      "codename": "change_units"
+    },
+    {
+      "id": 243,
+      "name": "Can delete units",
+      "content_type_id": 61,
+      "codename": "delete_units"
+    },
+    {
+      "id": 244,
+      "name": "Can view units",
+      "content_type_id": 61,
+      "codename": "view_units"
+    },
+    {
+      "id": 245,
+      "name": "Can add unit status",
+      "content_type_id": 62,
+      "codename": "add_unitstatus"
+    },
+    {
+      "id": 246,
+      "name": "Can change unit status",
+      "content_type_id": 62,
+      "codename": "change_unitstatus"
+    },
+    {
+      "id": 247,
+      "name": "Can delete unit status",
+      "content_type_id": 62,
+      "codename": "delete_unitstatus"
+    },
+    {
+      "id": 248,
+      "name": "Can view unit status",
+      "content_type_id": 62,
+      "codename": "view_unitstatus"
+    },
+    {
+      "id": 249,
+      "name": "Can add unit types",
+      "content_type_id": 63,
+      "codename": "add_unittypes"
+    },
+    {
+      "id": 250,
+      "name": "Can change unit types",
+      "content_type_id": 63,
+      "codename": "change_unittypes"
+    },
+    {
+      "id": 251,
+      "name": "Can delete unit types",
+      "content_type_id": 63,
+      "codename": "delete_unittypes"
+    },
+    {
+      "id": 252,
+      "name": "Can view unit types",
+      "content_type_id": 63,
+      "codename": "view_unittypes"
+    },
+    {
+      "id": 253,
+      "name": "Can add billing mile stone group members",
+      "content_type_id": 64,
+      "codename": "add_billingmilestonegroupmembers"
+    },
+    {
+      "id": 254,
+      "name": "Can change billing mile stone group members",
+      "content_type_id": 64,
+      "codename": "change_billingmilestonegroupmembers"
+    },
+    {
+      "id": 255,
+      "name": "Can delete billing mile stone group members",
+      "content_type_id": 64,
+      "codename": "delete_billingmilestonegroupmembers"
+    },
+    {
+      "id": 256,
+      "name": "Can view billing mile stone group members",
+      "content_type_id": 64,
+      "codename": "view_billingmilestonegroupmembers"
+    },
+    {
+      "id": 257,
+      "name": "Can add billing mile stone groups",
+      "content_type_id": 65,
+      "codename": "add_billingmilestonegroups"
+    },
+    {
+      "id": 258,
+      "name": "Can change billing mile stone groups",
+      "content_type_id": 65,
+      "codename": "change_billingmilestonegroups"
+    },
+    {
+      "id": 259,
+      "name": "Can delete billing mile stone groups",
+      "content_type_id": 65,
+      "codename": "delete_billingmilestonegroups"
+    },
+    {
+      "id": 260,
+      "name": "Can view billing mile stone groups",
+      "content_type_id": 65,
+      "codename": "view_billingmilestonegroups"
+    },
+    {
+      "id": 261,
+      "name": "Can add billing mile stone types",
+      "content_type_id": 66,
+      "codename": "add_billingmilestonetypes"
+    },
+    {
+      "id": 262,
+      "name": "Can change billing mile stone types",
+      "content_type_id": 66,
+      "codename": "change_billingmilestonetypes"
+    },
+    {
+      "id": 263,
+      "name": "Can delete billing mile stone types",
+      "content_type_id": 66,
+      "codename": "delete_billingmilestonetypes"
+    },
+    {
+      "id": 264,
+      "name": "Can view billing mile stone types",
+      "content_type_id": 66,
+      "codename": "view_billingmilestonetypes"
+    },
+    {
+      "id": 265,
+      "name": "Can add catalyst formulation components",
+      "content_type_id": 67,
+      "codename": "add_catalystformulationcomponents"
+    },
+    {
+      "id": 266,
+      "name": "Can change catalyst formulation components",
+      "content_type_id": 67,
+      "codename": "change_catalystformulationcomponents"
+    },
+    {
+      "id": 267,
+      "name": "Can delete catalyst formulation components",
+      "content_type_id": 67,
+      "codename": "delete_catalystformulationcomponents"
+    },
+    {
+      "id": 268,
+      "name": "Can view catalyst formulation components",
+      "content_type_id": 67,
+      "codename": "view_catalystformulationcomponents"
+    },
+    {
+      "id": 269,
+      "name": "Can add catalyst geometry types",
+      "content_type_id": 68,
+      "codename": "add_catalystgeometrytypes"
+    },
+    {
+      "id": 270,
+      "name": "Can change catalyst geometry types",
+      "content_type_id": 68,
+      "codename": "change_catalystgeometrytypes"
+    },
+    {
+      "id": 271,
+      "name": "Can delete catalyst geometry types",
+      "content_type_id": 68,
+      "codename": "delete_catalystgeometrytypes"
+    },
+    {
+      "id": 272,
+      "name": "Can view catalyst geometry types",
+      "content_type_id": 68,
+      "codename": "view_catalystgeometrytypes"
+    },
+    {
+      "id": 273,
+      "name": "Can add catalyst standard formulations",
+      "content_type_id": 69,
+      "codename": "add_catalyststandardformulations"
+    },
+    {
+      "id": 274,
+      "name": "Can change catalyst standard formulations",
+      "content_type_id": 69,
+      "codename": "change_catalyststandardformulations"
+    },
+    {
+      "id": 275,
+      "name": "Can delete catalyst standard formulations",
+      "content_type_id": 69,
+      "codename": "delete_catalyststandardformulations"
+    },
+    {
+      "id": 276,
+      "name": "Can view catalyst standard formulations",
+      "content_type_id": 69,
+      "codename": "view_catalyststandardformulations"
+    },
+    {
+      "id": 277,
+      "name": "Can add catalyst types",
+      "content_type_id": 70,
+      "codename": "add_catalysttypes"
+    },
+    {
+      "id": 278,
+      "name": "Can change catalyst types",
+      "content_type_id": 70,
+      "codename": "change_catalysttypes"
+    },
+    {
+      "id": 279,
+      "name": "Can delete catalyst types",
+      "content_type_id": 70,
+      "codename": "delete_catalysttypes"
+    },
+    {
+      "id": 280,
+      "name": "Can view catalyst types",
+      "content_type_id": 70,
+      "codename": "view_catalysttypes"
+    },
+    {
+      "id": 281,
+      "name": "Can add companies",
+      "content_type_id": 71,
+      "codename": "add_companies"
+    },
+    {
+      "id": 282,
+      "name": "Can change companies",
+      "content_type_id": 71,
+      "codename": "change_companies"
+    },
+    {
+      "id": 283,
+      "name": "Can delete companies",
+      "content_type_id": 71,
+      "codename": "delete_companies"
+    },
+    {
+      "id": 284,
+      "name": "Can view companies",
+      "content_type_id": 71,
+      "codename": "view_companies"
+    },
+    {
+      "id": 285,
+      "name": "Can add controlling cases",
+      "content_type_id": 72,
+      "codename": "add_controllingcases"
+    },
+    {
+      "id": 286,
+      "name": "Can change controlling cases",
+      "content_type_id": 72,
+      "codename": "change_controllingcases"
+    },
+    {
+      "id": 287,
+      "name": "Can delete controlling cases",
+      "content_type_id": 72,
+      "codename": "delete_controllingcases"
+    },
+    {
+      "id": 288,
+      "name": "Can view controlling cases",
+      "content_type_id": 72,
+      "codename": "view_controllingcases"
+    },
+    {
+      "id": 289,
+      "name": "Can add edge hardening types",
+      "content_type_id": 73,
+      "codename": "add_edgehardeningtypes"
+    },
+    {
+      "id": 290,
+      "name": "Can change edge hardening types",
+      "content_type_id": 73,
+      "codename": "change_edgehardeningtypes"
+    },
+    {
+      "id": 291,
+      "name": "Can delete edge hardening types",
+      "content_type_id": 73,
+      "codename": "delete_edgehardeningtypes"
+    },
+    {
+      "id": 292,
+      "name": "Can view edge hardening types",
+      "content_type_id": 73,
+      "codename": "view_edgehardeningtypes"
+    },
+    {
+      "id": 293,
+      "name": "Can add flow directions",
+      "content_type_id": 74,
+      "codename": "add_flowdirections"
+    },
+    {
+      "id": 294,
+      "name": "Can change flow directions",
+      "content_type_id": 74,
+      "codename": "change_flowdirections"
+    },
+    {
+      "id": 295,
+      "name": "Can delete flow directions",
+      "content_type_id": 74,
+      "codename": "delete_flowdirections"
+    },
+    {
+      "id": 296,
+      "name": "Can view flow directions",
+      "content_type_id": 74,
+      "codename": "view_flowdirections"
+    },
+    {
+      "id": 297,
+      "name": "Can add guarantee parameters",
+      "content_type_id": 75,
+      "codename": "add_guaranteeparameters"
+    },
+    {
+      "id": 298,
+      "name": "Can change guarantee parameters",
+      "content_type_id": 75,
+      "codename": "change_guaranteeparameters"
+    },
+    {
+      "id": 299,
+      "name": "Can delete guarantee parameters",
+      "content_type_id": 75,
+      "codename": "delete_guaranteeparameters"
+    },
+    {
+      "id": 300,
+      "name": "Can view guarantee parameters",
+      "content_type_id": 75,
+      "codename": "view_guaranteeparameters"
+    },
+    {
+      "id": 301,
+      "name": "Can add guarantee types",
+      "content_type_id": 76,
+      "codename": "add_guaranteetypes"
+    },
+    {
+      "id": 302,
+      "name": "Can change guarantee types",
+      "content_type_id": 76,
+      "codename": "change_guaranteetypes"
+    },
+    {
+      "id": 303,
+      "name": "Can delete guarantee types",
+      "content_type_id": 76,
+      "codename": "delete_guaranteetypes"
+    },
+    {
+      "id": 304,
+      "name": "Can view guarantee types",
+      "content_type_id": 76,
+      "codename": "view_guaranteetypes"
+    },
+    {
+      "id": 305,
+      "name": "Can add hg operating conditions",
+      "content_type_id": 77,
+      "codename": "add_hgoperatingconditions"
+    },
+    {
+      "id": 306,
+      "name": "Can change hg operating conditions",
+      "content_type_id": 77,
+      "codename": "change_hgoperatingconditions"
+    },
+    {
+      "id": 307,
+      "name": "Can delete hg operating conditions",
+      "content_type_id": 77,
+      "codename": "delete_hgoperatingconditions"
+    },
+    {
+      "id": 308,
+      "name": "Can view hg operating conditions",
+      "content_type_id": 77,
+      "codename": "view_hgoperatingconditions"
+    },
+    {
+      "id": 309,
+      "name": "Can add module materials",
+      "content_type_id": 78,
+      "codename": "add_modulematerials"
+    },
+    {
+      "id": 310,
+      "name": "Can change module materials",
+      "content_type_id": 78,
+      "codename": "change_modulematerials"
+    },
+    {
+      "id": 311,
+      "name": "Can delete module materials",
+      "content_type_id": 78,
+      "codename": "delete_modulematerials"
+    },
+    {
+      "id": 312,
+      "name": "Can view module materials",
+      "content_type_id": 78,
+      "codename": "view_modulematerials"
+    },
+    {
+      "id": 313,
+      "name": "Can add module styles",
+      "content_type_id": 79,
+      "codename": "add_modulestyles"
+    },
+    {
+      "id": 314,
+      "name": "Can change module styles",
+      "content_type_id": 79,
+      "codename": "change_modulestyles"
+    },
+    {
+      "id": 315,
+      "name": "Can delete module styles",
+      "content_type_id": 79,
+      "codename": "delete_modulestyles"
+    },
+    {
+      "id": 316,
+      "name": "Can view module styles",
+      "content_type_id": 79,
+      "codename": "view_modulestyles"
+    },
+    {
+      "id": 317,
+      "name": "Can add module types",
+      "content_type_id": 80,
+      "codename": "add_moduletypes"
+    },
+    {
+      "id": 318,
+      "name": "Can change module types",
+      "content_type_id": 80,
+      "codename": "change_moduletypes"
+    },
+    {
+      "id": 319,
+      "name": "Can delete module types",
+      "content_type_id": 80,
+      "codename": "delete_moduletypes"
+    },
+    {
+      "id": 320,
+      "name": "Can view module types",
+      "content_type_id": 80,
+      "codename": "view_moduletypes"
+    },
+    {
+      "id": 321,
+      "name": "Can add operating conditions",
+      "content_type_id": 81,
+      "codename": "add_operatingconditions"
+    },
+    {
+      "id": 322,
+      "name": "Can change operating conditions",
+      "content_type_id": 81,
+      "codename": "change_operatingconditions"
+    },
+    {
+      "id": 323,
+      "name": "Can delete operating conditions",
+      "content_type_id": 81,
+      "codename": "delete_operatingconditions"
+    },
+    {
+      "id": 324,
+      "name": "Can view operating conditions",
+      "content_type_id": 81,
+      "codename": "view_operatingconditions"
+    },
+    {
+      "id": 325,
+      "name": "Can add operating condition types",
+      "content_type_id": 82,
+      "codename": "add_operatingconditiontypes"
+    },
+    {
+      "id": 326,
+      "name": "Can change operating condition types",
+      "content_type_id": 82,
+      "codename": "change_operatingconditiontypes"
+    },
+    {
+      "id": 327,
+      "name": "Can delete operating condition types",
+      "content_type_id": 82,
+      "codename": "delete_operatingconditiontypes"
+    },
+    {
+      "id": 328,
+      "name": "Can view operating condition types",
+      "content_type_id": 82,
+      "codename": "view_operatingconditiontypes"
+    },
+    {
+      "id": 329,
+      "name": "Can add payment terms",
+      "content_type_id": 83,
+      "codename": "add_paymentterms"
+    },
+    {
+      "id": 330,
+      "name": "Can change payment terms",
+      "content_type_id": 83,
+      "codename": "change_paymentterms"
+    },
+    {
+      "id": 331,
+      "name": "Can delete payment terms",
+      "content_type_id": 83,
+      "codename": "delete_paymentterms"
+    },
+    {
+      "id": 332,
+      "name": "Can view payment terms",
+      "content_type_id": 83,
+      "codename": "view_paymentterms"
+    },
+    {
+      "id": 333,
+      "name": "Can add plant locations",
+      "content_type_id": 84,
+      "codename": "add_plantlocations"
+    },
+    {
+      "id": 334,
+      "name": "Can change plant locations",
+      "content_type_id": 84,
+      "codename": "change_plantlocations"
+    },
+    {
+      "id": 335,
+      "name": "Can delete plant locations",
+      "content_type_id": 84,
+      "codename": "delete_plantlocations"
+    },
+    {
+      "id": 336,
+      "name": "Can view plant locations",
+      "content_type_id": 84,
+      "codename": "view_plantlocations"
+    },
+    {
+      "id": 337,
+      "name": "Can add scope items",
+      "content_type_id": 85,
+      "codename": "add_scopeitems"
+    },
+    {
+      "id": 338,
+      "name": "Can change scope items",
+      "content_type_id": 85,
+      "codename": "change_scopeitems"
+    },
+    {
+      "id": 339,
+      "name": "Can delete scope items",
+      "content_type_id": 85,
+      "codename": "delete_scopeitems"
+    },
+    {
+      "id": 340,
+      "name": "Can view scope items",
+      "content_type_id": 85,
+      "codename": "view_scopeitems"
+    },
+    {
+      "id": 341,
+      "name": "Can add scope types",
+      "content_type_id": 86,
+      "codename": "add_scopetypes"
+    },
+    {
+      "id": 342,
+      "name": "Can change scope types",
+      "content_type_id": 86,
+      "codename": "change_scopetypes"
+    },
+    {
+      "id": 343,
+      "name": "Can delete scope types",
+      "content_type_id": 86,
+      "codename": "delete_scopetypes"
+    },
+    {
+      "id": 344,
+      "name": "Can view scope types",
+      "content_type_id": 86,
+      "codename": "view_scopetypes"
+    },
+    {
+      "id": 345,
+      "name": "Can add shipping terms",
+      "content_type_id": 87,
+      "codename": "add_shippingterms"
+    },
+    {
+      "id": 346,
+      "name": "Can change shipping terms",
+      "content_type_id": 87,
+      "codename": "change_shippingterms"
+    },
+    {
+      "id": 347,
+      "name": "Can delete shipping terms",
+      "content_type_id": 87,
+      "codename": "delete_shippingterms"
+    },
+    {
+      "id": 348,
+      "name": "Can view shipping terms",
+      "content_type_id": 87,
+      "codename": "view_shippingterms"
+    },
+    {
+      "id": 349,
+      "name": "Can add signoff",
+      "content_type_id": 88,
+      "codename": "add_signoff"
+    },
+    {
+      "id": 350,
+      "name": "Can change signoff",
+      "content_type_id": 88,
+      "codename": "change_signoff"
+    },
+    {
+      "id": 351,
+      "name": "Can delete signoff",
+      "content_type_id": 88,
+      "codename": "delete_signoff"
+    },
+    {
+      "id": 352,
+      "name": "Can view signoff",
+      "content_type_id": 88,
+      "codename": "view_signoff"
+    },
+    {
+      "id": 353,
+      "name": "Can add signoff template",
+      "content_type_id": 89,
+      "codename": "add_signofftemplate"
+    },
+    {
+      "id": 354,
+      "name": "Can change signoff template",
+      "content_type_id": 89,
+      "codename": "change_signofftemplate"
+    },
+    {
+      "id": 355,
+      "name": "Can delete signoff template",
+      "content_type_id": 89,
+      "codename": "delete_signofftemplate"
+    },
+    {
+      "id": 356,
+      "name": "Can view signoff template",
+      "content_type_id": 89,
+      "codename": "view_signofftemplate"
+    },
+    {
+      "id": 357,
+      "name": "Can add standard formulation components",
+      "content_type_id": 90,
+      "codename": "add_standardformulationcomponents"
+    },
+    {
+      "id": 358,
+      "name": "Can change standard formulation components",
+      "content_type_id": 90,
+      "codename": "change_standardformulationcomponents"
+    },
+    {
+      "id": 359,
+      "name": "Can delete standard formulation components",
+      "content_type_id": 90,
+      "codename": "delete_standardformulationcomponents"
+    },
+    {
+      "id": 360,
+      "name": "Can view standard formulation components",
+      "content_type_id": 90,
+      "codename": "view_standardformulationcomponents"
+    },
+    {
+      "id": 361,
+      "name": "Can add user profile",
+      "content_type_id": 91,
+      "codename": "add_userprofile"
+    },
+    {
+      "id": 362,
+      "name": "Can change user profile",
+      "content_type_id": 91,
+      "codename": "change_userprofile"
+    },
+    {
+      "id": 363,
+      "name": "Can delete user profile",
+      "content_type_id": 91,
+      "codename": "delete_userprofile"
+    },
+    {
+      "id": 364,
+      "name": "Can view user profile",
+      "content_type_id": 91,
+      "codename": "view_userprofile"
+    },
+    {
+      "id": 365,
+      "name": "Can add corrugated catalysts",
+      "content_type_id": 92,
+      "codename": "add_corrugatedcatalysts"
+    },
+    {
+      "id": 366,
+      "name": "Can change corrugated catalysts",
+      "content_type_id": 92,
+      "codename": "change_corrugatedcatalysts"
+    },
+    {
+      "id": 367,
+      "name": "Can delete corrugated catalysts",
+      "content_type_id": 92,
+      "codename": "delete_corrugatedcatalysts"
+    },
+    {
+      "id": 368,
+      "name": "Can view corrugated catalysts",
+      "content_type_id": 92,
+      "codename": "view_corrugatedcatalysts"
+    },
+    {
+      "id": 369,
+      "name": "Can add honeycomb catalysts",
+      "content_type_id": 93,
+      "codename": "add_honeycombcatalysts"
+    },
+    {
+      "id": 370,
+      "name": "Can change honeycomb catalysts",
+      "content_type_id": 93,
+      "codename": "change_honeycombcatalysts"
+    },
+    {
+      "id": 371,
+      "name": "Can delete honeycomb catalysts",
+      "content_type_id": 93,
+      "codename": "delete_honeycombcatalysts"
+    },
+    {
+      "id": 372,
+      "name": "Can view honeycomb catalysts",
+      "content_type_id": 93,
+      "codename": "view_honeycombcatalysts"
+    },
+    {
+      "id": 373,
+      "name": "Can add plate catalysts",
+      "content_type_id": 94,
+      "codename": "add_platecatalysts"
+    },
+    {
+      "id": 374,
+      "name": "Can change plate catalysts",
+      "content_type_id": 94,
+      "codename": "change_platecatalysts"
+    },
+    {
+      "id": 375,
+      "name": "Can delete plate catalysts",
+      "content_type_id": 94,
+      "codename": "delete_platecatalysts"
+    },
+    {
+      "id": 376,
+      "name": "Can view plate catalysts",
+      "content_type_id": 94,
+      "codename": "view_platecatalysts"
+    },
+    {
+      "id": 377,
+      "name": "Can add round honeycomb catalysts",
+      "content_type_id": 95,
+      "codename": "add_roundhoneycombcatalysts"
+    },
+    {
+      "id": 378,
+      "name": "Can change round honeycomb catalysts",
+      "content_type_id": 95,
+      "codename": "change_roundhoneycombcatalysts"
+    },
+    {
+      "id": 379,
+      "name": "Can delete round honeycomb catalysts",
+      "content_type_id": 95,
+      "codename": "delete_roundhoneycombcatalysts"
+    },
+    {
+      "id": 380,
+      "name": "Can view round honeycomb catalysts",
+      "content_type_id": 95,
+      "codename": "view_roundhoneycombcatalysts"
+    },
+    {
+      "id": 381,
+      "name": "Can add catalyst based parts",
+      "content_type_id": 96,
+      "codename": "add_catalystbasedparts"
+    },
+    {
+      "id": 382,
+      "name": "Can change catalyst based parts",
+      "content_type_id": 96,
+      "codename": "change_catalystbasedparts"
+    },
+    {
+      "id": 383,
+      "name": "Can delete catalyst based parts",
+      "content_type_id": 96,
+      "codename": "delete_catalystbasedparts"
+    },
+    {
+      "id": 384,
+      "name": "Can view catalyst based parts",
+      "content_type_id": 96,
+      "codename": "view_catalystbasedparts"
+    },
+    {
+      "id": 385,
+      "name": "Can add module sealing location",
+      "content_type_id": 97,
+      "codename": "add_modulesealinglocation"
+    },
+    {
+      "id": 386,
+      "name": "Can change module sealing location",
+      "content_type_id": 97,
+      "codename": "change_modulesealinglocation"
+    },
+    {
+      "id": 387,
+      "name": "Can delete module sealing location",
+      "content_type_id": 97,
+      "codename": "delete_modulesealinglocation"
+    },
+    {
+      "id": 388,
+      "name": "Can view module sealing location",
+      "content_type_id": 97,
+      "codename": "view_modulesealinglocation"
+    },
+    {
+      "id": 389,
+      "name": "Can add module details",
+      "content_type_id": 98,
+      "codename": "add_moduledetails"
+    },
+    {
+      "id": 390,
+      "name": "Can change module details",
+      "content_type_id": 98,
+      "codename": "change_moduledetails"
+    },
+    {
+      "id": 391,
+      "name": "Can delete module details",
+      "content_type_id": 98,
+      "codename": "delete_moduledetails"
+    },
+    {
+      "id": 392,
+      "name": "Can view module details",
+      "content_type_id": 98,
+      "codename": "view_moduledetails"
+    },
+    {
+      "id": 393,
+      "name": "Can add module jacking type",
+      "content_type_id": 99,
+      "codename": "add_modulejackingtype"
+    },
+    {
+      "id": 394,
+      "name": "Can change module jacking type",
+      "content_type_id": 99,
+      "codename": "change_modulejackingtype"
+    },
+    {
+      "id": 395,
+      "name": "Can delete module jacking type",
+      "content_type_id": 99,
+      "codename": "delete_modulejackingtype"
+    },
+    {
+      "id": 396,
+      "name": "Can view module jacking type",
+      "content_type_id": 99,
+      "codename": "view_modulejackingtype"
+    },
+    {
+      "id": 397,
+      "name": "Can add session",
+      "content_type_id": 100,
+      "codename": "add_session"
+    },
+    {
+      "id": 398,
+      "name": "Can change session",
+      "content_type_id": 100,
+      "codename": "change_session"
+    },
+    {
+      "id": 399,
+      "name": "Can delete session",
+      "content_type_id": 100,
+      "codename": "delete_session"
+    },
+    {
+      "id": 400,
+      "name": "Can view session",
+      "content_type_id": 100,
+      "codename": "view_session"
+    },
+    {
+      "id": 401,
+      "name": "Can add site",
+      "content_type_id": 101,
+      "codename": "add_site"
+    },
+    {
+      "id": 402,
+      "name": "Can change site",
+      "content_type_id": 101,
+      "codename": "change_site"
+    },
+    {
+      "id": 403,
+      "name": "Can delete site",
+      "content_type_id": 101,
+      "codename": "delete_site"
+    },
+    {
+      "id": 404,
+      "name": "Can view site",
+      "content_type_id": 101,
+      "codename": "view_site"
+    },
+    {
+      "id": 405,
+      "name": "Can add test workbook",
+      "content_type_id": 102,
+      "codename": "add_testworkbook"
+    },
+    {
+      "id": 406,
+      "name": "Can change test workbook",
+      "content_type_id": 102,
+      "codename": "change_testworkbook"
+    },
+    {
+      "id": 407,
+      "name": "Can delete test workbook",
+      "content_type_id": 102,
+      "codename": "delete_testworkbook"
+    },
+    {
+      "id": 408,
+      "name": "Can view test workbook",
+      "content_type_id": 102,
+      "codename": "view_testworkbook"
+    },
+    {
+      "id": 409,
+      "name": "Can add reactor test run",
+      "content_type_id": 103,
+      "codename": "add_reactortestrun"
+    },
+    {
+      "id": 410,
+      "name": "Can change reactor test run",
+      "content_type_id": 103,
+      "codename": "change_reactortestrun"
+    },
+    {
+      "id": 411,
+      "name": "Can delete reactor test run",
+      "content_type_id": 103,
+      "codename": "delete_reactortestrun"
+    },
+    {
+      "id": 412,
+      "name": "Can view reactor test run",
+      "content_type_id": 103,
+      "codename": "view_reactortestrun"
+    },
+    {
+      "id": 413,
+      "name": "Can add test worksheet",
+      "content_type_id": 104,
+      "codename": "add_testworksheet"
+    },
+    {
+      "id": 414,
+      "name": "Can change test worksheet",
+      "content_type_id": 104,
+      "codename": "change_testworksheet"
+    },
+    {
+      "id": 415,
+      "name": "Can delete test worksheet",
+      "content_type_id": 104,
+      "codename": "delete_testworksheet"
+    },
+    {
+      "id": 416,
+      "name": "Can view test worksheet",
+      "content_type_id": 104,
+      "codename": "view_testworksheet"
+    },
+    {
+      "id": 417,
+      "name": "Can add reactor location",
+      "content_type_id": 105,
+      "codename": "add_reactorlocation"
+    },
+    {
+      "id": 418,
+      "name": "Can change reactor location",
+      "content_type_id": 105,
+      "codename": "change_reactorlocation"
+    },
+    {
+      "id": 419,
+      "name": "Can delete reactor location",
+      "content_type_id": 105,
+      "codename": "delete_reactorlocation"
+    },
+    {
+      "id": 420,
+      "name": "Can view reactor location",
+      "content_type_id": 105,
+      "codename": "view_reactorlocation"
+    },
+    {
+      "id": 421,
+      "name": "Can add request type",
+      "content_type_id": 106,
+      "codename": "add_requesttype"
+    },
+    {
+      "id": 422,
+      "name": "Can change request type",
+      "content_type_id": 106,
+      "codename": "change_requesttype"
+    },
+    {
+      "id": 423,
+      "name": "Can delete request type",
+      "content_type_id": 106,
+      "codename": "delete_requesttype"
+    },
+    {
+      "id": 424,
+      "name": "Can view request type",
+      "content_type_id": 106,
+      "codename": "view_requesttype"
+    }
+  ],
+  "auth_user": [
+    {
+      "id": 1,
+      "password": "",
+      "last_login": 
+

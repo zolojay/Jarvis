@@ -1,0 +1,700 @@
+Lemur SQLite Database Schema Report
+================================================================================
+Database Path: C:\Jarvis\Database\lemur_full_clone.db
+Generated on: 2025-03-18 15:13:51.738472
+======================================================================
+
+Table: django_site
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |    
+domain                    | TEXT            |   NO    | —          |    
+name                      | TEXT            |   NO    | —          |    
+
+
+
+Table: django_migrations
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |    
+app                       | TEXT            |   NO    | —          |    
+name                      | TEXT            |   NO    | —          |    
+applied                   | TIMESTAMP       |   NO    | —          |    
+
+
+
+Table: django_content_type
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |    
+app_label                 | TEXT            |   NO    | —          |    
+model                     | TEXT            |   NO    | —          |    
+
+
+
+Table: auth_permission
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |    
+name                      | TEXT            |   NO    | —          |    
+content_type_id           | INTEGER         |   NO    | —          |    
+codename                  | TEXT            |   NO    | —          |    
+
+
+
+Table: auth_group
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |    
+name                      | TEXT            |   NO    | —          |    
+
+
+
+Table: auth_group_permissions
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | TEXT            |   NO    | —          |    
+group_id                  | TEXT            |   NO    | —          |    
+permission_id             | TEXT            |   NO    | —          |    
+
+
+
+Table: auth_user
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |    
+password                  | TEXT            |   NO    | —          |    
+last_login                | TIMESTAMP       |   NO    | —          |    
+is_superuser              | INTEGER         |   NO    | —          |    
+username                  | TEXT            |   NO    | —          |    
+first_name                | TEXT            |   NO    | —          |    
+last_name                 | TEXT            |   NO    | —          |    
+email                     | TEXT            |   NO    | —          |    
+is_staff                  | INTEGER         |   NO    | —          |    
+is_active                 | INTEGER         |   NO    | —          |    
+date_joined               | TIMESTAMP       |   NO    | —          |    
+
+
+
+Table: TestWorkbooks
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |    
+name                      | TEXT            |   NO    | —          |    
+lab_request_id            | INTEGER         |   NO    | —          |    
+
+
+
+Table: ReactorTestRuns
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |    
+test_sheet                | TEXT            |   NO    | —          |    
+number                    | INTEGER         |   NO    | —          |    
+reactor_test_id           | REAL            |   NO    | —          |    
+test_worksheet_id         | INTEGER         |   NO    | —          |    
+
+
+
+Table: auth_user_groups
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |    
+user_id                   | INTEGER         |   NO    | —          |    
+group_id                  | INTEGER         |   NO    | —          |    
+
+
+
+Table: auth_user_user_permissions
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | TEXT            |   NO    | —          |    
+user_id                   | TEXT            |   NO    | —          |    
+permission_id             | TEXT            |   NO    | —          |    
+
+
+
+Table: TestWorksheets
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |    
+name                      | TEXT            |   NO    | —          |    
+flow_rate_nm3_per_hr      | REAL            |   NO    | —          |    
+inlet_temperature         | REAL            |   NO    | —          |    
+dry_O2                    | REAL            |   NO    | —          |    
+water                     | REAL            |   NO    | —          |    
+start_time                | TEXT            |   NO    | —          |    
+stop_time                 | TIMESTAMP       |   NO    | —          |    
+workbook_id               | INTEGER         |   NO    | —          |    
+
+
+
+Table: django_admin_log
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |    
+action_time               | TIMESTAMP       |   NO    | —          |    
+object_id                 | TEXT            |   NO    | —          |    
+object_repr               | TEXT            |   NO    | —          |    
+action_flag               | INTEGER         |   NO    | —          |    
+change_message            | TEXT            |   NO    | —          |    
+content_type_id           | INTEGER         |   NO    | —          |    
+user_id                   | INTEGER         |   NO    | —          |    
+
+
+
+Table: ReactorLocations
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |    
+location                  | TEXT            |   NO    | —          |    
+
+
+
+Table: RequestTypes
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |    
+request_type              | TEXT            |   NO    | —          |    
+
+
+
+Table: Samples
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |    
+number                    | TEXT            |   NO    | —          |    
+job_number                | TEXT            |   NO    | —          |    
+pcn                       | TEXT            |   NO    | —          |    
+date_entered              | DATE            |   NO    | —          |    
+sample_type_id            | INTEGER         |   NO    | —          |    
+facility_id               | REAL            |   NO    | —          |    
+unit_id                   | REAL            |   NO    | —          |    
+
+Indexes:
+  - idx_samples_sample_type_id (Non-Unique)
+  - idx_samples_number (Non-Unique)
+
+
+
+Table: SampleLocations
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |    
+location                  | TEXT            |   NO    | —          |    
+
+
+
+Table: SampleNumber
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |    
+time_created              | TIMESTAMP       |   NO    | —          |    
+sequence                  | INTEGER         |   NO    | —          |    
+
+
+
+Table: SampleTypes
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |    
+sample_type               | TEXT            |   NO    | —          |    
+
+
+
+Table: SampleTypeLocations
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |    
+obsolete                  | INTEGER         |   NO    | —          |    
+location_id               | INTEGER         |   NO    | —          |    
+sample_type_id            | INTEGER         |   NO    | —          |    
+
+
+
+Table: SampleCrates
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |    
+quantity                  | INTEGER         |   NO    | —          |    
+project_number            | TEXT            |   NO    | —          |    
+date_arrived              | DATE            |   NO    | —          |    
+facility_id               | REAL            |   NO    | —          |    
+unit_id                   | REAL            |   NO    | —          |    
+
+
+
+Table: SampleInspectionPhotos
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |    
+title                     | TEXT            |   NO    | —          |    
+photo                     | TEXT            |   NO    | —          |    
+sample_id                 | INTEGER         |   NO    | —          |    
+
+
+
+Table: SampleInspections
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+entry_date                | DATE            |   NO    | —          |    
+box_sleeve_marking        | TEXT            |   NO    | —          |    
+other_marking             | TEXT            |   NO    | —          |    
+flow_direction_marked     | INTEGER         |   NO    | —          |    
+cells_high                | INTEGER         |   NO    | —          |    
+cells_wide                | INTEGER         |   NO    | —          |    
+plugged_cells             | INTEGER         |   NO    | —          |    
+sample_height             | REAL            |   NO    | —          |    
+sample_width              | REAL            |   NO    | —          |    
+sample_length             | REAL            |   NO    | —          |    
+crate_id                  | INTEGER         |   NO    | —          |    
+sample_id                 | INTEGER         |   NO    | —          |    
+
+
+
+Table: HoneycombSample
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | TEXT            |   NO    | —          |    
+date                      | TEXT            |   NO    | —          |    
+cells_high                | TEXT            |   NO    | —          |    
+cells_wide                | TEXT            |   NO    | —          |    
+sample_height             | TEXT            |   NO    | —          |    
+sample_width              | TEXT            |   NO    | —          |    
+sample_length             | TEXT            |   NO    | —          |    
+sample_id                 | TEXT            |   NO    | —          |    
+
+
+
+Table: LabRequestNotes
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |    
+created_time              | TIMESTAMP       |   NO    | —          |    
+note                      | TEXT            |   NO    | —          |    
+created_by_id             | INTEGER         |   NO    | —          |    
+lab_request_id            | INTEGER         |   NO    | —          |    
+
+
+
+Table: SampleCratePhotos
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |    
+photo                     | TEXT            |   NO    | —          |    
+title                     | TEXT            |   NO    | —          |    
+sample_crate_id           | INTEGER         |   NO    | —          |    
+
+
+
+Table: LabRequestSampleTestTypes
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |    
+lab_request_sample_id     | INTEGER         |   NO    | —          |    
+test_type_id              | INTEGER         |   NO    | —          |    
+
+
+
+Table: ReactorTestMeasurmentParameters
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | TEXT            |   NO    | —          |    
+parameter                 | TEXT            |   NO    | —          |    
+obsolete                  | TEXT            |   NO    | —          |    
+
+
+
+Table: Laboratories
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |    
+lab                       | TEXT            |   NO    | —          |    
+
+
+
+Table: TestConditionMeasurmentParameters
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | TEXT            |   NO    | —          |    
+condition_id              | TEXT            |   NO    | —          |    
+measurment_parameter_id   | TEXT            |   NO    | —          |    
+
+
+
+Table: LabRequests
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |    
+job_number                | TEXT            |   NO    | —          |    
+pcn                       | TEXT            |   NO    | —          |    
+time_created              | TIMESTAMP       |   NO    | —          |    
+sequence                  | INTEGER         |   NO    | —          |    
+time_submitted            | TIMESTAMP       |   NO    | —          |    
+created_by_id             | INTEGER         |   NO    | —          |    
+requested_lab_id          | INTEGER         |   NO    | —          |    
+number                    | TEXT            |   NO    | —          |    
+request_type_id           | INTEGER         |   NO    | —          |    
+priority                  | INTEGER         |   NO    | 100        |    
+status                    | TEXT            |   NO    | 'Unscheduled' |    
+reactor_assigned          | TEXT            |   NO    | NULL       |    
+sub_reactor_id            | TEXT            |   NO    | NULL       |    
+test_hours_required       | REAL            |   NO    | 10.0       |    
+cancelled_by              | TEXT            |   NO    | NULL       |    
+cancel_reason             | TEXT            |   NO    | NULL       |    
+estimated_start           | TIMESTAMP       |   NO    | NULL       |    
+estimated_end             | TIMESTAMP       |   NO    | NULL       |    
+
+Indexes:
+  - idx_labrequests_request_type_id (Non-Unique)
+  - idx_labrequests_created_by_id (Non-Unique)
+  - idx_labrequests_time_submitted (Non-Unique)
+  - idx_labrequests_pcn (Non-Unique)
+  - idx_labrequests_job_number (Non-Unique)
+
+
+
+Table: LabRequestSample
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |    
+lab_request_id            | INTEGER         |   NO    | —          |    
+sample_id                 | INTEGER         |   NO    | —          |    
+reactor_test              | INTEGER         |   NO    | —          |    
+
+Indexes:
+  - idx_labrequestsample_request_sample (Non-Unique)
+
+
+
+Table: ChemistryResults
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | TEXT            |   NO    | —          |    
+compound                  | TEXT            |   NO    | —          |    
+value                     | TEXT            |   NO    | —          |    
+test_id                   | TEXT            |   NO    | —          |    
+
+
+
+Table: Reactors
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |    
+name                      | TEXT            |   NO    | —          |    
+lab_id                    | INTEGER         |   NO    | —          |    
+reactor_type_id           | INTEGER         |   NO    | —          |    
+
+
+
+Table: ReactorLoads
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |    
+lab_request_id            | INTEGER         |   NO    | —          |    
+test_type_id              | INTEGER         |   NO    | —          |    
+
+Indexes:
+  - idx_reactorloads_test_type_id (Non-Unique)
+  - idx_reactorloads_lab_request_id (Non-Unique)
+
+
+
+Table: ReactorLoadSamples
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |    
+position                  | INTEGER         |   NO    | —          |    
+available_cells           | REAL            |   NO    | —          |    
+load_id                   | INTEGER         |   NO    | —          |    
+lab_request_sample_id     | INTEGER         |   NO    | —          |    
+
+Indexes:
+  - idx_reactorloadsamples_sample (Non-Unique)
+  - idx_reactorloadsamples_load_id (Non-Unique)
+
+
+
+Table: LocationTests
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |    
+test_time                 | TEXT            |   NO    | —          |    
+location_id               | INTEGER         |   NO    | —          |    
+test_type_id              | INTEGER         |   NO    | —          |    
+lab_request_sample_id     | INTEGER         |   NO    | —          |    
+
+
+
+Table: ReactorParameters
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |    
+reactor_parameter         | TEXT            |   NO    | —          |    
+obsolete                  | INTEGER         |   NO    | —          |    
+units                     | TEXT            |   NO    | —          |    
+
+
+
+Table: ReactorTests
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |    
+flow_rate_nm3_per_hr      | REAL            |   NO    | —          |    
+inlet_temperature         | REAL            |   NO    | —          |    
+dry_O2                    | REAL            |   NO    | —          |    
+load_id                   | INTEGER         |   NO    | —          |    
+test_condition_id         | INTEGER         |   NO    | —          |    
+reactor_id                | REAL            |   NO    | —          |    
+reactor_type_id           | INTEGER         |   NO    | —          |    
+stabilization_time        | TEXT            |   NO    | —          |    
+start_time                | TIMESTAMP       |   NO    | —          |    
+stop_time                 | TIMESTAMP       |   NO    | —          |    
+water                     | REAL            |   NO    | —          |    
+test_order                | REAL            |   NO    | —          |    
+
+Indexes:
+  - idx_reactortests_condition_id (Non-Unique)
+  - idx_reactortests_load_id (Non-Unique)
+
+
+
+Table: ReactorTestConditions
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |    
+job                       | TEXT            |   NO    | —          |    
+pcn                       | TEXT            |   NO    | —          |    
+description               | TEXT            |   NO    | —          |    
+Av                        | REAL            |   NO    | —          |    
+Ugs                       | REAL            |   NO    | —          |    
+temperature               | REAL            |   NO    | —          |    
+dry_O2                    | REAL            |   NO    | —          |    
+test_type_id              | INTEGER         |   NO    | —          |    
+water                     | REAL            |   NO    | —          |    
+
+Indexes:
+  - idx_reactortestconditions_testtype (Non-Unique)
+
+
+
+Table: ReactorTestConditionParameters
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |    
+value                     | REAL            |   NO    | —          |    
+condition_id              | INTEGER         |   NO    | —          |    
+reactor_parameter_id      | INTEGER         |   NO    | —          |    
+
+Indexes:
+  - idx_rtcondparams_reactor_param (Non-Unique)
+  - idx_rt_conditionparams_condition_id (Non-Unique)
+
+
+
+Table: ReactorTestParameters
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |    
+value                     | REAL            |   NO    | —          |    
+parameter_id              | INTEGER         |   NO    | —          |    
+location_id               | INTEGER         |   NO    | —          |    
+run_id                    | INTEGER         |   NO    | —          |    
+
+
+
+Table: TestSampleTypes
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |    
+sample_type_id            | INTEGER         |   NO    | —          |    
+test_type_id              | INTEGER         |   NO    | —          |    
+
+
+
+Table: TestTypes
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |    
+test_type                 | TEXT            |   NO    | —          |    
+obsolete                  | INTEGER         |   NO    | —          |    
+chemistry_test            | INTEGER         |   NO    | —          |    
+location_test             | INTEGER         |   NO    | —          |    
+physical_test             | INTEGER         |   NO    | —          |    
+reactor_test              | INTEGER         |   NO    | —          |    
+
+
+
+Table: TestConditionTypes
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |    
+test_condition_type       | TEXT            |   NO    | —          |    
+obsolete                  | INTEGER         |   NO    | —          |    
+
+
+
+Table: FieldSampleTracking
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |    
+name                      | TEXT            |   NO    | —          |    
+note                      | TEXT            |   NO    | —          |    
+closed                    | INTEGER         |   NO    | —          |    
+person_id                 | TEXT            |   NO    | —          |    
+sample_crate_id           | INTEGER         |   NO    | —          |    
+
+
+
+Table: django_session
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+session_key               | TEXT            |   NO    | —          |    
+session_data              | TEXT            |   NO    | —          |    
+expire_date               | TIMESTAMP       |   NO    | —          |    
+
+
+
+Table: AuditLog
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |  ✅ 
+timestamp                 | TIMESTAMP       |   NO    | CURRENT_TIMESTAMP |    
+lab_request_id            | INTEGER         |   NO    | —          |    
+field_changed             | TEXT            |   NO    | —          |    
+old_value                 | TEXT            |   NO    | —          |    
+new_value                 | TEXT            |   NO    | —          |    
+user_id                   | TEXT            |   NO    | —          |    
+
+Foreign Keys:
+From lab_request_id → LabRequests(id)
+
+
+
+Table: sqlite_sequence
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+name                      |                 |   NO    | —          |    
+seq                       |                 |   NO    | —          |    
+
+
+
+Table: SchedulerSettings
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |  ✅ 
+setting_name              | TEXT            |   YES   | —          |    
+setting_value             | TEXT            |   NO    | —          |    
+last_updated              | TIMESTAMP       |   NO    | CURRENT_TIMESTAMP |    
+
+Indexes:
+  - sqlite_autoindex_SchedulerSettings_1 (Unique)
+
+
+
+Table: LoadScheduling
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |  ✅ 
+reactor_load_id           | INTEGER         |   YES   | —          |    
+testing_area              | TEXT            |   YES   | —          |    
+assigned_on               | TIMESTAMP       |   NO    | CURRENT_TIMESTAMP |    
+
+Foreign Keys:
+From reactor_load_id → ReactorLoads(id)
+
+
+
+Table: LoadBench
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |  ✅ 
+load_id                   | INTEGER         |   YES   | —          |    
+testing_area              | TEXT            |   YES   | —          |    
+assigned_date             | DATE            |   NO    | CURRENT_DATE |    
+status                    | TEXT            |   YES   | 'Backlog'  |    
+priority                  | INTEGER         |   NO    | 100        |    
+
+Indexes:
+  - idx_loadbench_status (Non-Unique)
+  - idx_loadbench_testing_area (Non-Unique)
+  - idx_loadbench_load_id (Non-Unique)
+
+Foreign Keys:
+From load_id → ReactorLoads(id)
+
+
+
+Table: LoadSchedules
+----------------------------------------------------------------------
+Column                    | Data Type       | NotNull | Default    | PK
+----------------------------------------------------------------------
+id                        | INTEGER         |   NO    | —          |  ✅ 
+load_id                   | INTEGER         |   YES   | —          |    
+bench_type                | TEXT            |   YES   | —          |    
+reactor                   | TEXT            |   NO    | —          |    
+load_start                | TIMESTAMP       |   YES   | —          |    
+load_end                  | TIMESTAMP       |   YES   | —          |    
+reactor_id                | INTEGER         |   NO    | —          |    
+
+Indexes:
+  - idx_loadschedules_load_id (Non-Unique)
+  - idx_loadschedules_unique (Unique)
+
+Foreign Keys:
+From load_id → ReactorLoads(id)
+
+
+

@@ -1,0 +1,404 @@
+Database Connection Details:
+Database Path: C:\Jarvis\Database\lemur_full_clone.db
+SQLite Version: 3.45.3
+============================================================
+
+Table: django_site
+------------------------------------------------------------
+id (INTEGER)
+domain (TEXT)
+name (TEXT)
+
+Table: django_migrations
+------------------------------------------------------------
+id (INTEGER)
+app (TEXT)
+name (TEXT)
+applied (TIMESTAMP)
+
+Table: django_content_type
+------------------------------------------------------------
+id (INTEGER)
+app_label (TEXT)
+model (TEXT)
+
+Table: auth_permission
+------------------------------------------------------------
+id (INTEGER)
+name (TEXT)
+content_type_id (INTEGER)
+codename (TEXT)
+
+Table: auth_group
+------------------------------------------------------------
+id (INTEGER)
+name (TEXT)
+
+Table: auth_group_permissions
+------------------------------------------------------------
+id (TEXT)
+group_id (TEXT)
+permission_id (TEXT)
+
+Table: auth_user
+------------------------------------------------------------
+id (INTEGER)
+password (TEXT)
+last_login (TIMESTAMP)
+is_superuser (INTEGER)
+username (TEXT)
+first_name (TEXT)
+last_name (TEXT)
+email (TEXT)
+is_staff (INTEGER)
+is_active (INTEGER)
+date_joined (TIMESTAMP)
+
+Table: TestWorkbooks
+------------------------------------------------------------
+id (INTEGER)
+name (TEXT)
+lab_request_id (INTEGER)
+
+Table: ReactorTestRuns
+------------------------------------------------------------
+id (INTEGER)
+test_sheet (TEXT)
+number (INTEGER)
+reactor_test_id (REAL)
+test_worksheet_id (INTEGER)
+
+Table: auth_user_groups
+------------------------------------------------------------
+id (INTEGER)
+user_id (INTEGER)
+group_id (INTEGER)
+
+Table: auth_user_user_permissions
+------------------------------------------------------------
+id (TEXT)
+user_id (TEXT)
+permission_id (TEXT)
+
+Table: TestWorksheets
+------------------------------------------------------------
+id (INTEGER)
+name (TEXT)
+flow_rate_nm3_per_hr (REAL)
+inlet_temperature (REAL)
+dry_O2 (REAL)
+water (REAL)
+start_time (TEXT)
+stop_time (TIMESTAMP)
+workbook_id (INTEGER)
+
+Table: django_admin_log
+------------------------------------------------------------
+id (INTEGER)
+action_time (TIMESTAMP)
+object_id (TEXT)
+object_repr (TEXT)
+action_flag (INTEGER)
+change_message (TEXT)
+content_type_id (INTEGER)
+user_id (INTEGER)
+
+Table: ReactorLocations
+------------------------------------------------------------
+id (INTEGER)
+location (TEXT)
+
+Table: RequestTypes
+------------------------------------------------------------
+id (INTEGER)
+request_type (TEXT)
+
+Table: Samples
+------------------------------------------------------------
+id (INTEGER)
+number (TEXT)
+job_number (TEXT)
+pcn (TEXT)
+date_entered (DATE)
+sample_type_id (INTEGER)
+facility_id (REAL)
+unit_id (REAL)
+
+Table: SampleLocations
+------------------------------------------------------------
+id (INTEGER)
+location (TEXT)
+
+Table: SampleNumber
+------------------------------------------------------------
+id (INTEGER)
+time_created (TIMESTAMP)
+sequence (INTEGER)
+
+Table: SampleTypes
+------------------------------------------------------------
+id (INTEGER)
+sample_type (TEXT)
+
+Table: SampleTypeLocations
+------------------------------------------------------------
+id (INTEGER)
+obsolete (INTEGER)
+location_id (INTEGER)
+sample_type_id (INTEGER)
+
+Table: SampleCrates
+------------------------------------------------------------
+id (INTEGER)
+quantity (INTEGER)
+project_number (TEXT)
+date_arrived (DATE)
+facility_id (REAL)
+unit_id (REAL)
+
+Table: SampleInspectionPhotos
+------------------------------------------------------------
+id (INTEGER)
+title (TEXT)
+photo (TEXT)
+sample_id (INTEGER)
+
+Table: SampleInspections
+------------------------------------------------------------
+entry_date (DATE)
+box_sleeve_marking (TEXT)
+other_marking (TEXT)
+flow_direction_marked (INTEGER)
+cells_high (INTEGER)
+cells_wide (INTEGER)
+plugged_cells (INTEGER)
+sample_height (REAL)
+sample_width (REAL)
+sample_length (REAL)
+crate_id (INTEGER)
+sample_id (INTEGER)
+
+Table: HoneycombSample
+------------------------------------------------------------
+id (TEXT)
+date (TEXT)
+cells_high (TEXT)
+cells_wide (TEXT)
+sample_height (TEXT)
+sample_width (TEXT)
+sample_length (TEXT)
+sample_id (TEXT)
+
+Table: LabRequestNotes
+------------------------------------------------------------
+id (INTEGER)
+created_time (TIMESTAMP)
+note (TEXT)
+created_by_id (INTEGER)
+lab_request_id (INTEGER)
+
+Table: SampleCratePhotos
+------------------------------------------------------------
+id (INTEGER)
+photo (TEXT)
+title (TEXT)
+sample_crate_id (INTEGER)
+
+Table: LabRequestSampleTestTypes
+------------------------------------------------------------
+id (INTEGER)
+lab_request_sample_id (INTEGER)
+test_type_id (INTEGER)
+
+Table: ReactorTestMeasurmentParameters
+------------------------------------------------------------
+id (TEXT)
+parameter (TEXT)
+obsolete (TEXT)
+
+Table: Laboratories
+------------------------------------------------------------
+id (INTEGER)
+lab (TEXT)
+
+Table: TestConditionMeasurmentParameters
+------------------------------------------------------------
+id (TEXT)
+condition_id (TEXT)
+measurment_parameter_id (TEXT)
+
+Table: LabRequests
+------------------------------------------------------------
+id (INTEGER)
+job_number (TEXT)
+pcn (TEXT)
+time_created (TIMESTAMP)
+sequence (INTEGER)
+time_submitted (TIMESTAMP)
+created_by_id (INTEGER)
+requested_lab_id (INTEGER)
+number (TEXT)
+request_type_id (INTEGER)
+priority (INTEGER)
+status (TEXT)
+reactor_assigned (TEXT)
+sub_reactor_id (TEXT)
+test_hours_required (REAL)
+cancelled_by (TEXT)
+cancel_reason (TEXT)
+estimated_start (TIMESTAMP)
+estimated_end (TIMESTAMP)
+
+Table: LabRequestSample
+------------------------------------------------------------
+id (INTEGER)
+lab_request_id (INTEGER)
+sample_id (INTEGER)
+reactor_test (INTEGER)
+
+Table: ChemistryResults
+------------------------------------------------------------
+id (TEXT)
+compound (TEXT)
+value (TEXT)
+test_id (TEXT)
+
+Table: Reactors
+------------------------------------------------------------
+id (INTEGER)
+name (TEXT)
+lab_id (INTEGER)
+reactor_type_id (INTEGER)
+
+Table: ReactorLoads
+------------------------------------------------------------
+id (INTEGER)
+lab_request_id (INTEGER)
+test_type_id (INTEGER)
+
+Table: ReactorLoadSamples
+------------------------------------------------------------
+id (INTEGER)
+position (INTEGER)
+available_cells (REAL)
+load_id (INTEGER)
+lab_request_sample_id (INTEGER)
+
+Table: LocationTests
+------------------------------------------------------------
+id (INTEGER)
+test_time (TEXT)
+location_id (INTEGER)
+test_type_id (INTEGER)
+lab_request_sample_id (INTEGER)
+
+Table: ReactorParameters
+------------------------------------------------------------
+id (INTEGER)
+reactor_parameter (TEXT)
+obsolete (INTEGER)
+units (TEXT)
+
+Table: ReactorTests
+------------------------------------------------------------
+id (INTEGER)
+flow_rate_nm3_per_hr (REAL)
+inlet_temperature (REAL)
+dry_O2 (REAL)
+load_id (INTEGER)
+test_condition_id (INTEGER)
+reactor_id (REAL)
+reactor_type_id (INTEGER)
+stabilization_time (TEXT)
+start_time (TIMESTAMP)
+stop_time (TIMESTAMP)
+water (REAL)
+test_order (REAL)
+
+Table: ReactorTestConditions
+------------------------------------------------------------
+id (INTEGER)
+job (TEXT)
+pcn (TEXT)
+description (TEXT)
+Av (REAL)
+Ugs (REAL)
+temperature (REAL)
+dry_O2 (REAL)
+test_type_id (INTEGER)
+water (REAL)
+
+Table: ReactorTestConditionParameters
+------------------------------------------------------------
+id (INTEGER)
+value (REAL)
+condition_id (INTEGER)
+reactor_parameter_id (INTEGER)
+
+Table: ReactorTestParameters
+------------------------------------------------------------
+id (INTEGER)
+value (REAL)
+parameter_id (INTEGER)
+location_id (INTEGER)
+run_id (INTEGER)
+
+Table: TestSampleTypes
+------------------------------------------------------------
+id (INTEGER)
+sample_type_id (INTEGER)
+test_type_id (INTEGER)
+
+Table: TestTypes
+------------------------------------------------------------
+id (INTEGER)
+test_type (TEXT)
+obsolete (INTEGER)
+chemistry_test (INTEGER)
+location_test (INTEGER)
+physical_test (INTEGER)
+reactor_test (INTEGER)
+
+Table: TestConditionTypes
+------------------------------------------------------------
+id (INTEGER)
+test_condition_type (TEXT)
+obsolete (INTEGER)
+
+Table: FieldSampleTracking
+------------------------------------------------------------
+id (INTEGER)
+name (TEXT)
+note (TEXT)
+closed (INTEGER)
+person_id (TEXT)
+sample_crate_id (INTEGER)
+
+Table: django_session
+------------------------------------------------------------
+session_key (TEXT)
+session_data (TEXT)
+expire_date (TIMESTAMP)
+
+Table: AuditLog
+------------------------------------------------------------
+id (INTEGER)
+timestamp (TIMESTAMP)
+lab_request_id (INTEGER)
+field_changed (TEXT)
+old_value (TEXT)
+new_value (TEXT)
+user_id (TEXT)
+
+Table: sqlite_sequence
+------------------------------------------------------------
+name ()
+seq ()
+
+Table: SchedulerSettings
+------------------------------------------------------------
+id (INTEGER)
+setting_name (TEXT)
+setting_value (TEXT)
+last_updated (TIMESTAMP)
+

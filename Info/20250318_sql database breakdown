@@ -1,0 +1,65 @@
+	• How to find total test count for a load: done with a subquery that: 
+		• Joins the relevant tables:
+It starts from the ReactorTests table (which records each test performed on a load) and joins with ReactorTestConditions and TestConditionTypes. This lets the query inspect the type of test condition applied to each test.
+		• Filters out unwanted tests:
+The query specifically excludes tests where the condition type (when trimmed and converted to uppercase) equals "PRESSURE DROP". This means only tests that are considered valid (i.e., not "PRESSURE DROP" tests) are counted.
+		• Counts distinct tests:
+By using COUNT(DISTINCT RTST_inner.id), it ensures that each test is counted only once even if there are duplicate or repeated entries.
+
+
+		
+	• LoadBench
+	-load_id: unique identifier for a load
+	-testing_area: which area the load was tested in [Quarter Bench or Full Bench]
+	-status: testing status of the load [Backlog, In Reactor, Test Complete, QC Complete, Report Delivered]
+	-priority: priority of the items being tested. Only used for backlog samples to manage how the order in which we test the backlog
+	
+	• LoadSchedules
+	-load_id: unique identifier for a load
+	-load_start: when the sample was loaded into the reactor for testing. Also the date we want to use if we are doing any metrics tracking by week, month, year
+	-load_end: when the sample was finished with testing
+	-reactor: which reactor the load went into. For quarter bench this is always blank, for full bench its either r1,r2,r3
+	
+	• ReactorTestConditions
+	-pcn: equivelent to project number, given to unique projects we are working on
+	-job: job number for a project
+	-description: short description from the pm that describes the condition, normally has the name and some details
+	-av: area velocity for the condition
+	-temperature: temperature for the condition
+	
+	• ReactorTests
+	-test_condition_id: used when we have to bring in test conditions and is the id for the ReactorTestConditions table. 
+	-load_id: from the ReactorLoads table, the id for that table
+	
+	• TestConditionTypes
+	-test_condition_type: the different test types that our laboratory can do
+	-SO2 Oxidation, Hg Oxidation, NOx Removal, CO Oxidation, VOC Oxidation, CH2O Oxidation, Pressure Drop [ignored]
+	
+	• RequestTypes
+	-request_type: which department is requesting the test
+	-Development, Field Samples, Prequal, Quality Plan, Regen, Takeback
+	
+	• LabRequests
+	-PM's submit a new lab request and when they do it gets a number here
+	-
+	-pcn: equivelent to project number, given to unique projects we are working on
+	-job: job number for a project
+	-number: the LR number for a specific lab request
+	-time_submitted: when the LR was submitted
+	-request_type_id: id that relates to RequestTypes
+	-created_by_id: id that relates to the person who made the request [auth_user table]
+	
+	• auth_user
+	-username: the person who submitted the request
+	
+	• ReactorTestConditionParameters:
+Contains parameter values (for example, SO2, CO, NO, and NO2) related to the test conditions.
+	• ReactorParameters:
+-Defines the various parameters (e.g., SO2, CO) that are pivoted in the query to show a single value per load.
+	-NO NO2 Hg Hg+2 SO3 SO2 CO C3H6 C3H8, NH3:NOx Molar Ratio, Temperature, NH3, CO2, VOC, H2O, O2, Cl
+	-units: the units of the various parameters
+	
+	• ReactorLoadSamples & LabRequestSample:
+	These work together to link loads (via ReactorLoads) with the samples they use.
+	Samples & SampleTypes:
+Provide information about the samples (like sample numbers and types) associated with a load.

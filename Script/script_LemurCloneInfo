@@ -1,0 +1,60 @@
+import sqlite3
+import os
+
+DB_PATH = r"C:\Jarvis\Database\lemur_full_clone.db"
+OUTPUT_DIR = r"C:\Jarvis\Info"
+os.makedirs(OUTPUT_DIR, exist_ok=True)
+OUTPUT_FILE = os.path.join(OUTPUT_DIR, "reactor_loads_tables.txt")
+
+# Connect to the SQLite database
+conn = sqlite3.connect(DB_PATH)
+cursor = conn.cursor()
+
+# List of relevant tables to export
+relevant_tables = [
+    "LabRequests",
+    "ReactorLoadSamples",
+    "ReactorLoads",
+    "ReactorParameters",
+    "ReactorTestConditionParameters",
+    "ReactorTestConditions",
+    "RequestTypes",
+    "Reactors",
+    "SampleNumber",
+    "SampleTypes",
+    "TestConditionTypes",
+    "TestTypes",
+    "Samples",
+    "LabRequestSample",
+    "LabRequestSampleTestTypes",
+    "ReactorTests"
+]
+
+with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+    for table in relevant_tables:
+        f.write(f"\n{'='*40}\nTable: {table}\n{'='*40}\n")
+
+        # Get column names
+        cursor.execute(f"PRAGMA table_info({table})")
+        columns = [info[1] for info in cursor.fetchall()]
+        f.write(" | ".join(columns) + "\n")
+        f.write("-" * 40 + "\n")
+
+        # Write table rows efficiently (batching)
+        cursor.execute(f"SELECT * FROM {table}")
+        batch_size = 500
+        rows_fetched = True
+
+        while rows_fetched:
+            rows = cursor.fetchmany(batch_size)
+            rows_fetched = len(rows) > 0
+            for row in rows:
+                row_str = " | ".join(str(item) if item is not None else "" for item in row)
+                f.write(row_str + "\n")
+        
+        f.write("\n")
+
+# Close connection
+conn.close()
+
+print(f"Table contents successfully exported to {OUTPUT_FILE}")

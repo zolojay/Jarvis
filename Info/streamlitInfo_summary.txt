@@ -1,0 +1,386 @@
+1. Basic Concepts of Streamlit
+Workflow: You write a normal Python script, add Streamlit commands (st.xyz), then run it with:
+bash
+Copy code
+streamlit run your_script.py
+This boots a local server and opens your app in a browser tab.
+Script args: If you need to pass arguments to your script, put them after --. Otherwise, they might be interpreted as Streamlit’s own args.
+Running as a module: You can also do
+bash
+Copy code
+python -m streamlit run your_script.py
+Fast dev loop: Streamlit watches for code changes; when you save, it can automatically rerun the app.
+2. Data Flow
+Rerun on changes: Any time you change your script or a user interacts with a widget, Streamlit reruns your script from top to bottom.
+Callbacks: Some widgets (like sliders or buttons) support an on_change or on_click callback. This callback executes first, then the entire script reruns.
+Caching: To skip expensive computations, use @st.cache_data. It stores results so repeated calls with the same arguments can be skipped.
+3. Displaying Data (Tables, Arrays, Data Frames)
+Magic commands: Writing a variable on its own line automatically renders it with st.write().
+st.write(): Swiss Army knife—accepts many data types (text, data frames, Matplotlib figures, etc.).
+st.dataframe():
+Displays data in an interactive table.
+You can use Pandas Styler or column configurations for custom formatting.
+Returns an object you can update with .add_rows().
+st.table():
+Displays a static table (no scrolling or sorting).
+Styling:
+Pandas Styler object (e.g., .style.highlight_max) can highlight data in interactive tables.
+column_config can define column type/formatting.
+4. Charts and Maps
+Line Chart: st.line_chart(df) will auto-generate an Altair-based line chart for numeric columns.
+Bar/Area: Similarly, st.bar_chart() or st.area_chart().
+Map: st.map(df) expects lat and lon columns in the data.
+Other Libraries: Streamlit supports Matplotlib, Altair, Plotly, deck.gl, etc.
+5. Widgets
+Concept: A widget is code that assigns a current value to a Python variable. On user interaction, the script reruns with the updated widget value.
+Examples:
+st.slider("label")
+st.button("Click me")
+st.checkbox("Check me")
+st.selectbox("Select one", ["A", "B"])
+st.multiselect("Select multiple", ["A", "B"])
+Keys: If you give widgets a key, it’s stored in st.session_state.
+6. Layout
+Sidebar: Use st.sidebar.widget_name(...) or a with st.sidebar: block to pin elements on the left side.
+Columns: st.columns(n) or st.columns([ratio1, ratio2]) for side-by-side elements.
+Expander: st.expander("title") collapses/expands a section.
+Progress bar: st.progress(), then call progress_bar.progress(i) in a loop to show progress.
+7. st.data_editor (Editable DataFrames)
+Purpose: Displays an interactive table that can be edited by the user.
+Signature:
+python
+Copy code
+edited_data = st.data_editor(
+    data, 
+    num_rows="fixed" or "dynamic",  # "dynamic" allows row addition/deletion
+    column_config={...},           # For column types, formatting, etc.
+    # ... other params ...
+)
+Return value: The edited version of your data, typically in the same data structure as was passed in. If not possible (like PySpark DF), it converts it to pandas.
+Features:
+Can add/delete rows if num_rows="dynamic".
+column_config can enforce data types, min/max, step, formatting, etc.
+hide_index=True to hide the index.
+column_order=[...] to reorder or hide columns.
+If you set a key, the returned data is stored in session state so you can see exactly which rows/cells changed.
+
+PART 2 of 4: More Built-In Widgets, Plotly Charts, Metric Display, JSON, and Additional Elements
+1. st.dataframe vs st.table
+st.dataframe(data, ...):
+
+An interactive table. You can sort columns, resize, search, and download data as CSV.
+By default, displays up to 10 rows with a scroll for more.
+Best for exploring larger datasets (scrolling, searching, etc.).
+Supports styling with Pandas Styler or Streamlit’s column configuration.
+st.table(data):
+
+A static table with no built-in scrolling or sorting.
+Good for small, simple tables or decorative layouts (like a leaderboard or confusion matrix).
+Supports Markdown formatting in cells (e.g., **bold**).
+2. Plotly Charts with st.plotly_chart
+Syntax:
+python
+Copy code
+st.plotly_chart(
+    figure_or_data,
+    use_container_width=True,
+    on_select="ignore" or "rerun" or a callback,
+    selection_mode=("points" | "box" | "lasso" | iterable),
+    ...
+)
+Key Parameters:
+use_container_width=True makes the chart stretch to the container.
+theme="streamlit" (default) applies a Streamlit-based style.
+on_select allows you to capture user selections (like lasso selects on a scatter plot).
+Selection State:
+If on_select="rerun" (or a callback), st.plotly_chart returns a dictionary describing which points were selected, box/lasso coordinates, etc.
+This can be used for interactive data exploration (select points -> run code logic).
+Theming:
+By default, Streamlit modifies the Plotly figure to match the Streamlit look.
+You can turn off the theme by theme=None.
+3. Metric Display with st.metric
+Usage:
+python
+Copy code
+st.metric(label="Temperature", value="72 °F", delta="+1.2 °F")
+Displays a large, bold metric with an optional up/down arrow indicating a delta.
+delta_color="inverse" inverts red/green coloring.
+Commonly used to show KPIs (key performance indicators).
+4. JSON Display with st.json
+Usage:
+python
+Copy code
+st.json(
+    data_or_str,
+    expanded=True or False or an integer
+)
+Renders interactive, collapsible JSON.
+You can expand/collapse levels or set a default expansion depth.
+5. Additional Built-In Widgets
+A. st.multiselect
+Usage:
+python
+Copy code
+selections = st.multiselect(
+    "Label",
+    ["Option A", "Option B", "Option C"],
+    default=["Option B"]
+)
+Lets users pick multiple items from a list of options.
+Returns a list of selected values.
+B. st.pills
+Usage:
+python
+Copy code
+selection = st.pills(
+    label="Directions",
+    options=["North", "East", "South", "West"],
+    selection_mode="multi"
+)
+Similar to selectbox/multiselect, but displays as pill-shaped buttons.
+selection_mode="single" or "multi".
+Returns either a single selected item or a list.
+C. st.number_input
+Usage:
+python
+Copy code
+num = st.number_input(
+    "Enter a number",
+    min_value=0, max_value=100,
+    step=1, value=10
+)
+Displays a numeric input with +/- controls.
+Accepts int or float. You can specify format and step size.
+D. st.date_input & st.time_input
+st.date_input:
+python
+Copy code
+selected_date = st.date_input(
+    "Pick a date",
+    value=None,  # defaults to today if None
+    min_value=..., max_value=...
+)
+Returns a datetime.date or a tuple if you pick a range.
+st.time_input:
+python
+Copy code
+selected_time = st.time_input(
+    "Pick a time",
+    value=None  # defaults to now if None
+)
+Returns a datetime.time, or None if empty.
+E. st.bar_chart
+Quick “sugar” around Altair bar charts. For example:
+python
+Copy code
+st.bar_chart(df)
+df columns become bars. You can specify x, y, color, stack, horizontal, etc.
+6. Layout & Containers (Extra Details)
+st.columns([...]):
+You can do side-by-side elements. Each returned column can be treated like a mini “container”.
+E.g., col1, col2 = st.columns(2)
+with col1: …, with col2: … or col1.button(...)
+st.container():
+Invisible container you can fill with elements, or mutate out-of-order if you capture the container object.
+st.expander(label):
+A collapsible panel. Put content inside a with st.expander("Details"): block.
+st.popover(...):
+A button-like element that, when clicked, shows or hides a small popover panel. (Similar idea to a dropdown.)
+7. Progress & Status
+st.progress():
+Creates a progress bar object. Repeated calls to bar.progress(i) update it.
+Use in loops to show iteration progress.
+A final st.write("done!") can mark completion.
+That’s the end of Part 2.
+
+To continue into more advanced topics—like Session State, Caching Decorators (st.cache_data / st.cache_resource), Theming, Multipage Apps, and concurrency—simply say:
+
+kotlin
+Copy code
+continue
+and I'll provide Part 3.
+
+You said:
+continue
+Request for o1 pro mode
+Finished reasoning
+Below is Part 3 of the comprehensive summary on Streamlit. If you need more after reading, just say continue for the final Part 4.
+
+PART 3 of 4: Session State, Caching Decorators, Theming, Multipage Apps, Concurrency, and Custom Classes
+1. Session State
+What it is: A place to store data across reruns in a single user’s browser session.
+How it works: Each time Streamlit reruns your script, st.session_state preserves its contents instead of resetting.
+Syntax:
+python
+Copy code
+if "counter" not in st.session_state:
+    st.session_state.counter = 0
+
+st.session_state.counter += 1
+st.write(st.session_state.counter)
+This example counts how many times the script has run for the user.
+Widgets:
+If a widget has a key, its value is automatically kept in st.session_state[key].
+You can also manipulate widget values via st.session_state[...].
+Use cases:
+Storing user-specific data, like random seeds or partially completed forms.
+Progressing through multi-step workflows (like a multi-stage input process).
+Preventing recalculation that caching does not address (e.g., data specific to one user, not shared globally).
+2. Caching Decorators
+Streamlit provides two primary caching decorators:
+
+@st.cache_data
+
+Purpose: Cache data—i.e. the return of functions that produce data structures (e.g., data frames, lists).
+Behavior: Each time you call the function with the same inputs, Streamlit returns the cached result instead of recomputing.
+Returns: A copy of the data. This avoids unwanted side effects if your code mutates the cached return value.
+Signature example:
+python
+Copy code
+@st.cache_data
+def compute_stats(data):
+    # do expensive calculations
+    return stats_df
+Hashing:
+Streamlit hashes arguments to decide if it’s seen those inputs before.
+If a parameter name starts with _, that parameter is ignored in hashing.
+You can customize hashing with hash_funcs={...}.
+@st.cache_resource
+
+Purpose: Cache global resources—like database connections, ML models, etc.
+Behavior: The return is not copied. The same object is reused across sessions, so be mindful of concurrency and thread safety.
+Example:
+python
+Copy code
+@st.cache_resource
+def connect_to_db():
+    return db_connection
+Good for expensive setups where all users can share the same resource instance.
+Clearing:
+Each function gets a .clear() method for selectively clearing.
+Or you can clear all data caches with st.cache_data.clear() or all resource caches with st.cache_resource.clear().
+3. Theming
+Built-In Light/Dark: Streamlit detects system/browser preference.
+Custom Themes: Add a [theme] section to your config.toml or set them in “Edit active theme” (in local dev).
+toml
+Copy code
+[theme]
+primaryColor="#F63366"
+backgroundColor="#FFFFFF"
+secondaryBackgroundColor="#F0F2F6"
+textColor="#262730"
+Automatic: If a user overrides theme from their personal settings, that takes precedence.
+4. Multipage Apps
+Streamlit supports creating multiple pages to split larger apps:
+
+Option A: Using a pages/ Directory
+Put multiple Python files in a pages/ folder alongside your main script.
+Streamlit automatically builds a sidebar-based page selector.
+E.g., structure:
+Copy code
+my_app/
+├── pages/
+│   ├── page_1.py
+│   └── page_2.py
+└── app.py
+Filenames can be prefixed with numbers to define page order (e.g., 1_Introduction.py, 2_Analysis.py).
+Option B: Using st.Page and st.navigation (Advanced)
+Gives you maximum control over page labels, icons, and how you connect them.
+In your main script:
+python
+Copy code
+import streamlit as st
+
+pg = st.navigation([
+    st.Page("page_1.py", title="Page 1", icon="🦊"),
+    st.Page("page_2.py", title="Page 2", icon="🐼")
+])
+pg.run()
+You can create pages from Python callables, not just files. (Example: st.Page(my_func, title="Some Page"))
+Navigation Behavior:
+The selected page reloads with each user action.
+Programmatic navigation:
+st.switch_page("Page Name") can jump the user to a named page.
+st.page_link can build a link to another page.
+5. Concurrency (Multithreading, etc.)
+Streamlit uses threads internally:
+A main server thread.
+A script thread for each user’s rerun.
+If you create your own threads, be aware that many Streamlit commands need a ScriptRunContext (they fail if used from outside the script thread).
+Workarounds:
+Don’t call st.* commands from custom threads—just compute results, then show them in the main thread.
+Or attach Streamlit’s ScriptRunContext manually (add_script_run_ctx(thread, get_script_run_ctx()))—but it’s not officially supported, may have unexpected side effects.
+6. Custom Python Classes in Apps
+Pitfall: If a class is defined inside the main script, it redefines on every rerun. This can break equality checks or cause issues storing class instances in Session State.
+Solutions:
+Define classes in a separate module: Then they don’t get redefined each rerun.
+Implement __eq__ or store your class data in a serialized string, so equality checks rely on internal data rather than class identity.
+Use @st.cache_resource for “singleton” resources.
+Enum classes:
+If you use Enum members for a widget’s options, repeated definitions can break equality.
+enumCoercion config (enabled by default in newer Streamlit) automatically coerces Enum instances from previous reruns to the latest definition so equality checks work.
+That’s the end of Part 3.
+
+To see the final segment (Part 4) with a short bullet recap of everything covered, just say:
+
+kotlin
+Copy code
+continue
+and I’ll provide a concise final summary.
+
+You said:
+continue
+Request for o1 pro mode
+Finished reasoning
+Below is Part 4, the final segment. It’s a concise bullet-point recap of the major topics we covered in Parts 1–3.
+
+PART 4 of 4: Quick-Reference Recap
+1. Basic Concepts
+Run apps: streamlit run your_app.py or python -m streamlit run your_app.py.
+Auto-reruns: On code save or widget interaction, the entire script reruns top to bottom.
+Dev flow: Keep code editor and browser side by side for immediate feedback.
+2. Data Flow and Updates
+Widgets: Setting a widget’s key puts its value into st.session_state.
+on_change/on_click: Callback functions can pre-run logic before the main rerun.
+3. Displaying Data
+st.dataframe: Interactive table (sortable, searchable, can format columns, etc.).
+st.table: Static table (no scrolling/sorting). Great for small data or stylized tables.
+Magic commands: A plain variable or literal on its own line is auto-rendered with st.write().
+Data editing: st.data_editor allows users to edit tables (insert/delete rows, cell edits).
+4. Charts and Maps
+Quick: st.line_chart, st.bar_chart, st.area_chart, st.map for easy plots.
+Plotly/Altair: Use st.plotly_chart(fig) or st.altair_chart(chart) for full customization.
+5. Widgets (Assorted)
+Text: st.text_input, st.text_area
+Number: st.number_input
+Selection: st.selectbox, st.multiselect, st.radio, st.pills
+Date/Time: st.date_input, st.time_input
+Check/Buttons: st.checkbox, st.button, st.download_button
+Slider: st.slider
+Progress: st.progress()
+Metric: st.metric(label, value, delta)
+6. Layout and Organization
+Sidebar: st.sidebar.xyz
+Columns: col1, col2 = st.columns(...)
+Container: with st.container(): ... for grouping
+Expander: with st.expander("Title"): to collapse content
+Popover: A small pop-up container: st.popover("Label")
+7. Session State
+Retain across reruns: st.session_state.my_var = something
+Use cases: Multi-step forms, storing per-user data, preserving values for partial computations.
+8. Caching
+@st.cache_data: For returning data objects (like data frames). Creates copies, preventing mutation side effects.
+@st.cache_resource: For global resources (DB connections, ML models). Returns a single shared object.
+Clear: .clear() on specific function, or st.cache_data.clear() / st.cache_resource.clear() globally.
+9. Theming
+Built-in: Light/Dark or system preference by default.
+Custom: Config [theme] in config.toml, or “Edit active theme” in the local dev “Settings” menu.
+10. Multipage Apps
+Simple: Put extra scripts in a /pages folder, automatically gets a sidebar page selector.
+Advanced: st.Page(...) + st.navigation([...]) for more control.
+11. Concurrency
+Script vs. Server: Streamlit has a main server thread + a script thread for each user session.
+Creating threads: If you do so manually, avoid calling st.xyz from custom threads unless you attach a ScriptRunContext. Not officially supported.
+12. Custom Classes
+Redefinition: Classes defined in the main script re-instantiate on each rerun. This can break equality checks if storing objects in session_state.
+Fixes: Move class definitions to separate modules, implement __eq__, or store data in an alternative format. Enums can be coerced via enumCoercion.

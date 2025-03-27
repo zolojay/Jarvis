@@ -1,0 +1,586 @@
+Database Metadata Report
+========================
+
+Tables and Columns:
+-------------------
+Table: dbo.auth_group
+    Column 1: id - int, Nullable: NO
+    Column 2: name - nvarchar(150), Nullable: NO
+
+Table: dbo.auth_group_permissions
+    Column 1: id - bigint, Nullable: NO
+    Column 2: group_id - int, Nullable: NO
+    Column 3: permission_id - int, Nullable: NO
+
+Table: dbo.auth_permission
+    Column 1: id - int, Nullable: NO
+    Column 2: name - nvarchar(255), Nullable: NO
+    Column 3: content_type_id - int, Nullable: NO
+    Column 4: codename - nvarchar(100), Nullable: NO
+
+Table: dbo.auth_user
+    Column 1: id - int, Nullable: NO
+    Column 2: password - nvarchar(128), Nullable: NO
+    Column 3: last_login - datetime2, Nullable: YES
+    Column 4: is_superuser - bit, Nullable: NO
+    Column 5: username - nvarchar(150), Nullable: NO
+    Column 6: first_name - nvarchar(150), Nullable: NO
+    Column 7: last_name - nvarchar(150), Nullable: NO
+    Column 8: email - nvarchar(254), Nullable: NO
+    Column 9: is_staff - bit, Nullable: NO
+    Column 10: is_active - bit, Nullable: NO
+    Column 11: date_joined - datetime2, Nullable: NO
+
+Table: dbo.auth_user_groups
+    Column 1: id - bigint, Nullable: NO
+    Column 2: user_id - int, Nullable: NO
+    Column 3: group_id - int, Nullable: NO
+
+Table: dbo.auth_user_user_permissions
+    Column 1: id - bigint, Nullable: NO
+    Column 2: user_id - int, Nullable: NO
+    Column 3: permission_id - int, Nullable: NO
+
+Table: dbo.ChemistryResults
+    Column 1: id - int, Nullable: NO
+    Column 2: compound - nvarchar(25), Nullable: NO
+    Column 3: value - float, Nullable: NO
+    Column 4: test_id - int, Nullable: NO
+
+Table: dbo.django_admin_log
+    Column 1: id - int, Nullable: NO
+    Column 2: action_time - datetime2, Nullable: NO
+    Column 3: object_id - nvarchar(-1), Nullable: YES
+    Column 4: object_repr - nvarchar(200), Nullable: NO
+    Column 5: action_flag - smallint, Nullable: NO
+    Column 6: change_message - nvarchar(-1), Nullable: NO
+    Column 7: content_type_id - int, Nullable: YES
+    Column 8: user_id - int, Nullable: NO
+
+Table: dbo.django_content_type
+    Column 1: id - int, Nullable: NO
+    Column 2: app_label - nvarchar(100), Nullable: NO
+    Column 3: model - nvarchar(100), Nullable: NO
+
+Table: dbo.django_migrations
+    Column 1: id - bigint, Nullable: NO
+    Column 2: app - nvarchar(255), Nullable: NO
+    Column 3: name - nvarchar(255), Nullable: NO
+    Column 4: applied - datetime2, Nullable: NO
+
+Table: dbo.django_session
+    Column 1: session_key - nvarchar(40), Nullable: NO
+    Column 2: session_data - nvarchar(-1), Nullable: NO
+    Column 3: expire_date - datetime2, Nullable: NO
+
+Table: dbo.django_site
+    Column 1: id - int, Nullable: NO
+    Column 2: domain - nvarchar(100), Nullable: NO
+    Column 3: name - nvarchar(50), Nullable: NO
+
+Table: dbo.FieldSampleTracking
+    Column 1: id - int, Nullable: NO
+    Column 2: name - nvarchar(140), Nullable: NO
+    Column 3: note - nvarchar(280), Nullable: YES
+    Column 4: closed - bit, Nullable: NO
+    Column 5: person_id - int, Nullable: YES
+    Column 6: sample_crate_id - int, Nullable: YES
+
+Table: dbo.HoneycombSample
+    Column 1: id - bigint, Nullable: NO
+    Column 2: date - date, Nullable: NO
+    Column 3: cells_high - int, Nullable: YES
+    Column 4: cells_wide - int, Nullable: YES
+    Column 5: sample_height - float, Nullable: YES
+    Column 6: sample_width - float, Nullable: YES
+    Column 7: sample_length - int, Nullable: NO
+    Column 8: sample_id - int, Nullable: NO
+
+Table: dbo.Laboratories
+    Column 1: id - int, Nullable: NO
+    Column 2: lab - nvarchar(70), Nullable: NO
+
+Table: dbo.LabRequestNotes
+    Column 1: id - int, Nullable: NO
+    Column 2: created_time - datetime2, Nullable: NO
+    Column 3: note - nvarchar(250), Nullable: NO
+    Column 4: created_by_id - int, Nullable: NO
+    Column 5: lab_request_id - int, Nullable: NO
+
+Table: dbo.LabRequests
+    Column 1: id - int, Nullable: NO
+    Column 2: job_number - nvarchar(140), Nullable: YES
+    Column 3: pcn - nvarchar(15), Nullable: YES
+    Column 4: time_created - datetime2, Nullable: NO
+    Column 5: sequence - int, Nullable: NO
+    Column 6: time_submitted - datetime2, Nullable: YES
+    Column 7: created_by_id - int, Nullable: NO
+    Column 8: requested_lab_id - int, Nullable: YES
+    Column 9: number - nvarchar(50), Nullable: NO
+    Column 10: request_type_id - int, Nullable: NO
+
+Table: dbo.LabRequestSample
+    Column 1: id - int, Nullable: NO
+    Column 2: lab_request_id - int, Nullable: NO
+    Column 3: sample_id - int, Nullable: NO
+    Column 4: reactor_test - bit, Nullable: NO
+
+Table: dbo.LabRequestSampleTestTypes
+    Column 1: id - int, Nullable: NO
+    Column 2: lab_request_sample_id - int, Nullable: NO
+    Column 3: test_type_id - int, Nullable: NO
+
+Table: dbo.LocationTests
+    Column 1: id - int, Nullable: NO
+    Column 2: test_time - datetime2, Nullable: YES
+    Column 3: location_id - int, Nullable: NO
+    Column 4: test_type_id - int, Nullable: NO
+    Column 5: lab_request_sample_id - int, Nullable: YES
+
+Table: dbo.ReactorLoads
+    Column 1: id - int, Nullable: NO
+    Column 2: lab_request_id - int, Nullable: NO
+    Column 3: test_type_id - int, Nullable: NO
+
+Table: dbo.ReactorLoadSamples
+    Column 1: id - int, Nullable: NO
+    Column 2: position - int, Nullable: NO
+    Column 3: available_cells - int, Nullable: YES
+    Column 4: load_id - int, Nullable: NO
+    Column 5: lab_request_sample_id - int, Nullable: NO
+
+Table: dbo.ReactorLocations
+    Column 1: id - int, Nullable: NO
+    Column 2: location - nvarchar(75), Nullable: NO
+
+Table: dbo.ReactorParameters
+    Column 1: id - int, Nullable: NO
+    Column 2: reactor_parameter - nvarchar(140), Nullable: NO
+    Column 3: obsolete - bit, Nullable: NO
+    Column 4: units - nvarchar(50), Nullable: NO
+
+Table: dbo.Reactors
+    Column 1: id - int, Nullable: NO
+    Column 2: name - nvarchar(140), Nullable: NO
+    Column 3: lab_id - int, Nullable: NO
+    Column 4: reactor_type_id - int, Nullable: NO
+
+Table: dbo.ReactorTestConditionParameters
+    Column 1: id - int, Nullable: NO
+    Column 2: value - float, Nullable: NO
+    Column 3: condition_id - int, Nullable: NO
+    Column 4: reactor_parameter_id - int, Nullable: NO
+
+Table: dbo.ReactorTestConditions
+    Column 1: id - int, Nullable: NO
+    Column 2: job - nvarchar(70), Nullable: YES
+    Column 3: pcn - nvarchar(70), Nullable: YES
+    Column 4: description - nvarchar(140), Nullable: NO
+    Column 5: Av - float, Nullable: YES
+    Column 6: Ugs - float, Nullable: YES
+    Column 7: temperature - float, Nullable: NO
+    Column 8: dry_O2 - float, Nullable: NO
+    Column 9: test_type_id - int, Nullable: YES
+    Column 10: water - float, Nullable: NO
+
+Table: dbo.ReactorTestMeasurmentParameters
+    Column 1: id - int, Nullable: NO
+    Column 2: parameter - nvarchar(50), Nullable: NO
+    Column 3: obsolete - bit, Nullable: NO
+
+Table: dbo.ReactorTestParameters
+    Column 1: id - int, Nullable: NO
+    Column 2: value - float, Nullable: NO
+    Column 3: parameter_id - int, Nullable: NO
+    Column 4: location_id - int, Nullable: NO
+    Column 5: run_id - int, Nullable: NO
+
+Table: dbo.ReactorTestRuns
+    Column 1: id - int, Nullable: NO
+    Column 2: test_sheet - nvarchar(75), Nullable: YES
+    Column 3: number - int, Nullable: NO
+    Column 4: reactor_test_id - int, Nullable: YES
+    Column 5: test_worksheet_id - int, Nullable: NO
+
+Table: dbo.ReactorTests
+    Column 1: id - int, Nullable: NO
+    Column 2: flow_rate_nm3_per_hr - float, Nullable: YES
+    Column 3: inlet_temperature - float, Nullable: YES
+    Column 4: dry_O2 - float, Nullable: YES
+    Column 5: load_id - int, Nullable: YES
+    Column 6: test_condition_id - int, Nullable: YES
+    Column 7: reactor_id - int, Nullable: YES
+    Column 8: reactor_type_id - int, Nullable: NO
+    Column 9: stabilization_time - float, Nullable: YES
+    Column 10: start_time - datetime2, Nullable: YES
+    Column 11: stop_time - datetime2, Nullable: YES
+    Column 12: water - float, Nullable: YES
+    Column 13: test_order - int, Nullable: YES
+
+Table: dbo.RequestTypes
+    Column 1: id - int, Nullable: NO
+    Column 2: request_type - nvarchar(70), Nullable: NO
+
+Table: dbo.SampleCratePhotos
+    Column 1: id - int, Nullable: NO
+    Column 2: photo - nvarchar(100), Nullable: NO
+    Column 3: title - nvarchar(140), Nullable: NO
+    Column 4: sample_crate_id - int, Nullable: NO
+
+Table: dbo.SampleCrates
+    Column 1: id - int, Nullable: NO
+    Column 2: quantity - int, Nullable: NO
+    Column 3: project_number - nvarchar(45), Nullable: YES
+    Column 4: date_arrived - date, Nullable: NO
+    Column 5: facility_id - bigint, Nullable: YES
+    Column 6: unit_id - bigint, Nullable: YES
+
+Table: dbo.SampleInspectionPhotos
+    Column 1: id - int, Nullable: NO
+    Column 2: title - nvarchar(140), Nullable: NO
+    Column 3: photo - nvarchar(100), Nullable: NO
+    Column 4: sample_id - int, Nullable: NO
+
+Table: dbo.SampleInspections
+    Column 1: entry_date - date, Nullable: NO
+    Column 2: box_sleeve_marking - nvarchar(140), Nullable: NO
+    Column 3: other_marking - nvarchar(140), Nullable: NO
+    Column 4: flow_direction_marked - bit, Nullable: NO
+    Column 5: cells_high - int, Nullable: NO
+    Column 6: cells_wide - int, Nullable: NO
+    Column 7: plugged_cells - int, Nullable: NO
+    Column 8: sample_height - float, Nullable: NO
+    Column 9: sample_width - float, Nullable: NO
+    Column 10: sample_length - float, Nullable: NO
+    Column 11: crate_id - int, Nullable: NO
+    Column 12: sample_id - int, Nullable: NO
+
+Table: dbo.SampleLocations
+    Column 1: id - int, Nullable: NO
+    Column 2: location - nvarchar(140), Nullable: NO
+
+Table: dbo.SampleNumber
+    Column 1: id - int, Nullable: NO
+    Column 2: time_created - datetime2, Nullable: NO
+    Column 3: sequence - int, Nullable: NO
+
+Table: dbo.Samples
+    Column 1: id - int, Nullable: NO
+    Column 2: number - nvarchar(140), Nullable: NO
+    Column 3: job_number - nvarchar(140), Nullable: YES
+    Column 4: pcn - nvarchar(15), Nullable: YES
+    Column 5: date_entered - date, Nullable: NO
+    Column 6: sample_type_id - int, Nullable: NO
+    Column 7: facility_id - bigint, Nullable: YES
+    Column 8: unit_id - bigint, Nullable: YES
+
+Table: dbo.SampleTypeLocations
+    Column 1: id - int, Nullable: NO
+    Column 2: obsolete - bit, Nullable: NO
+    Column 3: location_id - int, Nullable: NO
+    Column 4: sample_type_id - int, Nullable: NO
+
+Table: dbo.SampleTypes
+    Column 1: id - int, Nullable: NO
+    Column 2: sample_type - nvarchar(140), Nullable: NO
+
+Table: dbo.TestConditionMeasurmentParameters
+    Column 1: id - int, Nullable: NO
+    Column 2: condition_id - int, Nullable: NO
+    Column 3: measurment_parameter_id - int, Nullable: NO
+
+Table: dbo.TestConditionTypes
+    Column 1: id - int, Nullable: NO
+    Column 2: test_condition_type - nvarchar(70), Nullable: NO
+    Column 3: obsolete - bit, Nullable: NO
+
+Table: dbo.TestSampleTypes
+    Column 1: id - int, Nullable: NO
+    Column 2: sample_type_id - int, Nullable: NO
+    Column 3: test_type_id - int, Nullable: NO
+
+Table: dbo.TestTypes
+    Column 1: id - int, Nullable: NO
+    Column 2: test_type - nvarchar(140), Nullable: NO
+    Column 3: obsolete - bit, Nullable: NO
+    Column 4: chemistry_test - bit, Nullable: NO
+    Column 5: location_test - bit, Nullable: NO
+    Column 6: physical_test - bit, Nullable: NO
+    Column 7: reactor_test - bit, Nullable: NO
+
+Table: dbo.TestWorkbooks
+    Column 1: id - int, Nullable: NO
+    Column 2: name - nvarchar(255), Nullable: NO
+    Column 3: lab_request_id - int, Nullable: NO
+
+Table: dbo.TestWorksheets
+    Column 1: id - int, Nullable: NO
+    Column 2: name - nvarchar(140), Nullable: NO
+    Column 3: flow_rate_nm3_per_hr - float, Nullable: NO
+    Column 4: inlet_temperature - float, Nullable: NO
+    Column 5: dry_O2 - float, Nullable: NO
+    Column 6: water - float, Nullable: NO
+    Column 7: start_time - datetime2, Nullable: YES
+    Column 8: stop_time - datetime2, Nullable: NO
+    Column 9: workbook_id - int, Nullable: YES
+
+Indexes:
+--------
+Table: auth_group
+    Index: auth_group_name_a6ea08ec_uniq, Type: NONCLUSTERED, Unique: True, Column (Ordinal 1): name
+    Index: PK__auth_gro__3213E83F4FA12A7D, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+Table: auth_group_permissions
+    Index: auth_group_permissions_group_id_b120cbf9, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): group_id
+    Index: auth_group_permissions_group_id_permission_id_0cd325b0_uniq, Type: NONCLUSTERED, Unique: True, Column (Ordinal 1): group_id
+    Index: auth_group_permissions_group_id_permission_id_0cd325b0_uniq, Type: NONCLUSTERED, Unique: True, Column (Ordinal 2): permission_id
+    Index: auth_group_permissions_permission_id_84c5c92e, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): permission_id
+    Index: PK__auth_gro__3213E83FE8D02002, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+Table: auth_permission
+    Index: auth_permission_content_type_id_2f476e4b, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): content_type_id
+    Index: auth_permission_content_type_id_codename_01ab375a_uniq, Type: NONCLUSTERED, Unique: True, Column (Ordinal 1): content_type_id
+    Index: auth_permission_content_type_id_codename_01ab375a_uniq, Type: NONCLUSTERED, Unique: True, Column (Ordinal 2): codename
+    Index: PK__auth_per__3213E83FA2F469DF, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+Table: auth_user
+    Index: auth_user_username_6821ab7c_uniq, Type: NONCLUSTERED, Unique: True, Column (Ordinal 1): username
+    Index: PK__auth_use__3213E83F3CED189A, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+Table: auth_user_groups
+    Index: auth_user_groups_group_id_97559544, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): group_id
+    Index: auth_user_groups_user_id_6a12ed8b, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): user_id
+    Index: auth_user_groups_user_id_group_id_94350c0c_uniq, Type: NONCLUSTERED, Unique: True, Column (Ordinal 1): user_id
+    Index: auth_user_groups_user_id_group_id_94350c0c_uniq, Type: NONCLUSTERED, Unique: True, Column (Ordinal 2): group_id
+    Index: PK__auth_use__3213E83F71EBB362, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+Table: auth_user_user_permissions
+    Index: auth_user_user_permissions_permission_id_1fbb5f2c, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): permission_id
+    Index: auth_user_user_permissions_user_id_a95ead1b, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): user_id
+    Index: auth_user_user_permissions_user_id_permission_id_14a6b632_uniq, Type: NONCLUSTERED, Unique: True, Column (Ordinal 1): user_id
+    Index: auth_user_user_permissions_user_id_permission_id_14a6b632_uniq, Type: NONCLUSTERED, Unique: True, Column (Ordinal 2): permission_id
+    Index: PK__auth_use__3213E83FCBC58CD6, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+Table: ChemistryResults
+    Index: ChemistryResults_test_id_c9690a44, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): test_id
+    Index: PK__Chemistr__3213E83FD1A85F22, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+Table: django_admin_log
+    Index: django_admin_log_content_type_id_c4bce8eb, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): content_type_id
+    Index: django_admin_log_user_id_c564eba6, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): user_id
+    Index: PK__django_a__3213E83F655D66C9, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+Table: django_content_type
+    Index: django_content_type_app_label_model_76bd3d3b_uniq, Type: NONCLUSTERED, Unique: True, Column (Ordinal 1): app_label
+    Index: django_content_type_app_label_model_76bd3d3b_uniq, Type: NONCLUSTERED, Unique: True, Column (Ordinal 2): model
+    Index: PK__django_c__3213E83F584D9F4A, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+Table: django_migrations
+    Index: PK__django_m__3213E83F797F0817, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+Table: django_session
+    Index: django_session_expire_date_a5c62663, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): expire_date
+    Index: PK__django_s__B3BA0F1F8735FD24, Type: CLUSTERED, Unique: True, Column (Ordinal 1): session_key
+Table: django_site
+    Index: django_site_domain_a2e37b91_uniq, Type: NONCLUSTERED, Unique: True, Column (Ordinal 1): domain
+    Index: PK__django_s__3213E83F72783D9B, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+Table: FieldSampleTracking
+    Index: FieldSampleTracking_person_id_c768ffaf, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): person_id
+    Index: FieldSampleTracking_sample_crate_id_2afd9a74, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): sample_crate_id
+    Index: PK__FieldSam__3213E83F2D833D43, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+Table: HoneycombSample
+    Index: PK__Honeycom__3213E83FBE47FB0A, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+    Index: UQ__Honeycom__84ACF7BB73D155F8, Type: NONCLUSTERED, Unique: True, Column (Ordinal 1): sample_id
+Table: Laboratories
+    Index: PK__Laborato__3213E83F31224C93, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+    Index: UQ__Laborato__DE101A0204B3A289, Type: NONCLUSTERED, Unique: True, Column (Ordinal 1): lab
+Table: LabRequestNotes
+    Index: LabRequestNotes_created_by_id_d4797a0f, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): created_by_id
+    Index: LabRequestNotes_lab_request_id_6a1bc3bc, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): lab_request_id
+    Index: PK__LabReque__3213E83FED0814FD, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+Table: LabRequests
+    Index: LabRequests_created_by_id_e768645c, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): created_by_id
+    Index: LabRequests_job_number_a9bb792c, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): job_number
+    Index: LabRequests_number_80702312, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): number
+    Index: LabRequests_pcn_becf8dca, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): pcn
+    Index: LabRequests_request_type_id_70755a2e, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): request_type_id
+    Index: LabRequests_requested_lab_id_ecb87d91, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): requested_lab_id
+    Index: PK__LabReque__3213E83F502D34A8, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+Table: LabRequestSample
+    Index: LabRequestSample_lab_request_id_5945ef0c, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): lab_request_id
+    Index: LabRequestSample_sample_id_7d85b2b7, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): sample_id
+    Index: LabRequestSample_sample_id_lab_request_id_c53d7699_uniq, Type: NONCLUSTERED, Unique: True, Column (Ordinal 1): sample_id
+    Index: LabRequestSample_sample_id_lab_request_id_c53d7699_uniq, Type: NONCLUSTERED, Unique: True, Column (Ordinal 2): lab_request_id
+    Index: PK__LabReque__3213E83F3DBD6952, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+Table: LabRequestSampleTestTypes
+    Index: LabRequestSampleTestTypes_lab_request_sample_id_e12c6ea4, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): lab_request_sample_id
+    Index: LabRequestSampleTestTypes_lab_request_sample_id_test_type_id_6f5bfbf6_uniq, Type: NONCLUSTERED, Unique: True, Column (Ordinal 1): lab_request_sample_id
+    Index: LabRequestSampleTestTypes_lab_request_sample_id_test_type_id_6f5bfbf6_uniq, Type: NONCLUSTERED, Unique: True, Column (Ordinal 2): test_type_id
+    Index: LabRequestSampleTestTypes_test_type_id_2a2a9a56, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): test_type_id
+    Index: PK__LabReque__3213E83F15A00880, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+Table: LocationTests
+    Index: LocationTests_lab_request_sample_id_c88bb194, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): lab_request_sample_id
+    Index: LocationTests_lab_request_sample_id_test_type_id_location_id_d7f03764_uniq, Type: NONCLUSTERED, Unique: True, Column (Ordinal 1): lab_request_sample_id
+    Index: LocationTests_lab_request_sample_id_test_type_id_location_id_d7f03764_uniq, Type: NONCLUSTERED, Unique: True, Column (Ordinal 2): test_type_id
+    Index: LocationTests_lab_request_sample_id_test_type_id_location_id_d7f03764_uniq, Type: NONCLUSTERED, Unique: True, Column (Ordinal 3): location_id
+    Index: LocationTests_location_id_d8277c24, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): location_id
+    Index: LocationTests_test_type_id_a1cd933f, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): test_type_id
+    Index: PK__Location__3213E83F67D63E4F, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+Table: ReactorLoads
+    Index: PK__ReactorL__3213E83F4F8CE5EF, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+    Index: ReactorLoads_lab_request_id_1a7885ac, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): lab_request_id
+    Index: ReactorLoads_test_type_id_2778ed1f, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): test_type_id
+Table: ReactorLoadSamples
+    Index: PK__ReactorL__3213E83F5404198D, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+    Index: ReactorLoadSamples_lab_request_sample_id_b73cde30, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): lab_request_sample_id
+    Index: ReactorLoadSamples_load_id_a18853c2, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): load_id
+    Index: ReactorLoadSamples_load_id_position_9a3c41b0_uniq, Type: NONCLUSTERED, Unique: True, Column (Ordinal 1): load_id
+    Index: ReactorLoadSamples_load_id_position_9a3c41b0_uniq, Type: NONCLUSTERED, Unique: True, Column (Ordinal 2): position
+Table: ReactorLocations
+    Index: PK__ReactorL__3213E83F6C4CE7A2, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+    Index: ReactorLoca_locatio_ffcd52_idx, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): location
+Table: ReactorParameters
+    Index: PK__ReactorP__3213E83F303A8599, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+    Index: UQ__ReactorP__F9C069AB19163945, Type: NONCLUSTERED, Unique: True, Column (Ordinal 1): reactor_parameter
+Table: Reactors
+    Index: PK__Reactors__3213E83F943D2B89, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+    Index: Reactors_lab_id_84ab20ab, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): lab_id
+    Index: Reactors_reactor_type_id_a14e3b2b, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): reactor_type_id
+Table: ReactorTestConditionParameters
+    Index: PK__ReactorT__3213E83F259FF8F1, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+    Index: ReactorTestConditionParameters_condition_id_79b1228d, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): condition_id
+    Index: ReactorTestConditionParameters_parameter_id_e1201d92, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): reactor_parameter_id
+Table: ReactorTestConditions
+    Index: PK__ReactorT__3213E83FE5CBB22C, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+    Index: ReactorTestConditions_test_type_id_e14b6904, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): test_type_id
+Table: ReactorTestMeasurmentParameters
+    Index: PK__ReactorT__3213E83FF9A556A2, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+    Index: UQ__ReactorT__F9C069AB812ABAD1, Type: NONCLUSTERED, Unique: True, Column (Ordinal 1): parameter
+Table: ReactorTestParameters
+    Index: PK__ReactorT__3213E83F35EC89FA, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+    Index: ReactorTestParameters_location_id_9be1dd36, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): location_id
+    Index: ReactorTestParameters_parameter_id_d5a1199e, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): parameter_id
+    Index: ReactorTestParameters_run_id_93381a7b, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): run_id
+Table: ReactorTestRuns
+    Index: PK__ReactorT__3213E83F897F6EC2, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+    Index: ReactorTest_number_83e00e_idx, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): number
+    Index: ReactorTestRuns_reactor_test_id_9797d4e5, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): reactor_test_id
+    Index: ReactorTestRuns_reactor_test_id_number_ce7d7281_uniq, Type: NONCLUSTERED, Unique: True, Column (Ordinal 1): reactor_test_id
+    Index: ReactorTestRuns_reactor_test_id_number_ce7d7281_uniq, Type: NONCLUSTERED, Unique: True, Column (Ordinal 2): number
+    Index: ReactorTestRuns_test_worksheet_id_06aa5a71, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): test_worksheet_id
+Table: ReactorTests
+    Index: PK__ReactorT__3213E83F5CBE5D07, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+    Index: ReactorTests_load_id_ccad8c05, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): load_id
+    Index: ReactorTests_reactor_id_e5712fd0, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): reactor_id
+    Index: ReactorTests_reactor_type_id_cc5ef4b0, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): reactor_type_id
+    Index: ReactorTests_test_condition_id_a7be440d, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): test_condition_id
+Table: RequestTypes
+    Index: PK__RequestT__3213E83FCB31ABB7, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+    Index: UQ__RequestT__DFCC32D8AF09F6BE, Type: NONCLUSTERED, Unique: True, Column (Ordinal 1): request_type
+Table: SampleCratePhotos
+    Index: PK__samples___3213E83FDA9C43CE, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+    Index: samples_samplecratephoto_sample_crate_id_b8916d3b, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): sample_crate_id
+Table: SampleCrates
+    Index: PK__SampleCr__3213E83FB8E2B0DD, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+Table: SampleInspectionPhotos
+    Index: PK__SampleIn__3213E83F429CBF2F, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+    Index: SampleInspectionPhotos_sample_id_cc7b5027, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): sample_id
+Table: SampleInspections
+    Index: SampleInspections_crate_id_4316914a, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): crate_id
+    Index: SampleInspections_sample_id_0609bb94_pk, Type: CLUSTERED, Unique: True, Column (Ordinal 1): sample_id
+    Index: SampleInspections_sample_id_0609bb94_uniq, Type: NONCLUSTERED, Unique: True, Column (Ordinal 1): sample_id
+Table: SampleLocations
+    Index: PK__SampleLo__3213E83F69F078AC, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+    Index: UQ__SampleLo__412AE05C6536BA55, Type: NONCLUSTERED, Unique: True, Column (Ordinal 1): location
+Table: SampleNumber
+    Index: PK__SampleNu__3213E83F32BD2E3D, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+Table: Samples
+    Index: PK__Samples__3213E83F884391B9, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+    Index: Samples_sample_type_id_0bf49573, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): sample_type_id
+    Index: UQ__Samples__FD291E41ED9F58E9, Type: NONCLUSTERED, Unique: True, Column (Ordinal 1): number
+Table: SampleTypeLocations
+    Index: PK__SampleTy__3213E83F07C8BCFA, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+    Index: SampleTypeLocations_location_id_5b17a2de, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): location_id
+    Index: SampleTypeLocations_sample_type_id_9ff8240c, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): sample_type_id
+Table: SampleTypes
+    Index: PK__SampleTy__3213E83F71D5AD7E, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+    Index: UQ__SampleTy__3F48595CAC5D7865, Type: NONCLUSTERED, Unique: True, Column (Ordinal 1): sample_type
+Table: TestConditionMeasurmentParameters
+    Index: PK__TestCond__3213E83F4A851C7E, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+    Index: TestConditionMeasurmentParameters_condition_id_aaec65ff, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): condition_id
+    Index: TestConditionMeasurmentParameters_measurment_parameter_id_3beec419, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): measurment_parameter_id
+Table: TestConditionTypes
+    Index: PK__TestCond__3213E83F9A6EF915, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+    Index: UQ__TestCond__EAB56F490EFA2DD8, Type: NONCLUSTERED, Unique: True, Column (Ordinal 1): test_condition_type
+Table: TestSampleTypes
+    Index: PK__TestSamp__3213E83F8D1928E6, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+    Index: TestSampleTypes_sample_type_id_a89fc192, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): sample_type_id
+    Index: TestSampleTypes_sample_type_id_test_type_id_8f8dd75b_uniq, Type: NONCLUSTERED, Unique: True, Column (Ordinal 1): sample_type_id
+    Index: TestSampleTypes_sample_type_id_test_type_id_8f8dd75b_uniq, Type: NONCLUSTERED, Unique: True, Column (Ordinal 2): test_type_id
+    Index: TestSampleTypes_test_type_id_b778a5fb, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): test_type_id
+Table: TestTypes
+    Index: PK__TestType__3213E83F706B366F, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+    Index: UQ__TestType__3761F28E92B86A8C, Type: NONCLUSTERED, Unique: True, Column (Ordinal 1): test_type
+Table: TestWorkbooks
+    Index: PK__TestWork__3213E83F1486F27F, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+    Index: TestWorkbooks_lab_request_id_063c6630, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): lab_request_id
+Table: TestWorksheets
+    Index: PK__TestWork__3213E83FB2D0989D, Type: CLUSTERED, Unique: True, Column (Ordinal 1): id
+    Index: TestWorksheets_workbook_id_d39af99c, Type: NONCLUSTERED, Unique: False, Column (Ordinal 1): workbook_id
+
+Foreign Keys:
+-------------
+Foreign Key: auth_group_permissions_group_id_b120cbf9_fk_auth_group_id - auth_group_permissions(group_id) references auth_group(id)
+Foreign Key: auth_group_permissions_permission_id_84c5c92e_fk_auth_permission_id - auth_group_permissions(permission_id) references auth_permission(id)
+Foreign Key: auth_permission_content_type_id_2f476e4b_fk_django_content_type_id - auth_permission(content_type_id) references django_content_type(id)
+Foreign Key: auth_user_groups_group_id_97559544_fk_auth_group_id - auth_user_groups(group_id) references auth_group(id)
+Foreign Key: auth_user_groups_user_id_6a12ed8b_fk_auth_user_id - auth_user_groups(user_id) references auth_user(id)
+Foreign Key: auth_user_user_permissions_permission_id_1fbb5f2c_fk_auth_permission_id - auth_user_user_permissions(permission_id) references auth_permission(id)
+Foreign Key: auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id - auth_user_user_permissions(user_id) references auth_user(id)
+Foreign Key: ChemistryResults_test_id_c9690a44_fk_LocationTests_id - ChemistryResults(test_id) references LocationTests(id)
+Foreign Key: django_admin_log_content_type_id_c4bce8eb_fk_django_content_type_id - django_admin_log(content_type_id) references django_content_type(id)
+Foreign Key: django_admin_log_user_id_c564eba6_fk_auth_user_id - django_admin_log(user_id) references auth_user(id)
+Foreign Key: FieldSampleTracking_person_id_c768ffaf_fk_auth_user_id - FieldSampleTracking(person_id) references auth_user(id)
+Foreign Key: FieldSampleTracking_sample_crate_id_2afd9a74_fk_SampleCrates_id - FieldSampleTracking(sample_crate_id) references SampleCrates(id)
+Foreign Key: HoneycombSample_sample_id_954f9a59_fk_Samples_id - HoneycombSample(sample_id) references Samples(id)
+Foreign Key: LabRequestNotes_created_by_id_d4797a0f_fk_auth_user_id - LabRequestNotes(created_by_id) references auth_user(id)
+Foreign Key: LabRequestNotes_lab_request_id_6a1bc3bc_fk_LabRequests_id - LabRequestNotes(lab_request_id) references LabRequests(id)
+Foreign Key: LabRequests_created_by_id_e768645c_fk_auth_user_id - LabRequests(created_by_id) references auth_user(id)
+Foreign Key: LabRequests_request_type_id_70755a2e_fk_RequestTypes_id - LabRequests(request_type_id) references RequestTypes(id)
+Foreign Key: LabRequests_requested_lab_id_ecb87d91_fk_Laboratories_id - LabRequests(requested_lab_id) references Laboratories(id)
+Foreign Key: LabRequestSample_lab_request_id_5945ef0c_fk_LabRequests_id - LabRequestSample(lab_request_id) references LabRequests(id)
+Foreign Key: LabRequestSample_sample_id_7d85b2b7_fk_Samples_id - LabRequestSample(sample_id) references Samples(id)
+Foreign Key: LabRequestSampleTestTypes_lab_request_sample_id_e12c6ea4_fk_LabRequestSample_id - LabRequestSampleTestTypes(lab_request_sample_id) references LabRequestSample(id)
+Foreign Key: LabRequestSampleTestTypes_test_type_id_2a2a9a56_fk_TestTypes_id - LabRequestSampleTestTypes(test_type_id) references TestTypes(id)
+Foreign Key: LocationTests_lab_request_sample_id_c88bb194_fk_LabRequestSample_id - LocationTests(lab_request_sample_id) references LabRequestSample(id)
+Foreign Key: LocationTests_location_id_d8277c24_fk_SampleLocations_id - LocationTests(location_id) references SampleLocations(id)
+Foreign Key: LocationTests_test_type_id_a1cd933f_fk_TestTypes_id - LocationTests(test_type_id) references TestTypes(id)
+Foreign Key: ReactorLoads_lab_request_id_1a7885ac_fk_LabRequests_id - ReactorLoads(lab_request_id) references LabRequests(id)
+Foreign Key: ReactorLoads_test_type_id_2778ed1f_fk_TestTypes_id - ReactorLoads(test_type_id) references TestTypes(id)
+Foreign Key: ReactorLoadSamples_lab_request_sample_id_b73cde30_fk_LabRequestSample_id - ReactorLoadSamples(lab_request_sample_id) references LabRequestSample(id)
+Foreign Key: ReactorLoadSamples_load_id_a18853c2_fk_ReactorLoads_id - ReactorLoadSamples(load_id) references ReactorLoads(id)
+Foreign Key: Reactors_lab_id_84ab20ab_fk_Laboratories_id - Reactors(lab_id) references Laboratories(id)
+Foreign Key: Reactors_reactor_type_id_a14e3b2b_fk_TestTypes_id - Reactors(reactor_type_id) references TestTypes(id)
+Foreign Key: ReactorTestConditionParameters_condition_id_79b1228d_fk_ReactorTestConditions_id - ReactorTestConditionParameters(condition_id) references ReactorTestConditions(id)
+Foreign Key: ReactorTestConditionParameters_reactor_parameter_id_fb0f072c_fk_ReactorParameters_id - ReactorTestConditionParameters(reactor_parameter_id) references ReactorParameters(id)
+Foreign Key: ReactorTestConditions_test_type_id_e14b6904_fk_TestConditionTypes_id - ReactorTestConditions(test_type_id) references TestConditionTypes(id)
+Foreign Key: ReactorTestParameters_location_id_9be1dd36_fk_ReactorLocations_id - ReactorTestParameters(location_id) references ReactorLocations(id)
+Foreign Key: ReactorTestParameters_parameter_id_d5a1199e_fk_ReactorParameters_id - ReactorTestParameters(parameter_id) references ReactorParameters(id)
+Foreign Key: ReactorTestParameters_run_id_93381a7b_fk_ReactorTestRuns_id - ReactorTestParameters(run_id) references ReactorTestRuns(id)
+Foreign Key: ReactorTestRuns_reactor_test_id_9797d4e5_fk_ReactorTests_id - ReactorTestRuns(reactor_test_id) references ReactorTests(id)
+Foreign Key: ReactorTestRuns_test_worksheet_id_06aa5a71_fk_TestWorksheets_id - ReactorTestRuns(test_worksheet_id) references TestWorksheets(id)
+Foreign Key: ReactorTests_load_id_ccad8c05_fk_ReactorLoads_id - ReactorTests(load_id) references ReactorLoads(id)
+Foreign Key: ReactorTests_reactor_id_e5712fd0_fk_Reactors_id - ReactorTests(reactor_id) references Reactors(id)
+Foreign Key: ReactorTests_reactor_type_id_cc5ef4b0_fk_TestTypes_id - ReactorTests(reactor_type_id) references TestTypes(id)
+Foreign Key: ReactorTests_test_condition_id_a7be440d_fk_ReactorTestConditions_id - ReactorTests(test_condition_id) references ReactorTestConditions(id)
+Foreign Key: SampleInspectionPhotos_sample_id_cc7b5027_fk_Samples_id - SampleInspectionPhotos(sample_id) references Samples(id)
+Foreign Key: SampleInspections_crate_id_4316914a_fk_SampleCrates_id - SampleInspections(crate_id) references SampleCrates(id)
+Foreign Key: SampleInspections_sample_id_0609bb94_fk_Samples_id - SampleInspections(sample_id) references Samples(id)
+Foreign Key: Samples_sample_type_id_0bf49573_fk_SampleTypes_id - Samples(sample_type_id) references SampleTypes(id)
+Foreign Key: samples_samplecratephoto_sample_crate_id_b8916d3b_fk_SampleCrates_id - SampleCratePhotos(sample_crate_id) references SampleCrates(id)
+Foreign Key: SampleTypeLocations_location_id_5b17a2de_fk_SampleLocations_id - SampleTypeLocations(location_id) references SampleLocations(id)
+Foreign Key: SampleTypeLocations_sample_type_id_9ff8240c_fk_SampleTypes_id - SampleTypeLocations(sample_type_id) references SampleTypes(id)
+Foreign Key: TestConditionMeasurmentParameters_condition_id_aaec65ff_fk_ReactorTestConditions_id - TestConditionMeasurmentParameters(condition_id) references ReactorTestConditions(id)
+Foreign Key: TestConditionMeasurmentParameters_measurment_parameter_id_3beec419_fk_ReactorTestMeasurmentParameters_id - TestConditionMeasurmentParameters(measurment_parameter_id) references ReactorTestMeasurmentParameters(id)
+Foreign Key: TestSampleTypes_sample_type_id_a89fc192_fk_SampleTypes_id - TestSampleTypes(sample_type_id) references SampleTypes(id)
+Foreign Key: TestSampleTypes_test_type_id_b778a5fb_fk_TestTypes_id - TestSampleTypes(test_type_id) references TestTypes(id)
+Foreign Key: TestWorkbooks_lab_request_id_063c6630_fk_LabRequests_id - TestWorkbooks(lab_request_id) references LabRequests(id)
+Foreign Key: TestWorksheets_workbook_id_d39af99c_fk_TestWorkbooks_id - TestWorksheets(workbook_id) references TestWorkbooks(id)
+
+Views:
+------
+No views found.
+
+Stored Procedures:
+------------------
+No stored procedures found.

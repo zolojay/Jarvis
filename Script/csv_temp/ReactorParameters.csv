@@ -1,0 +1,18 @@
+id,reactor_parameter,obsolete,units
+1,NO,False,ppmvd
+2,NO2,False,ppmvd
+3,Hg,False,ug/Nm3d
+4,Hg+2,False,um/Nm3d
+5,SO3,False,ppmvd
+6,SO2,False,ppmvd
+7,CO,False,ppmvd
+8,C3H6,False,ppmvd
+9,C3H8,False,ppmvd
+10,NH3:NOx Molar Ratio,False,ppmvd
+12,Temperature,False,°C
+13,NH3,False,ppmvd
+14,CO2,False,ppmvd
+15,VOC,False,ppmvd
+16,H2O,False,%
+17,O2,False,%
+18,Cl,False,ppmvd

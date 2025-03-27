@@ -1,0 +1,1049 @@
+1. Overview
+The database serves as the backend for a Django application that manages laboratory operations—from user authentication to complex testing workflows. It combines Django’s built‑in tables (for authentication, sessions, and content types) with custom tables that store data on lab requests, sample tracking, reactor testing, and more.
+By examining both the schema and sample data (as seen in the recent rows report ), you gain insight into not only the structure but also the nature of the data being handled.
+
+2. Django Built‑in Components
+Authentication and Authorization
+	• auth_user:
+Stores user accounts with fields like username, password, last login, and date joined.
+Sample Insight: The recent rows show several users with last_login timestamps and varying roles (e.g., one user is marked as a superuser, and others show typical login activity).
+	• auth_group & auth_user_groups:
+Define groups (e.g., “Account Manager”, “Lab Managers”) and link users to groups.
+Sample Insight: Only four groups are present, which hints at a limited set of roles controlling permissions.
+	• auth_permission & auth_user_user_permissions:
+Define granular permissions (e.g., “Can add user”, “Can view permission”). These are used by Django’s permission system.
+Administrative Tables
+	• django_admin_log:
+Logs admin actions such as changes to test reports or lab requests.
+Sample Insight: Entries include timestamps and descriptions (e.g., file names like “LR-24-00242_428.xlsm”), indicating that changes or uploads are audited for traceability.
+	• django_content_type & django_migrations:
+		○ django_content_type: Maps models to a content type, enabling generic relations.
+		○ django_migrations: Keeps track of applied migrations to ensure that the schema matches the models.
+Session and Sites Management
+	• django_session:
+Stores session data for users; sample rows include encoded session strings and expiration dates.
+	• django_site:
+Supports multi-site configurations, though the sample data shows a single entry (e.g., “example.com”).
+
+3. Custom Application Tables
+The bulk of the application’s domain logic is handled in custom tables. The recent rows report provides sample data that reveals how these tables function in practice.
+Lab Requests and Sample Tracking
+	• LabRequests:
+Records lab request details such as job numbers, PCNs, creation times, and request types.
+Sample Insight: Rows show job numbers (e.g., “240547”) and timestamps for when requests were created and submitted, indicating a chronological workflow.
+	• LabRequestNotes:
+Stores notes related to lab requests.
+Sample Insight: Notes include details like “Generic Sample ID, actual Sample ID TBD” and specific instructions, providing context for each lab request.
+	• LabRequestSample & LabRequestSampleTestTypes:
+Link specific samples to requests and indicate the tests to be performed.
+Sample Insight: Data reveals flags for reactor tests, indicating whether a particular sample is used in reactor testing workflows.
+	• SampleCrates, Samples, SampleNumber, SampleTypes, and SampleTypeLocations:
+Handle the identification, categorization, and physical tracking of samples.
+Sample Insight: The sample rows for Samples show formatted sample numbers (e.g., “6333-0101-0007.”) along with entry dates, illustrating how samples are tracked over time.
+	• SampleInspections & SampleInspectionPhotos:
+Capture quality checks and visual documentation of samples.
+Sample Insight: Inspections include measurements (e.g., cell dimensions) and photo references that provide evidence of sample condition.
+	• SampleLocations:
+Defines where samples are stored or processed (e.g., “Front”, “Middle”, “Rear”).
+Reactor and Test Data
+	• Reactor Infrastructure:
+		○ Reactors, ReactorLoads, ReactorLoadSamples, ReactorLocations:
+Store details on reactor equipment and their operating locations.
+Sample Insight: Reactor names (e.g., “Quarter Bench”, “Micro 1”) and locations (e.g., “S1”, “S2”) are straightforward, suggesting a structured setup in the lab.
+	• Reactor Test Parameters and Conditions:
+		○ ReactorTestConditions, ReactorTestConditionParameters:
+Define the conditions under which reactor tests are run, including parameters like temperature and oxygen levels.
+Sample Insight: Rows list test jobs, PCNs, and measured values (e.g., “176.7” for temperature) that are critical for evaluating reactor performance.
+		○ ReactorTestParameters & ReactorTestRuns:
+Capture the detailed measurements and sequential data during test runs.
+Sample Insight: Values such as flow rates, inlet temperatures, and test sheet numbers provide a granular look at testing procedures.
+	• General Test Data:
+		○ TestTypes, TestSampleTypes, TestConditionTypes, TestWorkbooks, and TestWorksheets:
+Manage the types of tests conducted (e.g., “XRF – Surface Qual All”, “Bench”) and document the corresponding test reports.
+Sample Insight: The worksheets show names like “BAT Condition 1 Test Report” with associated parameters (e.g., flow rate, temperature), offering a snapshot of the test output.
+
+4. Relationships and Data Integrity
+The schema makes extensive use of foreign keys to maintain relationships between tables. For example:
+	• User–Group Associations:
+auth_user_groups links users to groups, ensuring that permissions flow correctly.
+	• Lab Request Relationships:
+LabRequests is connected to LabRequestNotes, LabRequestSample, and indirectly to sample tables, forming a cohesive view of each lab request’s lifecycle.
+	• Reactor Testing:
+Multiple reactor-related tables (e.g., ReactorTestConditions, ReactorTestParameters, and ReactorTestRuns) are interrelated to document the end-to-end testing process.
+These enforced relationships are critical when pulling data, as they allow you to join tables together to form comprehensive views of operations.
+
+5. Pulling Data and Usage Considerations
+Using Django’s ORM
+	• Django’s models automatically map these tables into Python classes. In most cases, you can retrieve data using QuerySets:
+
+python
+Copy code
+from myapp.models import LabRequest
+recent_requests = LabRequest.objects.order_by('-time_created')[:20]
+for request in recent_requests:
+    print(request.job_number, request.time_created)
+
+Direct SQL Queries
+	• When performance or complex joins are required, raw SQL queries (or even tools like Django’s RawSQL) can be used. The sample data gives you a concrete idea of which columns are available for filtering and ordering (e.g., last_login in auth_user or time_created in LabRequests).
+Reporting and Integration
+	• The recent rows report demonstrates how each table contains its own snapshot of data (whether chronological via a datetime column or simply a set of TOP 20 rows). Use this information to:
+		○ Identify key fields for filtering (e.g., dates, job numbers, sample IDs).
+		○ Understand the typical data formats and potential null values.
+		○ Plan for data joins between tables (for instance, linking LabRequests with LabRequestNotes based on lab request IDs).
+
+6. Conclusion
+This database is designed to support a complex Django application that covers everything from user management to detailed lab testing workflows. The built‑in Django tables provide the backbone for authentication, session management, and administrative logging, while the custom tables manage domain‑specific information like lab requests, sample tracking, and reactor tests.
+
+
+1. Django (Built-In) Authentication & Administration Tables
+These tables come standard with a Django-based application:
+	• auth_user: Stores user accounts (username, password, first/last names, email, roles).
+	• auth_group / auth_group_permissions / auth_user_groups: Manage user groups and group permissions.
+	• auth_permission / auth_user_user_permissions: Store granular permission records.
+	• django_admin_log: Audit logs for Django’s admin actions (who changed what and when).
+	• django_content_type / django_migrations / django_session / django_site: Additional standard Django framework tables for content types, migrations history, sessions, and site metadata.
+Because these are Django internals, you usually do not modify them directly. However, they power authentication, authorization, and admin logging behind the scenes.
+
+2. Core “Lab Requests” & Sample Tracking
+The primary custom functionality revolves around lab requests, samples, and test tracking.
+2.1 LabRequests
+	• Table: LabRequests
+	• Key Fields:
+		○ id – Primary key.
+		○ number – A lab request “LRF” number (e.g., LR-25-00005).
+		○ job_number, pcn, time_created, time_submitted – Various metadata about the request.
+		○ requested_lab_id – Points to the Laboratories table.
+		○ request_type_id – Points to RequestTypes (e.g., “reactor test,” “chemistry test,” etc.).
+2.2 LabRequestSample
+	• Table: LabRequestSample
+	• Purpose: Connects each lab request (in LabRequests) to one or more physical samples (in Samples).
+	• Key Fields:
+		○ id – Primary key.
+		○ lab_request_id – Foreign key to LabRequests.
+		○ sample_id – Foreign key to Samples.
+		○ reactor_test (boolean) – Flags whether this particular sample is involved in a reactor test.
+2.3 Samples
+	• Table: Samples
+	• Purpose: Represents physical or conceptual samples being tested.
+	• Key Fields:
+		○ id – Primary key.
+		○ number – The sample’s identifying string (e.g., GREE-1B-2-30-1024).
+		○ job_number, pcn, date_entered – Additional metadata.
+		○ sample_type_id – Links to SampleTypes (e.g., “honeycomb,” “loose catalyst,” “coating sample,” etc.).
+2.4 LabRequestSampleTestTypes
+	• Table: LabRequestSampleTestTypes
+	• Purpose: For each (LabRequest, Sample) pair, specifies which tests will be performed.
+	• Key Fields:
+		○ id – Primary key.
+		○ lab_request_sample_id – Foreign key to LabRequestSample.
+		○ test_type_id – Foreign key to TestTypes (e.g., “Bench,” “Reactor,” “Chemistry,” etc.).
+2.5 TestTypes
+	• Table: TestTypes
+	• Purpose: Master list of possible test categories, such as Bench, Reactor, Chemistry, NOx Removal, CO Oxidation, etc.
+	• Key Fields:
+		○ id – Primary key.
+		○ test_type – The display name of the test (e.g., “Bench,” “NOx Removal”).
+		○ Flags like chemistry_test, location_test, physical_test, reactor_test – Indicate the nature of the test.
+2.6 RequestTypes
+	• Table: RequestTypes
+	• Purpose: A higher-level classification for an entire lab request (e.g., “Reactor Testing,” “Field Testing,” etc.).
+	• Key Fields:
+		○ id – Primary key.
+		○ request_type – Text name (e.g., “Reactor” vs. “Chemistry”).
+
+3. Reactor Testing & Conditions
+A significant portion of the schema handles reactor test setups. These let you plan out detailed test conditions, loads, and associated measurements.
+3.1 ReactorLoads
+	• Table: ReactorLoads
+	• Purpose: Ties a particular LabRequest (and test type) to a conceptual “reactor load.”
+	• Key Fields:
+		○ id – Primary key.
+		○ lab_request_id – Points back to LabRequests.
+		○ test_type_id – Points to TestTypes (often “Reactor” or “Bench” or similar).
+3.2 ReactorTests
+	• Table: ReactorTests
+	• Purpose: Actual test “runs” under a specific load and condition.
+	• Key Fields:
+		○ id – Primary key.
+		○ load_id – Links to ReactorLoads.
+		○ test_condition_id – Links to ReactorTestConditions.
+		○ reactor_id / reactor_type_id – Additional details on which reactor is used.
+		○ flow_rate_nm3_per_hr, inlet_temperature, etc. – Operating parameters for that run.
+3.3 ReactorTestConditions
+	• Table: ReactorTestConditions
+	• Purpose: Catalogs a named set of conditions used in a test (e.g., “Montana 1,” “CO oxidation at 315°C,” “NOx removal at 349°C”).
+	• Key Fields:
+		○ id – Primary key.
+		○ description, job, pcn – Descriptive fields.
+		○ test_type_id – Points to TestConditionTypes (e.g., “NOx Removal,” “CO Oxidation”).
+3.4 TestConditionTypes
+	• Table: TestConditionTypes
+	• Purpose: High-level category for a test condition, such as “NOx Removal,” “CO Oxidation,” “SO2 Oxidation,” “VOC Oxidation,” etc.
+	• Key Fields:
+		○ id – Primary key.
+		○ test_condition_type – The name (e.g., “NOx Removal”).
+3.5 ReactorLoadSamples
+	• Table: ReactorLoadSamples
+	• Purpose: Identifies which samples from a lab request are physically placed in a “reactor load.”
+	• Key Fields:
+		○ id – Primary key.
+		○ load_id – Points to ReactorLoads.
+		○ lab_request_sample_id – Points to LabRequestSample.
+3.6 ReactorTestParameters / ReactorTestConditionParameters
+	• These tables store numeric details for a test (e.g., operating temperature, flow rates, pressure drop, etc.).
+	• ReactorTestParameters ties parameters to a specific test run (ReactorTestRuns), while ReactorTestConditionParameters ties parameters to predefined conditions (ReactorTestConditions).
+
+4. Sample Crates, Inspections, and Field Tracking
+	• SampleCrates: Groups or crates in which samples arrive (fields like quantity, project_number, date_arrived).
+	• SampleCratePhotos: Photos of those crates.
+	• SampleInspections: Inspections done on samples (dimensions, markings, flow direction, plugged cells, etc.).
+	• SampleInspectionPhotos: Photos associated with those inspections.
+	• FieldSampleTracking: Tracks sample movement or notes from the field (with references to user and crate).
+
+5. Other Testing Tables
+	• ChemistryResults: For capturing measured compound values (compound, value) in a test. Links via test_id to LocationTests.
+	• LocationTests: Possibly for test data that is location-based. References the location (SampleLocations) and a lab_request_sample_id.
+
+6. Lookups & Support Tables
+	• SampleLocations, SampleTypes, SampleTypeLocations: Provide additional classification for how/where samples are stored or used.
+	• HoneycombSample: Subclass-like table for honeycomb-type samples (tracking dimensions, cell arrangement).
+	• Laboratories: List of labs (with lab name).
+	• RequestTypes: As mentioned, broad classification for LabRequests.
+	• TestWorkbooks / TestWorksheets: Provide a structure to handle test “workbooks” and “worksheets,” presumably for data entry forms that group multiple test runs together.
+
+7. Relationships (Foreign Keys) Summary
+Here are some of the most critical relationships you’ll use often:
+	1. LabRequests → LabRequestSample → Samples
+A single lab request can have multiple samples. Each sample can appear in multiple lab requests (many-to-many) but is bridged by LabRequestSample.
+	2. LabRequestSampleTestTypes
+For each (LabRequest, Sample) pair, we can list multiple tests.
+		○ Joins to TestTypes for the type of test requested.
+	3. ReactorLoads
+Links a LabRequest + a specific TestType = one reactor load setup.
+	4. ReactorTests
+Each ReactorLoad can have multiple test “runs.” Each run references a single ReactorTestCondition.
+	5. ReactorTestConditions → TestConditionTypes
+Each condition references a broad category (NOx Removal, CO Oxidation, etc.).
+	6. ReactorLoadSamples
+Tells which (LabRequestSample) physically went into a given reactor load.
+	7. LocationTests, ChemistryResults, etc.
+These additional tables handle other specialized testing data.
+
+
+Lemur Database – Complete Project Plan
+1. Introduction & Context
+The Lemur database, built with a Django-style schema, encompasses:
+	1. User Authentication & Authorization
+Standard Django auth_ tables manage user login credentials, roles, permissions, etc.
+	2. Lab Testing & Requests
+Entities track requests (e.g., LabRequests, LabRequestSample, TestWorkbooks, TestWorksheets), test types, and results (ChemistryResults, LocationTests, etc.).
+	3. Sample Tracking
+Physical samples, crates, and associated inspection details are recorded in tables like Samples, SampleCrates, HoneycombSample, SampleInspections.
+	4. Reactor Test Management
+Tables for tracking reactor-based tests (loads, parameters, runs, conditions) such as ReactorLoads, ReactorTests, and ReactorTestRuns.
+Because this database is fairly large, it is organized into logical groupings. The following sections detail all tables, columns, constraints, indexes, foreign keys, and their relationships.
+
+2. Global Schema Notes
+	• Schema Name: dbo (for all tables).
+	• Primary Keys: Usually named PK__<TableName>__<hex> and clustered on an integer or bigint id.
+	• Foreign Keys: Named with patterns like <table>_<column>_<hex>_fk_<referenced_table>_id.
+	• Unique Constraints: Named UQ__<TableName>__<ColumnName>… or included within “_uniq”.
+	• Check Constraints: Appear primarily in Django’s admin log table, restricting certain columns to valid values.
+	• Indexes: Typically:
+		○ Clustered = the primary key.
+		○ Nonclustered = any additional index on frequently searched columns or foreign keys.
+
+3. Detailed Table-by-Table Reference
+Below, each table is listed with:
+	1. Purpose or context.
+	2. Columns with data types, maximum length, nullability.
+	3. Constraints (PK, Unique, Check).
+	4. Indexes relevant to that table.
+	5. Key Relationships (Foreign Keys in or out).
+Where columns repeat across multiple tables (e.g., standard Django fields), we may abbreviate their function.
+3.1 Authentication & Authorization
+3.1.1 auth_group
+	• Purpose: Stores user groups (roles) for Django’s auth system.
+	• Columns:
+		1. id [int, PK, NOT NULL]
+		2. name [nvarchar(300), NOT NULL] – Unique name of the group.
+	• Constraints:
+		○ PK = PK__auth_gro__3213E83F4FA12A7D (clustered on id).
+		○ UNIQUE = auth_group_name_a6ea08ec_uniq on name.
+	• Indexes:
+		○ Clustered primary key on id.
+		○ Nonclustered unique index on name.
+	• Relationships:
+		○ Referenced by auth_user_groups.group_id and auth_group_permissions.group_id.
+3.1.2 auth_permission
+	• Purpose: Stores granular permissions for Django’s auth system.
+	• Columns:
+		1. id [int, PK, NOT NULL]
+		2. name [nvarchar(510), NOT NULL]
+		3. content_type_id [int, FK, NOT NULL] – Links to django_content_type.id.
+		4. codename [nvarchar(200), NOT NULL]
+	• Constraints:
+		○ PK = PK__auth_per__3213E83FA2F469DF.
+		○ FK = auth_permission_content_type_id_2f476e4b_fk_django_content_type_id.
+	• Indexes:
+		○ Clustered PK on id.
+		○ Nonclustered unique (content_type_id, codename) to avoid duplicates.
+	• Relationships:
+		○ Referenced by auth_group_permissions.permission_id, auth_user_user_permissions.permission_id.
+3.1.3 auth_user
+	• Purpose: Stores individual user accounts. Used to reference who submitted what
+	• Columns:
+		1. id [int, PK, NOT NULL]
+		2. password [nvarchar(256), NOT NULL]
+		3. last_login [datetime2, NULL]
+		4. is_superuser [bit, NOT NULL]
+		5. username [nvarchar(300), NOT NULL, UNIQUE]
+		6. first_name [nvarchar(300), NOT NULL]
+		7. last_name [nvarchar(300), NOT NULL]
+		8. email [nvarchar(508), NOT NULL]
+		9. is_staff [bit, NOT NULL]
+		10. is_active [bit, NOT NULL]
+		11. date_joined [datetime2, NOT NULL]
+	• Constraints:
+		○ PK = PK__auth_use__3213E83F3CED189A.
+		○ UNIQUE = auth_user_username_6821ab7c_uniq on username.
+	• Indexes:
+		○ Clustered PK on id.
+		○ Nonclustered unique on username.
+	• Relationships:
+		○ Referenced by auth_user_groups.user_id, auth_user_user_permissions.user_id, and possibly other tables (e.g., django_admin_log.user_id).
+3.1.4 auth_user_groups
+	• Purpose: A many-to-many linking table between auth_user and auth_group.
+	• Columns:
+		1. id [bigint, PK, NOT NULL]
+		2. user_id [int, FK, NOT NULL]
+		3. group_id [int, FK, NOT NULL]
+	• Constraints:
+		○ PK = PK__auth_use__3213E83F71EBB362.
+		○ FKs = auth_user_groups_user_id_6a12ed8b_fk_auth_user_id, auth_user_groups_group_id_97559544_fk_auth_group_id.
+	• Indexes:
+		○ Clustered PK on id.
+		○ Nonclustered unique on (user_id, group_id) to avoid duplicates.
+3.1.5 auth_group_permissions
+	• Purpose: Many-to-many linking table between auth_group and auth_permission.
+	• Columns:
+		1. id [bigint, PK, NOT NULL]
+		2. group_id [int, FK, NOT NULL]
+		3. permission_id [int, FK, NOT NULL]
+	• Constraints:
+		○ PK = PK__auth_gro__3213E83FE8D02002.
+		○ FK = auth_group_permissions_group_id_b120cbf9_fk_auth_group_id + auth_group_permissions_permission_id_84c5c92e_fk_auth_permission_id.
+	• Indexes:
+		○ PK on id (clustered).
+		○ Nonclustered unique index on (group_id, permission_id).
+3.1.6 auth_user_user_permissions
+	• Purpose: Many-to-many linking table between auth_user and auth_permission.
+	• Columns:
+		1. id [bigint, PK, NOT NULL]
+		2. user_id [int, FK, NOT NULL]
+		3. permission_id [int, FK, NOT NULL]
+	• Constraints:
+		○ PK = PK__auth_use__3213E83FCBC58CD6.
+		○ FKs link to auth_user and auth_permission.
+	• Indexes:
+		○ PK on id.
+		○ Nonclustered unique on (user_id, permission_id).
+
+3.2 Django Administrative / Housekeeping
+3.2.1 django_admin_log
+	• Purpose: Records admin site actions (add, change, delete) in Django.
+	• Columns:
+		1. id [int, PK, NOT NULL]
+		2. action_time [datetime2, NOT NULL]
+		3. object_id [nvarchar(-1), NULL] – Usually object primary key as text.
+		4. object_repr [nvarchar(400), NOT NULL]
+		5. action_flag [smallint, NOT NULL, CHECK] – Must be 1/2/3 (add/change/delete).
+		6. change_message [nvarchar(-1), NOT NULL]
+		7. content_type_id [int, FK, NULL]
+		8. user_id [int, FK, NOT NULL]
+	• Constraints:
+		○ PK = PK__django_a__3213E83F655D66C9.
+		○ CHECK = django_admin_log_action_flag_a8637d59_check on action_flag.
+		○ FK = django_admin_log_content_type_id_c4bce8eb_fk_django_content_type_id, django_admin_log_user_id_c564eba6_fk_auth_user_id.
+	• Indexes:
+		○ PK on id (clustered).
+		○ Nonclustered on content_type_id and user_id.
+3.2.2 django_content_type
+	• Purpose: Maps Python (Django) models to their IDs for permission system.
+	• Columns:
+		1. id [int, PK, NOT NULL]
+		2. app_label [nvarchar(200), NOT NULL]
+		3. model [nvarchar(200), NOT NULL]
+	• Constraints:
+		○ PK = PK__django_c__3213E83F584D9F4A.
+		○ Unique on (app_label, model).
+	• Indexes:
+		○ PK on id.
+		○ Nonclustered unique on (app_label, model).
+3.2.3 django_migrations
+	• Purpose: Tracks Django migrations applied.
+	• Columns:
+		1. id [bigint, PK, NOT NULL]
+		2. app [nvarchar(510), NOT NULL]
+		3. name [nvarchar(510), NOT NULL]
+		4. applied [datetime2, NOT NULL]
+	• Constraints:
+		○ PK = PK__django_m__3213E83F797F0817.
+	• Indexes:
+		○ PK on id.
+3.2.4 django_session
+	• Purpose: Stores session data for logged-in users (if using DB-based sessions).
+	• Columns:
+		1. session_key [nvarchar(80), PK, NOT NULL]
+		2. session_data [nvarchar(-1), NOT NULL]
+		3. expire_date [datetime2, NOT NULL]
+	• Constraints:
+		○ PK = PK__django_s__B3BA0F1F8735FD24 (clustered on session_key).
+	• Indexes:
+		○ Nonclustered on expire_date.
+3.2.5 django_site
+	• Purpose: Django’s “sites” framework for multi-site installations.
+	• Columns:
+		1. id [int, PK, NOT NULL]
+		2. domain [nvarchar(200), NOT NULL]
+		3. name [nvarchar(100), NOT NULL]
+	• Constraints:
+		○ PK = PK__django_s__3213E83F72783D9B.
+		○ UNIQUE = django_site_domain_a2e37b91_uniq on domain.
+
+3.3 Lab Requests & Testing
+3.3.1 LabRequests
+	• Purpose: The main record for a lab testing request.
+	• Columns:
+		1. id [int, PK, NOT NULL]
+		2. job_number [nvarchar(280), NULL]
+		3. pcn [nvarchar(30), NULL]
+		4. time_created [datetime2, NOT NULL]
+		5. sequence [int, NOT NULL]
+		6. time_submitted [datetime2, NULL]
+		7. created_by_id [int, FK, NOT NULL → auth_user.id]
+		8. requested_lab_id [int, FK, NULL → Laboratories.id]
+		9. number [nvarchar(100), NOT NULL]
+		10. request_type_id [int, FK, NOT NULL → RequestTypes.id]
+	• Constraints:
+		○ PK = PK__LabReque__3213E83F502D34A8.
+		○ FK:
+			§ LabRequests_created_by_id_e768645c_fk_auth_user_id
+			§ LabRequests_requested_lab_id_ecb87d91_fk_Laboratories_id
+			§ LabRequests_request_type_id_70755a2e_fk_RequestTypes_id
+	• Indexes:
+		○ Nonclustered on job_number, number, pcn, request_type_id, requested_lab_id.
+3.3.2 LabRequestSample
+	• Purpose: Associates multiple samples with a single LabRequests record.
+	• Columns:
+		1. id [int, PK, NOT NULL]
+		2. lab_request_id [int, FK, NOT NULL → LabRequests.id]
+		3. sample_id [int, FK, NOT NULL → Samples.id]
+		4. reactor_test [bit, NOT NULL]
+	• Constraints:
+		○ PK = PK__LabReque__3213E83F3DBD6952.
+		○ Unique index on (sample_id, lab_request_id) to avoid duplicates.
+	• Indexes:
+		○ Nonclustered on lab_request_id and sample_id.
+3.3.3 LabRequestNotes
+	• Purpose: Allows text-based notes on a LabRequests record, referencing the user who created it.
+	• Columns:
+		1. id [int, PK, NOT NULL]
+		2. created_time [datetime2, NOT NULL]
+		3. note [nvarchar(500), NOT NULL]
+		4. created_by_id [int, FK, NOT NULL → auth_user.id]
+		5. lab_request_id [int, FK, NOT NULL → LabRequests.id]
+	• Constraints:
+		○ PK = PK__LabReque__3213E83FED0814FD.
+		○ FK = LabRequestNotes_created_by_id_d4797a0f_fk_auth_user_id, LabRequestNotes_lab_request_id_6a1bc3bc_fk_LabRequests_id.
+	• Indexes:
+		○ Nonclustered on created_by_id, lab_request_id.
+3.3.4 TestWorkbooks
+	• Purpose: after testing is complete, testing workbook uploaded to this table
+	• Columns:
+		1. id [int, PK, NOT NULL]
+		2. name [nvarchar(510), NOT NULL]
+		3. lab_request_id [int, FK, NOT NULL → LabRequests.id]
+	• Constraints:
+		○ PK = PK__TestWork__3213E83F1486F27F.
+		○ FK = TestWorkbooks_lab_request_id_063c6630_fk_LabRequests_id.
+	• Indexes:
+		○ Nonclustered on lab_request_id.
+3.3.5 TestWorksheets
+	• Purpose: More granular worksheets under a test workbook.
+	• Columns:
+		1. id [int, PK, NOT NULL]
+		2. name [nvarchar(280), NOT NULL]
+		3. flow_rate_nm3_per_hr [float, NOT NULL]
+		4. inlet_temperature [float, NOT NULL]
+		5. dry_O2 [float, NOT NULL]
+		6. water [float, NOT NULL]
+		7. start_time [datetime2, NULL]
+		8. stop_time [datetime2, NOT NULL]
+		9. workbook_id [int, FK, NULL → TestWorkbooks.id]
+	• Constraints:
+		○ PK = PK__TestWork__3213E83FB2D0989D.
+		○ FK = TestWorksheets_workbook_id_d39af99c_fk_TestWorkbooks_id.
+	• Indexes:
+		○ Nonclustered on workbook_id.
+3.3.6 TestTypes
+	• Purpose: Master list of possible test types (chemistry, location, physical, reactor, etc.).
+	• Columns:
+		1. id [int, PK, NOT NULL]
+		2. test_type [nvarchar(280), NOT NULL, UNIQUE]
+		3. obsolete [bit, NOT NULL]
+		4. chemistry_test [bit, NOT NULL]
+		5. location_test [bit, NOT NULL]
+		6. physical_test [bit, NOT NULL]
+		7. reactor_test [bit, NOT NULL]
+	• Constraints:
+		○ PK = PK__TestType__3213E83F706B366F.
+		○ UNIQUE = UQ__TestType__3761F28E92B86A8C on test_type.
+	• Relationships:
+		○ Referenced by LabRequestSampleTestTypes.test_type_id, LocationTests.test_type_id, ReactorLoads.test_type_id, etc.
+3.3.7 LabRequestSampleTestTypes
+	• Purpose: Many-to-many bridging table tying a single LabRequestSample to one or more TestTypes.
+	• Columns:
+		1. id [int, PK, NOT NULL]
+		2. lab_request_sample_id [int, FK, NOT NULL → LabRequestSample.id]
+		3. test_type_id [int, FK, NOT NULL → TestTypes.id]
+	• Constraints:
+		○ PK = PK__LabReque__3213E83F15A00880.
+		○ Unique index on (lab_request_sample_id, test_type_id).
+	• Indexes:
+		○ Nonclustered on lab_request_sample_id and test_type_id.
+3.3.8 ChemistryResults
+	• Purpose: Holds compound data (e.g., chemical composition or measurement) associated with a test.
+	• Columns:
+		1. id [int, PK, NOT NULL]
+		2. compound [nvarchar(50), NOT NULL]
+		3. value [float, NOT NULL]
+		4. test_id [int, FK → LocationTests.id]
+	• Constraints:
+		○ PK = PK__Chemistr__3213E83FD1A85F22.
+		○ FK = ChemistryResults_test_id_c9690a44_fk_LocationTests_id.
+	• Indexes:
+		○ Nonclustered on test_id.
+3.3.9 LocationTests
+	• Purpose: Another layer of test detail, possibly used for sampling at particular locations.
+	• Columns:
+		1. id [int, PK, NOT NULL]
+		2. test_time [datetime2, NULL]
+		3. location_id [int, FK, NOT NULL → SampleLocations.id]
+		4. test_type_id [int, FK, NOT NULL → TestTypes.id]
+		5. lab_request_sample_id [int, FK, NULL → LabRequestSample.id]
+	• Constraints:
+		○ PK = PK__Location__3213E83F67D63E4F.
+		○ FK = LocationTests_location_id_d8277c24_fk_SampleLocations_id, etc.
+	• Indexes:
+		○ Nonclustered unique across (lab_request_sample_id, test_type_id, location_id) to ensure no duplicate location tests.
+3.3.10 RequestTypes
+	• Purpose: which internal department the testing request belongs to
+	• Columns:
+		1. id [int, PK, NOT NULL]
+		2. request_type [nvarchar(140), NOT NULL, UNIQUE]
+	• Constraints:
+		○ PK = PK__RequestT__3213E83FCB31ABB7.
+		○ UNIQUE = UQ__RequestT__DFCC32D8AF09F6BE.
+	• Indexes:
+		○ PK on id.
+		○ Nonclustered unique on request_type.
+
+3.4 Sample Tracking & Inspections
+3.4.1 Samples
+	• Purpose: Central record for a physical sample submitted to the lab.
+	• Columns:
+		1. id [int, PK, NOT NULL]
+		2. number [nvarchar(280), NOT NULL, UNIQUE] – Sample identification code.
+		3. job_number [nvarchar(280), NULL]
+		4. pcn [nvarchar(30), NULL]
+		5. date_entered [date, NOT NULL]
+		6. sample_type_id [int, FK, NOT NULL → SampleTypes.id]
+		7. facility_id [bigint, NULL] – Possibly references an external table or leftover.
+		8. unit_id [bigint, NULL] – Possibly references an external table or leftover.
+	• Constraints:
+		○ PK = PK__Samples__3213E83F884391B9.
+		○ UNIQUE = UQ__Samples__FD291E41ED9F58E9 on number.
+		○ FK = Samples_sample_type_id_0bf49573_fk_SampleTypes_id.
+	• Indexes:
+		○ PK on id.
+		○ Nonclustered on sample_type_id.
+		○ Nonclustered unique on number.
+3.4.2 SampleCrates
+	• Purpose: Batches or crates in which samples arrive.
+	• Columns:
+		1. id [int, PK, NOT NULL]
+		2. quantity [int, NOT NULL]
+		3. project_number [nvarchar(90), NULL]
+		4. date_arrived [date, NOT NULL]
+		5. facility_id [bigint, NULL]
+		6. unit_id [bigint, NULL]
+	• Constraints:
+		○ PK = PK__SampleCr__3213E83FB8E2B0DD.
+	• Relationships:
+		○ Referenced by FieldSampleTracking.sample_crate_id, SampleCratePhotos.sample_crate_id, SampleInspections.crate_id.
+3.4.3 SampleCratePhotos
+	• Purpose: Photos of crates (maybe for documentation).
+	• Columns:
+		1. id [int, PK, NOT NULL]
+		2. photo [nvarchar(200), NOT NULL]
+		3. title [nvarchar(280), NOT NULL]
+		4. sample_crate_id [int, FK, NOT NULL → SampleCrates.id]
+	• Constraints:
+		○ PK = PK__samples___3213E83FDA9C43CE.
+		○ FK = samples_samplecratephoto_sample_crate_id_b8916d3b_fk_SampleCrates_id.
+3.4.4 SampleInspections
+	• Purpose: Inspection info for a specific sample (dimensions, markings, etc.).
+	• Columns:
+		1. entry_date [date, NOT NULL]
+		2. box_sleeve_marking [nvarchar(280), NOT NULL]
+		3. other_marking [nvarchar(280), NOT NULL]
+		4. flow_direction_marked [bit, NOT NULL]
+		5. cells_high [int, NOT NULL]
+		6. cells_wide [int, NOT NULL]
+		7. plugged_cells [int, NOT NULL]
+		8. sample_height [float, NOT NULL]
+		9. sample_width [float, NOT NULL]
+		10. sample_length [float, NOT NULL]
+		11. crate_id [int, FK, NOT NULL → SampleCrates.id]
+		12. sample_id [int, FK, NOT NULL → Samples.id, PK, UNIQUE]
+	• Constraints:
+		○ PK = SampleInspections_sample_id_0609bb94_pk (using sample_id as PK).
+		○ UNIQUE = SampleInspections_sample_id_0609bb94_uniq on sample_id.
+		○ FK = SampleInspections_crate_id_4316914a_fk_SampleCrates_id, SampleInspections_sample_id_0609bb94_fk_Samples_id.
+	• Indexes:
+		○ Clustered PK on sample_id.
+3.4.5 SampleInspectionPhotos
+	• Purpose: Photos for a sample’s inspection process.
+	• Columns:
+		1. id [int, PK, NOT NULL]
+		2. title [nvarchar(280), NOT NULL]
+		3. photo [nvarchar(200), NOT NULL]
+		4. sample_id [int, FK, NOT NULL → Samples.id]
+	• Constraints:
+		○ PK = PK__SampleIn__3213E83F429CBF2F.
+		○ FK = SampleInspectionPhotos_sample_id_cc7b5027_fk_Samples_id.
+3.4.6 HoneycombSample
+	• Purpose: Specialized sample data for honeycomb catalyst elements.
+	• Columns:
+		1. id [bigint, PK, NOT NULL]
+		2. date [date, NOT NULL]
+		3. cells_high [int, NULL]
+		4. cells_wide [int, NULL]
+		5. sample_height [float, NULL]
+		6. sample_width [float, NULL]
+		7. sample_length [int, NOT NULL]
+		8. sample_id [int, FK, NOT NULL, UNIQUE]
+	• Constraints:
+		○ PK = PK__Honeycom__3213E83FBE47FB0A.
+		○ UNIQUE = UQ__Honeycom__84ACF7BB73D155F8 on sample_id.
+		○ FK = HoneycombSample_sample_id_954f9a59_fk_Samples_id.
+3.4.7 SampleTypes
+	• Purpose: Classification of sample types (e.g., honeycomb, plate, etc.).
+	• Columns:
+		1. id [int, PK, NOT NULL]
+		2. sample_type [nvarchar(280), NOT NULL, UNIQUE]
+	• Constraints:
+		○ PK = PK__SampleTy__3213E83F71D5AD7E.
+		○ UNIQUE = UQ__SampleTy__3F48595CAC5D7865.
+	• Relationships:
+		○ Referenced by Samples.sample_type_id, TestSampleTypes.sample_type_id, etc.
+3.4.8 SampleLocations
+	• Purpose: Potential “location” identifiers for samples or test references.
+	• Columns:
+		1. id [int, PK, NOT NULL]
+		2. location [nvarchar(280), NOT NULL, UNIQUE]
+	• Constraints:
+		○ PK = PK__SampleLo__3213E83F69F078AC.
+		○ UNIQUE = UQ__SampleLo__412AE05C6536BA55.
+	• Relationships:
+		○ Referenced by LocationTests.location_id, SampleTypeLocations.location_id.
+3.4.9 SampleTypeLocations
+	• Purpose: Many-to-many linking table: which SampleTypes can appear at which SampleLocations.
+	• Columns:
+		1. id [int, PK, NOT NULL]
+		2. obsolete [bit, NOT NULL]
+		3. location_id [int, FK, NOT NULL → SampleLocations.id]
+		4. sample_type_id [int, FK, NOT NULL → SampleTypes.id]
+	• Constraints:
+		○ PK = PK__SampleTy__3213E83F07C8BCFA.
+		○ FK = SampleTypeLocations_location_id_5b17a2de_fk_SampleLocations_id, SampleTypeLocations_sample_type_id_9ff8240c_fk_SampleTypes_id.
+
+3.5 Reactor Testing
+3.5.1 ReactorLoads
+	• Purpose: A “load” configuration for reactor-based tests.
+	• Columns:
+		1. id [int, PK, NOT NULL]
+		2. lab_request_id [int, FK, NOT NULL → LabRequests.id]
+		3. test_type_id [int, FK, NOT NULL → TestTypes.id]
+	• Constraints:
+		○ PK = PK__ReactorL__3213E83F4F8CE5EF.
+		○ FK = ReactorLoads_lab_request_id_1a7885ac_fk_LabRequests_id, ReactorLoads_test_type_id_2778ed1f_fk_TestTypes_id.
+	• Indexes:
+		○ Nonclustered on lab_request_id, test_type_id.
+3.5.2 ReactorLoadSamples
+	• Purpose: Ties samples (LabRequestSample) to a specific load in the reactor.
+	• Columns:
+		1. id [int, PK, NOT NULL]
+		2. position [int, NOT NULL]
+		3. available_cells [int, NULL]
+		4. load_id [int, FK, NOT NULL → ReactorLoads.id]
+		5. lab_request_sample_id [int, FK, NOT NULL → LabRequestSample.id]
+	• Constraints:
+		○ PK = PK__ReactorL__3213E83F5404198D.
+		○ Unique index on (load_id, position).
+		○ FK = ReactorLoadSamples_load_id_a18853c2_fk_ReactorLoads_id, ReactorLoadSamples_lab_request_sample_id_b73cde30_fk_LabRequestSample_id.
+3.5.3 Reactors
+	• Purpose: Table of available reactors for testing.
+	• Columns:
+		1. id [int, PK, NOT NULL]
+		2. name [nvarchar(280), NOT NULL]
+		3. lab_id [int, FK, NOT NULL → Laboratories.id]
+		4. reactor_type_id [int, FK, NOT NULL → TestTypes.id]
+	• Constraints:
+		○ PK = PK__Reactors__3213E83F943D2B89.
+		○ FK = Reactors_lab_id_84ab20ab_fk_Laboratories_id, Reactors_reactor_type_id_a14e3b2b_fk_TestTypes_id.
+3.5.4 ReactorTests
+	• Purpose: Primary record of actual test events done in a reactor.
+	• Columns:
+		1. id [int, PK, NOT NULL]
+		2. flow_rate_nm3_per_hr [float, NULL]
+		3. inlet_temperature [float, NULL]
+		4. dry_O2 [float, NULL]
+		5. load_id [int, FK, NULL → ReactorLoads.id]
+		6. test_condition_id [int, FK, NULL → ReactorTestConditions.id]
+		7. reactor_id [int, FK, NULL → Reactors.id]
+		8. reactor_type_id [int, FK, NOT NULL → TestTypes.id]
+		9. stabilization_time [float, NULL]
+		10. start_time [datetime2, NULL]
+		11. stop_time [datetime2, NULL]
+		12. water [float, NULL]
+		13. test_order [int, NULL]
+	• Constraints:
+		○ PK = PK__ReactorT__3213E83F5CBE5D07.
+		○ FK = ReactorTests_load_id_ccad8c05_fk_ReactorLoads_id, ReactorTests_test_condition_id_a7be440d_fk_ReactorTestConditions_id, etc.
+3.5.5 ReactorTestConditions
+	• Purpose: Defines the conditions under which a reactor test is run.
+	• Columns:
+		1. id [int, PK, NOT NULL]
+		2. job [nvarchar(140), NULL]
+		3. pcn [nvarchar(140), NULL]
+		4. description [nvarchar(280), NOT NULL]
+		5. Av [float, NULL]
+		6. Ugs [float, NULL]
+		7. temperature [float, NOT NULL]
+		8. dry_O2 [float, NOT NULL]
+		9. test_type_id [int, FK, NULL → TestConditionTypes.id]
+		10. water [float, NOT NULL]
+	• Constraints:
+		○ PK = PK__ReactorT__3213E83FE5CBB22C.
+		○ FK = ReactorTestConditions_test_type_id_e14b6904_fk_TestConditionTypes_id.
+3.5.6 ReactorTestRuns
+	• Purpose: Each test can have multiple “runs.”
+	• Columns:
+		1. id [int, PK, NOT NULL]
+		2. test_sheet [nvarchar(150), NULL]
+		3. number [int, NOT NULL]
+		4. reactor_test_id [int, FK, NULL → ReactorTests.id]
+		5. test_worksheet_id [int, FK, NOT NULL → TestWorksheets.id]
+	• Constraints:
+		○ PK = PK__ReactorT__3213E83F897F6EC2.
+		○ FK = ReactorTestRuns_reactor_test_id_9797d4e5_fk_ReactorTests_id, ReactorTestRuns_test_worksheet_id_06aa5a71_fk_TestWorksheets_id.
+		○ Unique index on (reactor_test_id, number).
+3.5.7 ReactorParameters
+	• Purpose: Named parameters that can be measured or set in a reactor.
+	• Columns:
+		1. id [int, PK, NOT NULL]
+		2. reactor_parameter [nvarchar(280), NOT NULL, UNIQUE]
+		3. obsolete [bit, NOT NULL]
+		4. units [nvarchar(100), NOT NULL]
+	• Constraints:
+		○ PK = PK__ReactorP__3213E83F303A8599.
+		○ UNIQUE = UQ__ReactorP__F9C069AB19163945.
+3.5.8 ReactorTestConditionParameters
+	• Purpose: Key-value pair for a test condition, storing a numeric value for a specific reactor parameter.
+	• Columns:
+		1. id [int, PK, NOT NULL]
+		2. value [float, NOT NULL]
+		3. condition_id [int, FK, NOT NULL → ReactorTestConditions.id]
+		4. reactor_parameter_id [int, FK, NOT NULL → ReactorParameters.id]
+	• Constraints:
+		○ PK = PK__ReactorT__3213E83F259FF8F1.
+		○ FK = ReactorTestConditionParameters_condition_id_79b1228d_fk_ReactorTestConditions_id, ReactorTestConditionParameters_reactor_parameter_id_fb0f072c_fk_ReactorParameters_id.
+3.5.9 ReactorTestMeasurmentParameters
+	• Purpose: Another enumerated list for measurement-based parameters in reactor tests.
+	• Columns:
+		1. id [int, PK, NOT NULL]
+		2. parameter [nvarchar(100), NOT NULL, UNIQUE]
+		3. obsolete [bit, NOT NULL]
+	• Constraints:
+		○ PK = PK__ReactorT__3213E83FF9A556A2.
+		○ UNIQUE = UQ__ReactorT__F9C069AB812ABAD1 on parameter.
+3.5.10 ReactorTestParameters
+	• Purpose: Stores measured parameter values for a specific test run & location.
+	• Columns:
+		1. id [int, PK, NOT NULL]
+		2. value [float, NOT NULL]
+		3. parameter_id [int, FK, NOT NULL → ReactorParameters.id]
+		4. location_id [int, FK, NOT NULL → ReactorLocations.id]
+		5. run_id [int, FK, NOT NULL → ReactorTestRuns.id]
+	• Constraints:
+		○ PK = PK__ReactorT__3213E83F35EC89FA.
+		○ FK = ReactorTestParameters_parameter_id_d5a1199e_fk_ReactorParameters_id, etc.
+3.5.11 ReactorLocations
+	• Purpose: A reference table listing possible “locations” within a reactor.
+	• Columns:
+		1. id [int, PK, NOT NULL]
+		2. location [nvarchar(150), NOT NULL]
+	• Constraints:
+		○ PK = PK__ReactorL__3213E83F6C4CE7A2.
+		○ Nonclustered index on location.
+
+3.6 Additional / Miscellaneous Tables
+3.6.1 FieldSampleTracking
+	• Purpose: Possibly a high-level table that tracks field samples, referencing a user and a crate.
+	• Columns:
+		1. id [int, PK, NOT NULL]
+		2. name [nvarchar(280), NOT NULL]
+		3. note [nvarchar(560), NULL]
+		4. closed [bit, NOT NULL]
+		5. person_id [int, FK, NULL → auth_user.id]
+		6. sample_crate_id [int, FK, NULL → SampleCrates.id]
+	• Constraints:
+		○ PK = PK__FieldSam__3213E83F2D833D43.
+		○ FK = FieldSampleTracking_person_id_c768ffaf_fk_auth_user_id, FieldSampleTracking_sample_crate_id_2afd9a74_fk_SampleCrates_id.
+3.6.2 SampleNumber
+	• Purpose: Possibly an auto-sequencing mechanism for sample IDs.
+	• Columns:
+		1. id [int, PK, NOT NULL]
+		2. time_created [datetime2, NOT NULL]
+		3. sequence [int, NOT NULL]
+	• Constraints:
+		○ PK = PK__SampleNu__3213E83F32BD2E3D.
+3.6.3 TestConditionTypes
+	• Purpose: Defines possible “test condition types” used by ReactorTestConditions.
+	• Columns:
+		1. id [int, PK, NOT NULL]
+		2. test_condition_type [nvarchar(140), NOT NULL, UNIQUE]
+		3. obsolete [bit, NOT NULL]
+	• Constraints:
+		○ PK = PK__TestCond__3213E83F9A6EF915.
+		○ UNIQUE = UQ__TestCond__EAB56F490EFA2DD8.
+3.6.4 TestSampleTypes
+	• Purpose: Many-to-many link between SampleTypes and TestTypes.
+	• Columns:
+		1. id [int, PK, NOT NULL]
+		2. sample_type_id [int, FK, NOT NULL → SampleTypes.id]
+		3. test_type_id [int, FK, NOT NULL → TestTypes.id]
+	• Constraints:
+		○ PK = PK__TestSamp__3213E83F8D1928E6.
+		○ Unique index on (sample_type_id, test_type_id).
+3.6.5 TestConditionMeasurmentParameters
+	• Purpose: Ties ReactorTestConditions to a ReactorTestMeasurmentParameters record for measurement values.
+	• Columns:
+		1. id [int, PK, NOT NULL]
+		2. condition_id [int, FK, NOT NULL → ReactorTestConditions.id]
+		3. measurment_parameter_id [int, FK, NOT NULL → ReactorTestMeasurmentParameters.id]
+	• Constraints:
+		○ PK = PK__TestCond__3213E83F4A851C7E.
+		○ FK = TestConditionMeasurmentParameters_condition_id_aaec65ff_fk_ReactorTestConditions_id, TestConditionMeasurmentParameters_measurment_parameter_id_3beec419_fk_ReactorTestMeasurmentParameters_id.
+
+4. Entity Relationship Summary
+Here’s a condensed bullet of some major relationships:
+	• Samples → child of SampleTypes (sample_type_id).
+	• LabRequests → references auth_user (created_by_id), Laboratories (requested_lab_id), and RequestTypes.
+	• LabRequestSample → references LabRequests and Samples.
+	• LocationTests → references LabRequestSample, SampleLocations, TestTypes.
+	• ChemistryResults → references LocationTests.
+	• ReactorLoads → references LabRequests and TestTypes.
+	• ReactorLoadSamples → references ReactorLoads and LabRequestSample.
+	• ReactorTests → references ReactorLoads, ReactorTestConditions, Reactors, TestTypes.
+	• Reactors → references Laboratories and TestTypes.
+	• ReactorTestRuns → references ReactorTests and TestWorksheets.
+	• ReactorTestParameters → references ReactorParameters, ReactorLocations, ReactorTestRuns.
+
+5. Suggested Usage & Workflows
+	1. Sample Intake
+		○ A SampleCrates row is created upon arrival, storing crate info.
+		○ Each physical sample is inserted into Samples, referencing a SampleType.
+		○ An optional SampleInspections row is created to log dimensional checks, photos, etc.
+	2. Lab Request Creation
+		○ A user (auth_user) creates a row in LabRequests, specifying a request_type_id, maybe linking to a lab (requested_lab_id).
+		○ That lab request is linked to one or more samples in LabRequestSample.
+	3. Test Definition
+		○ Each sample can have multiple test types (LabRequestSampleTestTypes).
+		○ If location-based data is needed, LocationTests references SampleLocations and logs further details.
+		○ ChemistryResults can store compound measurements for each location test.
+	4. Reactor Testing
+		○ If a sample is used in a reactor, a ReactorLoads record is created referencing the lab request.
+		○ ReactorLoadSamples ties specific samples to load positions in that reactor.
+		○ ReactorTests are created for each test scenario, referencing conditions (ReactorTestConditions), and data is recorded in ReactorTestParameters or ReactorTestConditionParameters.
+	5. User & Permission Handling
+		○ Standard Django approach: auth_user, auth_group, and M2M bridging tables let you define roles and permissions that control who can create or modify which records.
+
+6. Indexes & Performance Notes
+	• Frequent Lookups:
+		○ lab_request_id, sample_id, test_type_id, etc. are heavily indexed to speed up joins/filters.
+	• Potential Large Tables:
+		○ Samples, LabRequests, ReactorTests may grow large over time. Regular housekeeping or partitioning could be considered.
+	• Unique Fields:
+e.g., Samples.number, HoneycombSample.sample_id, auth_user.username. Proper application logic must ensure collisions are handled gracefully.
+
+
+1. Main Table for Loads: ReactorLoads
+	• ReactorLoads is your starting point for each load, with columns:
+		○ id (the unique Load ID)
+		○ lab_request_id → references LabRequests.id
+		○ test_type_id → references TestTypes.id
+From ReactorLoads you can join to:
+	1. LabRequests (for the LR number, and possibly notes from LabRequestNotes)
+	2. TestTypes (to identify the test type name, e.g. “Reactor” vs. “Chemistry”)
+1.1 Lab Request Number & Notes
+	• lab_request_id → LabRequests.id
+		○ LabRequests.number = the formal lab request number (e.g. “LR-1234”)
+		○ Any notes associated with this lab request are in LabRequestNotes:
+			§ LabRequestNotes.lab_request_id = LabRequests.id
+			§ LabRequestNotes.note = free-text note
+			§ So, if you want “load notes” but there aren’t any directly on ReactorLoads, you might find relevant info in LabRequestNotes tied to that same lab_request_id.
+1.2 Test Type
+	• test_type_id → TestTypes.id
+		○ TestTypes.test_type = the name, e.g. “Reactor Test” or “Physical Test,” plus booleans like chemistry_test, etc.
+
+2. Test Conditions & Parameter Values
+You mentioned wanting the “test conditions” and associated parameter values for each load. In Lemur, test conditions and parameters are not stored directly on ReactorLoads. Instead, you get them through ReactorTests:
+	1. ReactorTests.load_id = links back to ReactorLoads.id.
+	2. ReactorTests.test_condition_id → to ReactorTestConditions.id.
+Then, from ReactorTestConditions you can see a “description” field or other condition-level data. And each condition references parameter values in ReactorTestConditionParameters:
+	• ReactorTestConditionParameters.condition_id → ReactorTestConditions.id
+		○ Each record in ReactorTestConditionParameters has:
+			§ reactor_parameter_id → references ReactorParameters.id
+			§ value (the actual numeric or textual reading)
+			§ ReactorParameters.reactor_parameter (the name, e.g. “Temperature,” “Flow,” “Pressure”), plus units.
+Hence, to get all “parameter values for a given load,” the chain is:
+
+bash
+Copy
+ReactorLoads
+   -> ReactorTests (where ReactorTests.load_id = ReactorLoads.id)
+      -> ReactorTestConditions (where ReactorTests.test_condition_id = ReactorTestConditions.id)
+         -> ReactorTestConditionParameters (where .condition_id = ReactorTestConditions.id)
+            -> ReactorParameters (where ReactorTestConditionParameters.reactor_parameter_id = ReactorParameters.id)
+From that chain, you can gather:
+	• Load info (ReactorLoads.id)
+	• Test Condition description (ReactorTestConditions.description)
+	• Parameter Name (ReactorParameters.reactor_parameter), plus units
+	• Parameter Value (ReactorTestConditionParameters.value)
+	• Extra Condition Fields in ReactorTestConditions (e.g. job, pcn, Av, Ugs, etc.).
+	Note: If you also need “measured parameters” that are recorded during the run (as opposed to the “input/condition” parameters), you might look at ReactorTestParameters and/or ReactorTestMeasurmentParameters. But typically, “conditions” come from ReactorTestConditionParameters.
+
+3. Which Samples Are Involved in Each Load?
+To see the samples that compose a load:
+	1. ReactorLoadSamples ties each load to specific samples:
+		○ ReactorLoadSamples.load_id = ReactorLoads.id
+		○ ReactorLoadSamples.lab_request_sample_id → references LabRequestSample.id
+	2. From LabRequestSample you get:
+		○ sample_id → references Samples.id
+	3. Finally, from Samples you can retrieve:
+		○ Samples.number = the sample’s unique code
+		○ Samples.job_number, Samples.pcn, etc.
+So, to list all samples for a load:
+
+bash
+Copy
+ReactorLoads (id = LOAD_ID)
+   -> ReactorLoadSamples (where .load_id = LOAD_ID)
+      -> LabRequestSample (where .id = ReactorLoadSamples.lab_request_sample_id)
+         -> Samples (where Samples.id = LabRequestSample.sample_id)
+
+4. Putting It All Together
+Below is a conceptual “join map” summarizing how to tie everything to a single load ID:
+	1. Load (from ReactorLoads)
+		○ lab_request_id → LabRequests.number (the LR number)
+		○ test_type_id → TestTypes.test_type
+		○ Join to LabRequestNotes if you want textual notes about that entire request.
+	2. Load → Samples
+		○ ReactorLoadSamples.load_id = ReactorLoads.id → get lab_request_sample_id
+		○ Then LabRequestSample.sample_id → join to Samples.id for sample details.
+	3. Load → Conditions & Parameters
+		○ ReactorTests.load_id = ReactorLoads.id
+		○ Then test_condition_id → ReactorTestConditions.id for a “description,” plus fields like job, pcn, etc.
+		○ Then ReactorTestConditionParameters.condition_id = ReactorTestConditions.id →
+			§ ReactorTestConditionParameters.value
+			§ reactor_parameter_id → ReactorParameters.reactor_parameter, units.
+	4. Notes or Descriptions
+		○ Load-specific? Nothing direct on ReactorLoads for “notes,” so look at:
+			§ LabRequests + LabRequestNotes (the overarching “job request” that the load belongs to).
+		○ Condition-specific? The ReactorTestConditions.description is typically an overview of the condition.
+		○ Parameter-specific? ReactorParameters has a reactor_parameter name and units, but not a “note” field.
+		○ Samples: each sample might have notes in a separate table (like SampleInspections, SampleInspectionPhotos), if relevant.
+
+5. Example Query Outline
+A pseudo-query to get everything in one pass (assuming T-SQL style) might look like:
+
+sql
+Copy
+SELECT
+    RL.id AS LoadID,
+-- Lab Request info
+    LR.number AS LabRequestNumber,
+    LRN.note AS LabRequestNote,                -- from LabRequestNotes if needed
+    TT.test_type AS LoadTestType,
+-- Reactor Test Condition & Parameter
+    RTC.description AS ConditionDescription,
+    RTP.value AS ConditionParamValue,
+    RP.reactor_parameter AS ConditionParamName,
+    RP.units AS ConditionParamUnits,
+-- Sample info
+    S.id AS SampleID,
+    S.number AS SampleNumber,
+    S.job_number AS SampleJobNumber
+FROM ReactorLoads RL
+-- Join to LabRequests (for LR number)
+LEFT JOIN LabRequests LR
+    ON RL.lab_request_id = LR.id
+-- Optionally join LabRequestNotes
+LEFT JOIN LabRequestNotes LRN
+    ON LRN.lab_request_id = LR.id
+-- Join to TestTypes
+LEFT JOIN TestTypes TT
+    ON RL.test_type_id = TT.id
+-- ReactorTests (one load can have multiple ReactorTests)
+LEFT JOIN ReactorTests RT
+    ON RT.load_id = RL.id
+-- ReactorTestConditions
+LEFT JOIN ReactorTestConditions RTC
+    ON RT.test_condition_id = RTC.id
+-- ReactorTestConditionParameters
+LEFT JOIN ReactorTestConditionParameters RTP
+    ON RTP.condition_id = RTC.id
+-- ReactorParameters
+LEFT JOIN ReactorParameters RP
+    ON RTP.reactor_parameter_id = RP.id
+-- ReactorLoadSamples
+LEFT JOIN ReactorLoadSamples RLS
+    ON RLS.load_id = RL.id
+-- LabRequestSample
+LEFT JOIN LabRequestSample LRS
+    ON RLS.lab_request_sample_id = LRS.id
+-- Samples
+LEFT JOIN Samples S
+    ON LRS.sample_id = S.id
+WHERE RL.id = @GivenLoadID;  -- or filter by your criteria
+	• This demonstrates the core joins you’d use to get:
+		○ Load identification (ReactorLoads),
+		○ The lab request details + optional notes,
+		○ The test conditions + parameter values,
+		○ The samples that are tied to that load.
+
+6. Recap
+	• ReactorLoads is your starting point: it identifies each load, references the lab request (where you can also find notes) and the test type.
+	• Test conditions & parameter values come through ReactorTests → ReactorTestConditions → ReactorTestConditionParameters → ReactorParameters.
+	• Samples in a load are found in ReactorLoadSamples → LabRequestSample → Samples.
+That covers exactly how to get:
+	1. Each unique load,
+	2. Condition test type,
+	3. Condition parameters (parameter name + value),
+	4. LR number,
+	5. Descriptions & notes,
+	6. Which samples belong to the load.
+With these joins, you’ll be able to assemble a complete, load-centric view that includes all the relevant data and references.
