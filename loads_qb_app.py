@@ -1,5 +1,5 @@
 # technician_qb_app.py
-# Streamlit app for Quarter Bench technicians to update load times with better UX
+# Streamlit app for Quarter Bench technicians to update load times (table-based interface)
 
 import streamlit as st
 import pandas as pd
@@ -28,52 +28,42 @@ if df.empty:
     st.info("No backlog loads found for Quarter Bench.")
     st.stop()
 
-# === Format select options ===
-df['display'] = df.apply(lambda row: f"{row['load_id']} - {row['job']} - PCN {row['pcn']} - Priority {row['priority']}", axis=1)
-selected_row = st.selectbox("Select a load to update:", df['display'])
-selected = df[df['display'] == selected_row].iloc[0]
+# === Editable Table ===
+editable_cols = ["load_start", "load_end"]
 
-# === Show Summary Card ===
-st.markdown("""
-### Load Info
----
-**Load ID:** {load_id}  
-**Description:** {description}  
-**Priority:** {priority}  
-**Request Type:** {req_type}  
-**PCN:** {pcn}  
-**Job:** {job}  
-**Lab Request #:** {lab_req}  
-**Created By:** {user}  
-""".format(
-    load_id=selected['load_id'],
-    description=selected['description'],
-    priority=selected['priority'],
-    req_type=selected['request_type'],
-    pcn=selected['pcn'],
-    job=selected['job'],
-    lab_req=selected['lab_request_number'],
-    user=selected['username']
-))
+# Convert to string for display purposes
+for col in editable_cols:
+    df[col] = pd.to_datetime(df[col], errors='coerce').dt.strftime('%Y-%m-%d %H:%M')
 
-# === Editable Fields ===
-def default_or_parsed(val):
-    return pd.to_datetime(val) if pd.notnull(val) else datetime(2025, 1, 1, 8, 0)
+st.write("Edit start/end times below and click save:")
+edited_df = st.data_editor(
+    df,
+    use_container_width=True,
+    num_rows="dynamic",
+    hide_index=True,
+    column_config={
+        "load_start": st.column_config.DatetimeColumn("Start Time", format="YYYY-MM-DD HH:mm"),
+        "load_end": st.column_config.DatetimeColumn("End Time", format="YYYY-MM-DD HH:mm")
+    },
+    disabled=[col for col in df.columns if col not in editable_cols]
+)
 
-with st.form("load_update_form"):
-    start_time = st.datetime_input("Load Start Time", value=default_or_parsed(selected['load_start']))
-    end_time = st.datetime_input("Load End Time", value=default_or_parsed(selected['load_end']))
-
-    submitted = st.form_submit_button("💾 Save Load Times")
-
-    if submitted:
-        with engine.connect() as conn:
-            conn.execute(
-                sqlalchemy.text(f"""
-                    UPDATE {TABLE_NAME}
-                    SET load_start = :start, load_end = :end
-                    WHERE load_id = :id
-                """),
-                {"start": start_time, "end": end_time, "id": selected['load_id']}
-            )
-        st.success(f"✅ Load times updated for Load ID {selected['load_id']}")
+if st.button("💾 Save All Changes"):
+    updated = 0
+    with engine.connect() as conn:
+        for _, row in edited_df.iterrows():
+            if row['load_start'] or row['load_end']:
+                conn.execute(
+                    sqlalchemy.text(f"""
+                        UPDATE {TABLE_NAME}
+                        SET load_start = :start, load_end = :end
+                        WHERE load_id = :id
+                    """),
+                    {
+                        "start": row['load_start'],
+                        "end": row['load_end'],
+                        "id": row['load_id']
+                    }
+                )
+                updated += 1
+    st.success(f"✅ Updated {updated} load(s) successfully.")
