@@ -51,22 +51,18 @@ edited_df = st.data_editor(
 if st.button("💾 Save All Changes"):
     updated = 0
     with engine.connect() as conn:
+        sql = sqlalchemy.text(
+            f"UPDATE {TABLE_NAME} SET load_start = :start, load_end = :end WHERE load_id = :id"
+        )
         for _, row in edited_df.iterrows():
             start = pd.to_datetime(row['load_start'], errors='coerce') if row['load_start'] else None
             end = pd.to_datetime(row['load_end'], errors='coerce') if row['load_end'] else None
 
             if pd.notnull(start) or pd.notnull(end):
-                conn.execute(
-                    sqlalchemy.text(f"""
-                        UPDATE {TABLE_NAME}
-                        SET load_start = :start, load_end = :end
-                        WHERE load_id = :id
-                    """),
-                    {
-                        "start": start,
-                        "end": end,
-                        "id": row['load_id']
-                    }
-                )
+                conn.execute(sql, {
+                    "start": start,
+                    "end": end,
+                    "id": row['load_id']
+                })
                 updated += 1
     st.success(f"✅ Updated {updated} load(s) successfully.")
