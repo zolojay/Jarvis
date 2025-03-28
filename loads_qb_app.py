@@ -31,13 +31,13 @@ if df.empty:
 # === Editable Table ===
 editable_cols = ["load_start", "load_end"]
 
-# Convert to string for display purposes
+# Format datetime columns for display, but keep original values to re-parse
 for col in editable_cols:
     df[col] = pd.to_datetime(df[col], errors='coerce').dt.strftime('%Y-%m-%d %H:%M')
 
 st.write("Edit start/end times below and click save:")
 edited_df = st.data_editor(
-    df,
+    df.copy(),
     use_container_width=True,
     num_rows="dynamic",
     hide_index=True,
@@ -52,7 +52,10 @@ if st.button("💾 Save All Changes"):
     updated = 0
     with engine.connect() as conn:
         for _, row in edited_df.iterrows():
-            if row['load_start'] or row['load_end']:
+            start = pd.to_datetime(row['load_start'], errors='coerce') if row['load_start'] else None
+            end = pd.to_datetime(row['load_end'], errors='coerce') if row['load_end'] else None
+
+            if pd.notnull(start) or pd.notnull(end):
                 conn.execute(
                     sqlalchemy.text(f"""
                         UPDATE {TABLE_NAME}
@@ -60,8 +63,8 @@ if st.button("💾 Save All Changes"):
                         WHERE load_id = :id
                     """),
                     {
-                        "start": row['load_start'],
-                        "end": row['load_end'],
+                        "start": start,
+                        "end": end,
                         "id": row['load_id']
                     }
                 )
