@@ -6,6 +6,9 @@ import pandas as pd
 import sqlalchemy
 from datetime import datetime
 
+# === PAGE CONFIG ===
+st.set_page_config(page_title="Quarter Bench Load Updates", layout="wide")
+
 # === CONFIG ===
 SUPABASE_CONN = st.secrets["supabase_connection"]
 TABLE_NAME = "load_queue"
@@ -48,21 +51,24 @@ edited_df = st.data_editor(
     disabled=[col for col in df.columns if col not in editable_cols]
 )
 
-if st.button("💾 Save All Changes"):
-    updated = 0
-    with engine.connect() as conn:
-        sql = sqlalchemy.text(
-            f"UPDATE {TABLE_NAME} SET load_start = :start, load_end = :end WHERE load_id = :id"
-        )
-        for _, row in edited_df.iterrows():
-            start = pd.to_datetime(row['load_start'], errors='coerce') if row['load_start'] else None
-            end = pd.to_datetime(row['load_end'], errors='coerce') if row['load_end'] else None
+# === Save Button Centered and Styled ===
+col1, col2, col3 = st.columns([1, 2, 1])
+with col2:
+    if st.button("💾 Save All Changes", use_container_width=True):
+        updated = 0
+        with engine.connect() as conn:
+            sql = sqlalchemy.text(
+                f"UPDATE {TABLE_NAME} SET load_start = :start, load_end = :end WHERE load_id = :id"
+            )
+            for _, row in edited_df.iterrows():
+                start = pd.to_datetime(row['load_start'], errors='coerce') if row['load_start'] else None
+                end = pd.to_datetime(row['load_end'], errors='coerce') if row['load_end'] else None
 
-            if pd.notnull(start) or pd.notnull(end):
-                conn.execute(sql, {
-                    "start": start,
-                    "end": end,
-                    "id": row['load_id']
-                })
-                updated += 1
-    st.success(f"✅ Updated {updated} load(s) successfully.")
+                if pd.notnull(start) or pd.notnull(end):
+                    conn.execute(sql, {
+                        "start": start,
+                        "end": end,
+                        "id": row['load_id']
+                    })
+                    updated += 1
+        st.success(f"✅ Updated {updated} load(s) successfully.")
