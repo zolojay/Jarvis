@@ -1,6 +1,4 @@
 # technician_qb_app.py
-# Streamlit app for Quarter Bench technicians to update load times (table-based interface)
-
 import streamlit as st
 import pandas as pd
 import sqlalchemy
@@ -31,27 +29,49 @@ if df.empty:
     st.info("No backlog loads found for Quarter Bench.")
     st.stop()
 
-# === Editable Table ===
-editable_cols = ["load_start", "load_end"]
+# === Prep Data ===
 
-# Format datetime columns for display, but keep original values to re-parse
-for col in editable_cols:
+# Format datetime for editing
+for col in ["load_start", "load_end"]:
     df[col] = pd.to_datetime(df[col], errors='coerce').dt.strftime('%Y-%m-%d %H:%M')
 
+# Remove unused column
+df.drop(columns=["testing_area"], inplace=True)
+
+# Desired column order
+ordered_cols = [
+    "status", "priority", "lab_request_number", "load_id", "request_type",
+    "username", "pcn", "job", "description", "load_start", "load_end"
+]
+df = df[ordered_cols]
+
+# === Editable Table ===
+
 st.write("Edit start/end times below and click save:")
+
 edited_df = st.data_editor(
     df.copy(),
     use_container_width=True,
     num_rows="dynamic",
     hide_index=True,
     column_config={
+        "status": "Status",
+        "priority": "Priority",
+        "lab_request_number": "LRF",
+        "load_id": "Load #",
+        "request_type": "Type",
+        "username": "Requestor",
+        "pcn": "PCN",
+        "job": "Job #",
+        "description": "Description",
         "load_start": st.column_config.DatetimeColumn("Start Time", format="YYYY-MM-DD HH:mm"),
-        "load_end": st.column_config.DatetimeColumn("End Time", format="YYYY-MM-DD HH:mm")
+        "load_end": st.column_config.DatetimeColumn("End Time", format="YYYY-MM-DD HH:mm"),
     },
-    disabled=[col for col in df.columns if col not in editable_cols]
+    disabled=[col for col in df.columns if col not in ["load_start", "load_end"]]
 )
 
-# === Save Button Centered and Styled ===
+# === Save Button Centered ===
+
 col1, col2, col3 = st.columns([1, 2, 1])
 with col2:
     if st.button("💾 Save All Changes", use_container_width=True):
